@@ -1,0 +1,3 @@
+29 : close inter (29;)
+44 : change sprite ( 44;-2147483645;538;)
+45 : setcolor

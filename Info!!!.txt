@@ -1,0 +1,67 @@
+---------Setup info---------
+Step 1.
+Open the config.properties and change your path(s)
+
+Step 2.
+Dump your cache sprites (can be done with the editor by clicking extra --> dump sprites, if this doesn't dump everything try using steve's editor.)
+
+Step 3.
+Back-up your cache!!
+
+Step 4.
+Enjoy editing :)
+
+---------Border info---------
+Blue border = model (not rendered)
+Red border = Container
+Green border = base container 
+White border = Current selected component
+
+---------Other info---------
+Make sure you always make a back-up from your cache.
+
+Note that cs2 stuff and models
+
+if you want your component to render pure x & y based use position mode 0 for x & y  
+---------My client crashed, what did I do wrong?---------
+Things to check : 
+					1. Did I gave a component a parent ID that doesn't exist? 
+					2. Does the sprite exist? 
+					3. Does the model id exist? 
+					4. Is my color id right?
+					5. Did I do something to the scripts?
+
+If these things are correct remove the component and try again, or contact me!
+
+---------Questions---------
+My discord : Cara Shnek#6969
+Rune-server : Shnek
+(I will help you as much as possible but I won't make whole interfaces for you.)
+
+---------misc info--------
+List of current font ids
+305 307 468 473 494 495 496 497 584 591 645 646 647 648 764 776 819 1591 2244 2710 3237 3793 3794 3795 4040 5419 5631 13120 13121
+
+-------------scripts---------------
+How does those scripts work in the script tab ? 
+
+example :
+
+1357;-2147483645;100;
+
+full vieuw of the script
+
+void script_1357(Widget widget0, int arg1) {
+	widget0.setTrans(arg1);
+	return;
+}
+
+what does the numbers mean? 
+
+1357: is the id of script, the first number in the array is ALWAYS the script id
+everything after 1357 are paremeters
+
+-2147483645 : means it's the widget itself, if you want to trigger another component use it ihash.
+
+100 : an extra parameter (so the trans will be 100% when hovered on the component)
+

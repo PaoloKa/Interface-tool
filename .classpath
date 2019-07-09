@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="lib"/>
+	<classpathentry exported="true" kind="lib" path="lib/synthetica.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="lib/syntheticaBlackEye.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jgoodies-forms-1.8.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jgoodies-forms-1.8.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/substance.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
