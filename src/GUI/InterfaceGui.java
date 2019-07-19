@@ -2303,13 +2303,6 @@ public class InterfaceGui  extends JFrame {
 			case 1: //normal hover button
 				ComponentDefinition container = ComponentDefinition.getInterfaceComponent(506, 1);
 				ComponentDefinition text = ComponentDefinition.getInterfaceComponent(506, 2);
-				ComponentDefinition rightClick = ComponentDefinition.getInterfaceComponent(320, 150);
-				text.rightclickOptions = rightClick.rightclickOptions;
-				for(int i = 0; i < text.rightclickOptions.length; i ++)
-					text.rightclickOptions[i] = "";
-				text.opCursors = rightClick.opCursors;
-				text.Option = rightClick.Option;
-				text.optionMask = rightClick.optionMask;
 				Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), container.encode());
 				Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), text.encode());
 				ComponentDefinition.getInterface(currentInterface, true); //since we need to reload the array
@@ -2335,13 +2328,6 @@ public class InterfaceGui  extends JFrame {
 				break;
 			case 3:
 				ComponentDefinition hover = ComponentDefinition.getInterfaceComponent(6, 36);
-				ComponentDefinition rightClick2 = ComponentDefinition.getInterfaceComponent(320, 150);
-				hover.rightclickOptions = rightClick2.rightclickOptions;
-				for(int i = 0; i < hover.rightclickOptions.length; i ++)
-					hover.rightclickOptions[i] = "";
-				hover.opCursors = rightClick2.opCursors;
-				hover.Option = rightClick2.Option;
-				hover.optionMask = rightClick2.optionMask;
 				hover.parentId = -1;
 				hover.popupScript = null;
 				hover.anObjectArray4770 = null;
@@ -2355,13 +2341,6 @@ public class InterfaceGui  extends JFrame {
 			case 4:
 				ComponentDefinition popupButton = ComponentDefinition.getInterfaceComponent(762, 33);
 				ComponentDefinition cont = ComponentDefinition.getInterfaceComponent(762, 119);
-				ComponentDefinition rightClick3 = ComponentDefinition.getInterfaceComponent(320, 150);
-				popupButton.rightclickOptions = rightClick3.rightclickOptions;
-				for(int i = 0; i < popupButton.rightclickOptions.length; i ++)
-					popupButton.rightclickOptions[i] = "";
-				popupButton.opCursors = rightClick3.opCursors;
-				popupButton.Option = rightClick3.Option;
-				popupButton.optionMask = rightClick3.optionMask;
 				cont.parentId = -1;
 				popupButton.parentId = -1;
 				int place2 = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface);
