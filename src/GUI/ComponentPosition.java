@@ -1,6 +1,6 @@
 package GUI;
 
-import com.rs.cache.loaders.IComponentDefinitions;
+import com.rs.cache.loaders.ComponentDefinition;
 
 public class ComponentPosition {
 	
@@ -11,7 +11,7 @@ public class ComponentPosition {
 	 * @param parentHeight
 	 * 
 	 */
-	public static void realPosition(IComponentDefinitions component, int parentWidth, int parentHeight) {
+	public static void realPosition(ComponentDefinition component, int parentWidth, int parentHeight) {
 			/**
 			 * x Type
 			 */
@@ -64,7 +64,7 @@ public class ComponentPosition {
 	 * @param bool
 	 * @param i_3_
 	 */
-	public static void realAfmeting(IComponentDefinitions component, int width, int height) {
+	public static void realAfmeting(ComponentDefinition component, int width, int height) {
 		/* width */
 			if (component.aspectWidthType == 0)
 				component.width = component.baseWidth;
@@ -101,10 +101,10 @@ public class ComponentPosition {
 			*/
 	}
 	
-	public static void setValues(IComponentDefinitions component) {
+	public static void setValues(ComponentDefinition component) {
 		if(component == null)
 			return;
-		IComponentDefinitions parent = InterfaceUtils.getParent(component.parentId);
+		ComponentDefinition parent = InterfaceUtils.getParent(component.parentId);
 		int width;
 		int height;
 		if (null == parent) {

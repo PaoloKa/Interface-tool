@@ -10,7 +10,7 @@ import java.nio.file.Files;
 
 import com.interfaces.FontDecoding;
 import com.rs.cache.Cache;
-import com.rs.cache.loaders.IComponentDefinitions;
+import com.rs.cache.loaders.ComponentDefinition;
 
 import properties.PropertyValues;
 import sprite.Sprite;
@@ -80,7 +80,7 @@ public class InterfaceGui  extends JFrame {
 	 */
 	private int currentInterface=-1;
 	private int selectedComp=-1;
-	private IComponentDefinitions copiedComp = null;
+	private ComponentDefinition copiedComp = null;
 	/**
 	 * launches the app
 	 * @param args
@@ -210,7 +210,7 @@ public class InterfaceGui  extends JFrame {
 		scrollPane_1.setBounds(749, 54, 229, 339);
 		getContentPane().add(scrollPane_1);
 		//jtree itself
-		JTree tree = new JTree(populateJtree(1));
+		JTree tree = new JTree(createInterfaceTree(1));
 		scrollPane_1.setViewportView(tree);
 		tree.addTreeSelectionListener(new TreeSelectionListener() {
 
@@ -242,7 +242,7 @@ public class InterfaceGui  extends JFrame {
 		btnCopy.setToolTipText("Copy selected interface");
 		btnCopy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				 copiedComp = IComponentDefinitions.getInterfaceComponent(currentInterface, selectedComp);
+				 copiedComp = ComponentDefinition.getInterfaceComponent(currentInterface, selectedComp);
 			}
 		});
 		btnCopy.setBounds(904, 404, 78, 32);
@@ -255,7 +255,7 @@ public class InterfaceGui  extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				if(selectedComp != -1){
-				IComponentDefinitions c =  IComponentDefinitions.getInterfaceComponent(currentInterface, selectedComp);
+				ComponentDefinition c =  ComponentDefinition.getInterfaceComponent(currentInterface, selectedComp);
 				String message =  (c.type == 0 ? "Are you sure that you want to remove component "+selectedComp+" from interface "+currentInterface+" ? NOTE: this component is a container, childs will be removed aswell." : "Are you sure that you want to remove  component "+selectedComp+" from interface "+currentInterface+" ?");
 				int option = JOptionPane.showConfirmDialog( tree,
                 		    message,
@@ -1016,8 +1016,8 @@ public class InterfaceGui  extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if(currentInterface <= 0)
 					return;
-				IComponentDefinitions comp = IComponentDefinitions.getInterfaceComponent(6, 38);
-				IComponentDefinitions rightClick = IComponentDefinitions.getInterfaceComponent(320, 150);
+				ComponentDefinition comp = ComponentDefinition.getInterfaceComponent(6, 38);
+				ComponentDefinition rightClick = ComponentDefinition.getInterfaceComponent(320, 150);
 				comp.rightclickOptions = rightClick.rightclickOptions;
 				for(int i = 0; i < comp.rightclickOptions.length; i ++)
 					comp.rightclickOptions[i] = "";
@@ -1028,9 +1028,9 @@ public class InterfaceGui  extends JFrame {
 				comp.basePositionY =0;
 				comp.parentId = -1;
 				comp.spriteId = 0;
-				comp.ihash = IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface) + (currentInterface << 16);
-				Cache.STORE.getIndexes()[3].putFile(currentInterface, IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface), comp.encode());
-				IComponentDefinitions.getInterface(currentInterface, true);
+				comp.ihash = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface) + (currentInterface << 16);
+				Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), comp.encode());
+				ComponentDefinition.getInterface(currentInterface, true);
 				drawTree(currentInterface);
 				
 			}
@@ -1043,8 +1043,8 @@ public class InterfaceGui  extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(currentInterface <= 0)
 					return;
-				IComponentDefinitions comp = IComponentDefinitions.getInterfaceComponent(4, 5);
-				IComponentDefinitions rightClick = IComponentDefinitions.getInterfaceComponent(320, 150);
+				ComponentDefinition comp = ComponentDefinition.getInterfaceComponent(4, 5);
+				ComponentDefinition rightClick = ComponentDefinition.getInterfaceComponent(320, 150);
 				comp.rightclickOptions = rightClick.rightclickOptions;
 				for(int i = 0; i < comp.rightclickOptions.length; i ++)
 					comp.rightclickOptions[i] = "";
@@ -1055,9 +1055,9 @@ public class InterfaceGui  extends JFrame {
 				comp.basePositionY =0;
 				comp.parentId = -1;
 				comp.text = "Hallo world";
-				comp.ihash = IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface) + (currentInterface << 16);
-				Cache.STORE.getIndexes()[3].putFile(currentInterface, IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface), comp.encode());
-				IComponentDefinitions.getInterface(currentInterface, true);
+				comp.ihash = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface) + (currentInterface << 16);
+				Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), comp.encode());
+				ComponentDefinition.getInterface(currentInterface, true);
 				drawTree(currentInterface);
 				
 			}
@@ -1069,8 +1069,8 @@ public class InterfaceGui  extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(currentInterface <= 0)
 					return;
-				IComponentDefinitions comp = IComponentDefinitions.getInterfaceComponent(6, 0);
-				IComponentDefinitions rightClick = IComponentDefinitions.getInterfaceComponent(320, 150);
+				ComponentDefinition comp = ComponentDefinition.getInterfaceComponent(6, 0);
+				ComponentDefinition rightClick = ComponentDefinition.getInterfaceComponent(320, 150);
 				comp.rightclickOptions = rightClick.rightclickOptions;
 				for(int i = 0; i < comp.rightclickOptions.length; i ++)
 					comp.rightclickOptions[i] = "";
@@ -1082,8 +1082,8 @@ public class InterfaceGui  extends JFrame {
 				comp.baseHeight = 50;
 				comp.baseWidth = 50;
 				comp.parentId = -1;
-				Cache.STORE.getIndexes()[3].putFile(currentInterface, IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface), comp.encode());
-				IComponentDefinitions.getInterface(currentInterface, true);
+				Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), comp.encode());
+				ComponentDefinition.getInterface(currentInterface, true);
 				drawTree(currentInterface);
 				
 			}
@@ -1097,8 +1097,8 @@ public class InterfaceGui  extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(currentInterface <= 0)
 					return;
-				IComponentDefinitions comp = IComponentDefinitions.getInterfaceComponent(732, 3);
-				IComponentDefinitions rightClick = IComponentDefinitions.getInterfaceComponent(320, 150);
+				ComponentDefinition comp = ComponentDefinition.getInterfaceComponent(732, 3);
+				ComponentDefinition rightClick = ComponentDefinition.getInterfaceComponent(320, 150);
 				comp.rightclickOptions = rightClick.rightclickOptions;
 				for(int i = 0; i < comp.rightclickOptions.length; i ++)
 					comp.rightclickOptions[i] = "";
@@ -1108,9 +1108,9 @@ public class InterfaceGui  extends JFrame {
 				comp.basePositionX = 0;
 				comp.basePositionY =0;
 				comp.parentId = -1;
-				comp.ihash = IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface) + (currentInterface << 16);
-				Cache.STORE.getIndexes()[3].putFile(currentInterface, IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface), comp.encode());
-				IComponentDefinitions.getInterface(currentInterface, true);
+				comp.ihash = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface) + (currentInterface << 16);
+				Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), comp.encode());
+				ComponentDefinition.getInterface(currentInterface, true);
 				drawTree(currentInterface);
 			}
 		});
@@ -1122,8 +1122,8 @@ public class InterfaceGui  extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(currentInterface <= 0)
 					return;
-				IComponentDefinitions comp = IComponentDefinitions.getInterfaceComponent(640, 0);
-				IComponentDefinitions rightClick = IComponentDefinitions.getInterfaceComponent(320, 150);
+				ComponentDefinition comp = ComponentDefinition.getInterfaceComponent(640, 0);
+				ComponentDefinition rightClick = ComponentDefinition.getInterfaceComponent(320, 150);
 				comp.rightclickOptions = rightClick.rightclickOptions;
 				for(int i = 0; i < comp.rightclickOptions.length; i ++)
 					comp.rightclickOptions[i] = "";
@@ -1133,9 +1133,9 @@ public class InterfaceGui  extends JFrame {
 				comp.basePositionX = 0;
 				comp.basePositionY =0;
 				comp.parentId = -1;
-				comp.ihash = IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface) + (currentInterface << 16);
-				Cache.STORE.getIndexes()[3].putFile(currentInterface, IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface), comp.encode());
-				IComponentDefinitions.getInterface(currentInterface, true);
+				comp.ihash = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface) + (currentInterface << 16);
+				Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), comp.encode());
+				ComponentDefinition.getInterface(currentInterface, true);
 				drawTree(currentInterface);
 				
 			}
@@ -1173,12 +1173,12 @@ public class InterfaceGui  extends JFrame {
 		btnTest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				IComponentDefinitions defaultButton = IComponentDefinitions.getInterfaceComponent(6, 36);
+				ComponentDefinition defaultButton = ComponentDefinition.getInterfaceComponent(6, 36);
 				defaultButton.basePositionX = 0;
 				defaultButton.basePositionY = 0;
 				defaultButton.parentId = -1;
-            	Cache.STORE.getIndexes()[3].putFile(IComponentDefinitions.getInterfaceDefinitionsSize(), 0 , defaultButton.encode());
-            	IComponentDefinitions.icomponentsdefs = new IComponentDefinitions[IComponentDefinitions.getInterfaceDefinitionsSize()][];
+            	Cache.STORE.getIndexes()[3].putFile(ComponentDefinition.getInterfaceDefinitionsSize(), 0 , defaultButton.encode());
+            	ComponentDefinition.icomponentsdefs = new ComponentDefinition[ComponentDefinition.getInterfaceDefinitionsSize()][];
             	JList list = new JList(populateList());
             	list.addListSelectionListener(new ListSelectionListener() {
 
@@ -1206,7 +1206,7 @@ public class InterfaceGui  extends JFrame {
             		    "Inane warning",
             		    JOptionPane.YES_NO_OPTION);
             	if(option == 0) { 
-				for(int i = 0; i < IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface); i ++){
+				for(int i = 0; i < ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface); i ++){
             		if(i == 0){
             			addIndex0text((currentInterface));
             		} else
@@ -1218,7 +1218,7 @@ public class InterfaceGui  extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-            	IComponentDefinitions.icomponentsdefs = new IComponentDefinitions[IComponentDefinitions.getInterfaceDefinitionsSize()][];
+            	ComponentDefinition.icomponentsdefs = new ComponentDefinition[ComponentDefinition.getInterfaceDefinitionsSize()][];
             	drawTree(currentInterface);
             	}
 			}
@@ -1330,7 +1330,7 @@ public class InterfaceGui  extends JFrame {
 		btnQcopy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-				 copiedComp = IComponentDefinitions.getInterfaceComponent(Integer.parseInt(txt_qcopy_inter.getText()), Integer.parseInt(txt_qcopy_comp.getText()));
+				 copiedComp = ComponentDefinition.getInterfaceComponent(Integer.parseInt(txt_qcopy_inter.getText()), Integer.parseInt(txt_qcopy_comp.getText()));
 				} catch(Exception ex) {
 					JOptionPane.showMessageDialog(scrollPane_2,
 						    "Component can not be found.");
@@ -1476,7 +1476,7 @@ public class InterfaceGui  extends JFrame {
 		/* cleaning previous values*/
 		cleanValues();
 		/*  selected component*/
-		final IComponentDefinitions comp = IComponentDefinitions.getInterfaceComponent(inter, id);		
+		final ComponentDefinition comp = ComponentDefinition.getInterfaceComponent(inter, id);
 		/* setting all the values*/
 		this.txt_hash.setText(comp.ihash+"");
 		this.txt_height.setText(comp.baseHeight+"");
@@ -1748,7 +1748,7 @@ public class InterfaceGui  extends JFrame {
 					g.setColor(Color.WHITE);
 					g.drawImage(result, 0, 0, null);
 					ComponentPosition.setValues(comp);
-					g.drawRect(IComponentDefinitions.getX(comp, inter), IComponentDefinitions.getY(comp, inter), comp.width, comp.height);
+					g.drawRect(ComponentDefinition.getX(comp, inter), ComponentDefinition.getY(comp, inter), comp.width, comp.height);
 					
 				}
 		};*/
@@ -1756,14 +1756,14 @@ public class InterfaceGui  extends JFrame {
 		scrollPane_2.setViewportView(panel);
 	}
 	
-	private void drawSelected(IComponentDefinitions comp, int interafece) {
+	private void drawSelected(ComponentDefinition comp, int interafece) {
 		this.panel = new JPanel() {
 			@Override
 			public void paintComponent(Graphics g) {
 					g.setColor(Color.WHITE);
 					g.drawImage(result, 0, 0, null);
 					ComponentPosition.setValues(comp);
-					g.drawRect(IComponentDefinitions.getX(comp, interafece), IComponentDefinitions.getY(comp, interafece), comp.width, comp.height);
+					g.drawRect(ComponentDefinition.getX(comp, interafece), ComponentDefinition.getY(comp, interafece), comp.width, comp.height);
 				}
 		};
 	}
@@ -1778,7 +1778,7 @@ public class InterfaceGui  extends JFrame {
 			{
 				JTextField ctrl = (JTextField) c;
 				if(ctrl.isEditable())
-					ctrl.setText("");
+					ctrl.setText(null);
 			}
 	}
 	/**
@@ -1795,7 +1795,7 @@ public class InterfaceGui  extends JFrame {
 	 * @param comp
 	 */
 	public void saveInterface(int inter, int comp){
-		IComponentDefinitions changedComponent = IComponentDefinitions.getInterfaceComponent(inter, comp);
+		ComponentDefinition changedComponent = ComponentDefinition.getInterfaceComponent(inter, comp);
 		changedComponent.basePositionX = Integer.parseInt(txt_x.getText());
 		changedComponent.basePositionY = Integer.parseInt(txt_y.getText());
 		changedComponent.baseHeight = Integer.parseInt(txt_height.getText());
@@ -1873,7 +1873,7 @@ public class InterfaceGui  extends JFrame {
 			}
 		 else */if(!this.txt_leftclick.getText().equals("")){// && this.txt_option1.getText() == "" && this.txt_option2.getText() == "" && this.txt_option3.getText() == "" && this.txt_option4.getText() == "" && this.txt_option5.getText() == ""){
 				//changedComponent.rightclickOptions = new String[1];
-				IComponentDefinitions rightClick = IComponentDefinitions.getInterfaceComponent(320, 150);
+				ComponentDefinition rightClick = ComponentDefinition.getInterfaceComponent(320, 150);
 				changedComponent.rightclickOptions = rightClick.rightclickOptions;
 				for(int i = 0; i < changedComponent.rightclickOptions.length; i ++)
 					changedComponent.rightclickOptions[i] = "";
@@ -1897,6 +1897,7 @@ public class InterfaceGui  extends JFrame {
 		changedComponent.anObjectArray4701 = InterfaceUtils.getScriptArray(this.txt_anObjectArray4701.getText());
 		changedComponent.onLoadScript = InterfaceUtils.getScriptArray(this.txt_onload.getText());
 		changedComponent.anObjectArray4771 = InterfaceUtils.getScriptArray(this.txt_anObjectArray4771.getText());
+		changedComponent.configs = InterfaceUtils.getConfigArray(this.txt_configs.getText());
 		//message
 		//JOptionPane.showMessageDialog(scrollPane_2, "Component has been succesfully saved.");
 		//saves it
@@ -1908,10 +1909,11 @@ public class InterfaceGui  extends JFrame {
 	 */
 	public DefaultListModel  populateList(){
 		DefaultListModel listModel = new DefaultListModel();
-		for(int i = 0; i < IComponentDefinitions.getInterfaceDefinitionsSize(); i ++){
+		for(int i = 0; i < ComponentDefinition.getInterfaceDefinitionsSize(); i ++){
 			try{
-				if(IComponentDefinitions.getInterface(i) != null)
-					listModel.addElement("Interface: "+i);
+				if(ComponentDefinition.getInterface(i) != null) {
+					listModel.addElement("Interface: " + i);
+				}
 			} catch(Exception ex){
 
 			}
@@ -1919,37 +1921,59 @@ public class InterfaceGui  extends JFrame {
 		return listModel;
 		
 	}
+	public DefaultTreeModel populateTree(int interfaceId){
+		DefaultMutableTreeNode head =  new DefaultMutableTreeNode("Interface "+interfaceId+"");
+		for(ComponentDefinition component : ComponentDefinition.getInterface(interfaceId)){
+			if(component.parentId == -1){
+				head.add(new DefaultMutableTreeNode("Component: "+component.componentId));
+				continue;
+			}
+			DefaultMutableTreeNode  child = new DefaultMutableTreeNode("Component "+ component.componentId);
+			ArrayList<ComponentDefinition> childs  = ComponentDefinition.getChildsByParent(interfaceId, component.ihash);
+			while(childs != null){
+				for(ComponentDefinition childeren : childs) {
+					child.add(new DefaultMutableTreeNode("Component:" + component.componentId));
+
+				}
+				head.add(child);
+
+
+			}
+		}
+		return new DefaultTreeModel(head);
+	}
 	/**
+	 * TODO rewrite this
 	 * fills the jtree
 	 * @param interfaceId
 	 * @return
 	 */
-	public  DefaultTreeModel populateJtree(int interfaceId){
+	public  DefaultTreeModel createInterfaceTree(int interfaceId){
 		 DefaultMutableTreeNode inter =  new DefaultMutableTreeNode("Interface "+interfaceId+"");
 		 //new stuff
-		 for(int i = 0; i < IComponentDefinitions.getInterfaceDefinitionsComponentsSize(interfaceId); i ++){
-			 IComponentDefinitions c = IComponentDefinitions.getInterfaceComponent(interfaceId, i);
+		 for(int i = 0; i < ComponentDefinition.getInterfaceDefinitionsComponentsSize(interfaceId); i ++){
+			 ComponentDefinition c = ComponentDefinition.getInterfaceComponent(interfaceId, i);
 			 if(c == null)
 				 continue;
 			 //check for the base containers
-			 if(c.parentId == -1 && IComponentDefinitions.hasChilds(interfaceId, c.ihash)){
+			 if(c.parentId == -1 && ComponentDefinition.hasChilds(interfaceId, c.ihash)){
 				 DefaultMutableTreeNode  child = new DefaultMutableTreeNode("Component "+ c.componentId);
-				 ArrayList<IComponentDefinitions> childs  = IComponentDefinitions.getChildsByParent(interfaceId, c.ihash);
+				 ArrayList<ComponentDefinition> childs  = ComponentDefinition.getChildsByParent(interfaceId, c.ihash);
 				 //loop throu the childs
-				 for(IComponentDefinitions c2 : childs){
-					 //check if the child is a container , if so loop throu his childs etc..
-					 if(IComponentDefinitions.hasChilds(interfaceId, c2.ihash)){
-						 ArrayList<IComponentDefinitions> childs2  = IComponentDefinitions.getChildsByParent(interfaceId, c2.ihash); 
-						 DefaultMutableTreeNode  container2 = new DefaultMutableTreeNode("Component "+c2.componentId);
-						 	for(IComponentDefinitions c3 : childs2){
-						 		if(IComponentDefinitions.hasChilds(interfaceId, c3.ihash)){
-						 			 ArrayList<IComponentDefinitions> childs3  = IComponentDefinitions.getChildsByParent(interfaceId, c3.ihash); 
+				 for(ComponentDefinition c2 : childs){
+									//check if the child is a container , if so loop throu his childs etc..
+									if(ComponentDefinition.hasChilds(interfaceId, c2.ihash)){
+										ArrayList<ComponentDefinition> childs2  = ComponentDefinition.getChildsByParent(interfaceId, c2.ihash);
+										DefaultMutableTreeNode  container2 = new DefaultMutableTreeNode("Component "+c2.componentId);
+										for(ComponentDefinition c3 : childs2){
+											if(ComponentDefinition.hasChilds(interfaceId, c3.ihash)){
+						 			 ArrayList<ComponentDefinition> childs3  = ComponentDefinition.getChildsByParent(interfaceId, c3.ihash);
 									 DefaultMutableTreeNode  container3 = new DefaultMutableTreeNode("Component "+c3.componentId);
-									 	for(IComponentDefinitions c4 : childs3){
-									 		if(IComponentDefinitions.hasChilds(interfaceId, c4.ihash)){
-									 			 ArrayList<IComponentDefinitions> child4  = IComponentDefinitions.getChildsByParent(interfaceId, c4.ihash); 
+									 	for(ComponentDefinition c4 : childs3){
+									 		if(ComponentDefinition.hasChilds(interfaceId, c4.ihash)){
+									 			 ArrayList<ComponentDefinition> child4  = ComponentDefinition.getChildsByParent(interfaceId, c4.ihash);
 												 DefaultMutableTreeNode  container4 = new DefaultMutableTreeNode("Component "+c4.componentId);
-												 for(IComponentDefinitions c5 : child4){
+												 for(ComponentDefinition c5 : child4){
 													 DefaultMutableTreeNode  childs4 = new DefaultMutableTreeNode("Component "+c5.componentId);
 													 container4.add(childs4);
 												 }
@@ -1975,7 +1999,7 @@ public class InterfaceGui  extends JFrame {
 				 }
 				 
 				 inter.add(child );
-			 } else if(c.parentId == -1 && !IComponentDefinitions.hasChilds(interfaceId, c.ihash)){
+			 } else if(c.parentId == -1 && !ComponentDefinition.hasChilds(interfaceId, c.ihash)){
 				 DefaultMutableTreeNode  child2 = new DefaultMutableTreeNode("Component "+c.componentId);
 				 inter.add(child2);
 			 }
@@ -2032,7 +2056,7 @@ public class InterfaceGui  extends JFrame {
 	}
 	
 	public void addIndex0text(int interfaceId){
-		IComponentDefinitions defaultButton = IComponentDefinitions.getInterfaceComponent(6, 19);
+		ComponentDefinition defaultButton = ComponentDefinition.getInterfaceComponent(6, 19);
 		defaultButton.parentId = -1;
 		defaultButton.text = "I'm cleaned :)";
 		Cache.STORE.getIndexes()[3].putFile(interfaceId, 0 , defaultButton.encode());
@@ -2042,17 +2066,17 @@ public class InterfaceGui  extends JFrame {
             JOptionPane.showMessageDialog(scrollPane_2, "No component was selected to paste.");
             return;
         }
-        ArrayList<IComponentDefinitions> childeren = IComponentDefinitions.getChildsByParent(copiedComp.interfaceId, copiedComp.ihash);
+        ArrayList<ComponentDefinition> childeren = ComponentDefinition.getChildsByParent(copiedComp.interfaceId, copiedComp.ihash);
         copiedComp.parentId = -1;
-        Cache.STORE.getIndexes()[3].putFile(currentInterface, IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface), copiedComp.encode());
-        int baseParentPosition  = IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface);
+        Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), copiedComp.encode());
+        int baseParentPosition  = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface);
         if(childeren.size() > 0){ //if component is a container
-            for(IComponentDefinitions component: childeren){
+            for(ComponentDefinition component: childeren){
                 component.parentId = baseParentPosition + (currentInterface << 16);
                 if(component.type ==  0){
 
                 } else {
-                    Cache.STORE.getIndexes()[3].putFile(currentInterface, IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface) , component.encode());
+                    Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface) , component.encode());
                 }
             }
         }
@@ -2068,32 +2092,33 @@ public class InterfaceGui  extends JFrame {
 			return;
 		}
 		if(copiedComp.type == 0){
-			int containerPlace = IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface);
+			int containerPlace = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface);
 			copiedComp.parentId = -1;
 			Cache.STORE.getIndexes()[3].putFile(currentInterface,  containerPlace, copiedComp.encode());
-			ArrayList<IComponentDefinitions> childs = IComponentDefinitions.getChildsByParent(copiedComp.interfaceId, copiedComp.ihash);
-			for(IComponentDefinitions c : childs) {
+			ArrayList<ComponentDefinition> childs = ComponentDefinition.getChildsByParent(copiedComp.interfaceId, copiedComp.ihash);
+			for(ComponentDefinition c : childs) {
 			    if(c.type == 0){ //TODO packing containers in containers
 
                 } else
-				    Cache.STORE.getIndexes()[3].putFile(currentInterface, IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface) , c.encode());
+				    Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface) , c.encode());
 			}
-			IComponentDefinitions.getInterface(currentInterface, true);
-			int size  = IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface);
-			IComponentDefinitions parent = IComponentDefinitions.getInterfaceComponent(currentInterface, containerPlace);
+			ComponentDefinition.getInterface(currentInterface, true);
+			int size  = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface);
+			ComponentDefinition parent = ComponentDefinition.getInterfaceComponent(currentInterface, containerPlace);
 			for(int i = size - childs.size() -1; i < size; i ++){
-				IComponentDefinitions component = IComponentDefinitions.getInterfaceComponent(currentInterface, i);
+				ComponentDefinition component = ComponentDefinition.getInterfaceComponent(currentInterface, i);
 				if(component.type != 0){
 					component.parentId = parent.ihash;
 					Cache.STORE.getIndexes()[3].putFile(currentInterface, i , component.encode());
 						
 				}
 			}
-			IComponentDefinitions.getInterface(currentInterface, true);
+			ComponentDefinition.getInterface(currentInterface, true);
 			drawTree(currentInterface);
 		} else {
 			copiedComp.parentId = -1;
-			Cache.STORE.getIndexes()[3].putFile(currentInterface,   IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface), copiedComp.encode());
+			Cache.STORE.getIndexes()[3].putFile(currentInterface,   ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), copiedComp.encode());
+			ComponentDefinition.getInterface(currentInterface, true);
 			drawTree(currentInterface);
 		}
 	}
@@ -2122,8 +2147,8 @@ public class InterfaceGui  extends JFrame {
 		byte[] data;
 		try {
 			data = Files.readAllBytes(new File(path).toPath());
-			int archiveId = IComponentDefinitions.getInterfaceDefinitionsSize();
-			IComponentDefinitions defaultButton = IComponentDefinitions.getInterfaceComponent(6, 19);
+			int archiveId = ComponentDefinition.getInterfaceDefinitionsSize();
+			ComponentDefinition defaultButton = ComponentDefinition.getInterfaceComponent(6, 19);
 			defaultButton.parentId = -1;
 			defaultButton.text = "I'm cleaned :)";
 			Cache.STORE.getIndexes()[3].putFile(archiveId, 0 , defaultButton.encode());
@@ -2276,22 +2301,22 @@ public class InterfaceGui  extends JFrame {
 	 * @param interfaceId
 	 * @return sorted comp list
 	 */
-	public ArrayList<IComponentDefinitions> getOrderedComps(int interfaceId){
-		ArrayList<IComponentDefinitions> comps = new ArrayList(); 
-		ArrayList<IComponentDefinitions> comps2 = new ArrayList(); 
-		ArrayList<IComponentDefinitions> containers = IComponentDefinitions.getInterfaceContainers(interfaceId); //gets all the containers of an interface
-		IComponentDefinitions[] allComps = IComponentDefinitions.getInterface(interfaceId);
+	public ArrayList<ComponentDefinition> getOrderedComps(int interfaceId){
+		ArrayList<ComponentDefinition> comps = new ArrayList();
+		ArrayList<ComponentDefinition> comps2 = new ArrayList();
+		ArrayList<ComponentDefinition> containers = ComponentDefinition.getInterfaceContainers(interfaceId); //gets all the containers of an interface
+		ComponentDefinition[] allComps = ComponentDefinition.getInterface(interfaceId);
 
 		if(allComps == null)
 			return null;
-		for(IComponentDefinitions c : allComps){
+		for(ComponentDefinition c : allComps){
 			if(c.parentId == -1)
 				comps.add(c);
 		}
-		for(IComponentDefinitions comp : containers){
+		for(ComponentDefinition comp : containers){
 			if(!comps.contains(comp))
 				comps.add(comp); //add container itself
-			for(IComponentDefinitions child : IComponentDefinitions.getChildsByParent(interfaceId, comp.ihash))
+			for(ComponentDefinition child : ComponentDefinition.getChildsByParent(interfaceId, comp.ihash))
 				comps.add(child); //Add childs
 			
 		}
@@ -2303,7 +2328,7 @@ public class InterfaceGui  extends JFrame {
 				continue;
 			ComponentPosition.setValues(allComps[i]);
 			boolean found = false;
-			for(IComponentDefinitions c : comps){
+			for(ComponentDefinition c : comps){
 				if(c.componentId == allComps[i].componentId)
 					found = true;
 			}
@@ -2321,7 +2346,7 @@ public class InterfaceGui  extends JFrame {
 				e.printStackTrace();
 			}
 			if(chckbxRefreshTreeOn.isSelected()){
-			JTree tree = new JTree(populateJtree(id));
+			JTree tree = new JTree(createInterfaceTree(id));
 			tree.addTreeSelectionListener(new TreeSelectionListener() {
 
 				@Override
@@ -2369,48 +2394,48 @@ public class InterfaceGui  extends JFrame {
 	public void addDefaultComponent(int id){
 		switch(comboBox.getSelectedIndex()){
 		case 0://default close button (with hover)
-			IComponentDefinitions defaultcloseButton = IComponentDefinitions.getInterfaceComponent(6, 36);
+			ComponentDefinition defaultcloseButton = ComponentDefinition.getInterfaceComponent(6, 36);
 			defaultcloseButton.parentId = -1;
-			Cache.STORE.getIndexes()[3].putFile(currentInterface, IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface), defaultcloseButton.encode());
-			IComponentDefinitions.getInterface(currentInterface, true); //since we need to reload the array
+			Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), defaultcloseButton.encode());
+			ComponentDefinition.getInterface(currentInterface, true); //since we need to reload the array
 			drawTree(currentInterface);
 			break;
 		case 1: //normal hover button
-			IComponentDefinitions container = IComponentDefinitions.getInterfaceComponent(506, 1);
-			IComponentDefinitions text = IComponentDefinitions.getInterfaceComponent(506, 2);
-			IComponentDefinitions rightClick = IComponentDefinitions.getInterfaceComponent(320, 150);
+			ComponentDefinition container = ComponentDefinition.getInterfaceComponent(506, 1);
+			ComponentDefinition text = ComponentDefinition.getInterfaceComponent(506, 2);
+			ComponentDefinition rightClick = ComponentDefinition.getInterfaceComponent(320, 150);
 			text.rightclickOptions = rightClick.rightclickOptions;
 			for(int i = 0; i < text.rightclickOptions.length; i ++)
 				text.rightclickOptions[i] = "";
 			text.opCursors = rightClick.opCursors;
 			text.Option = rightClick.Option;
 			text.optionMask = rightClick.optionMask;
-			Cache.STORE.getIndexes()[3].putFile(currentInterface, IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface), container.encode());
-			Cache.STORE.getIndexes()[3].putFile(currentInterface, IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface), text.encode());
-			IComponentDefinitions.getInterface(currentInterface, true); //since we need to reload the array
-			IComponentDefinitions n = IComponentDefinitions.getInterfaceComponent(currentInterface,IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface) -2);
-			IComponentDefinitions xd = IComponentDefinitions.getInterfaceComponent(currentInterface, IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface) -1);
+			Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), container.encode());
+			Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), text.encode());
+			ComponentDefinition.getInterface(currentInterface, true); //since we need to reload the array
+			ComponentDefinition n = ComponentDefinition.getInterfaceComponent(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface) -2);
+			ComponentDefinition xd = ComponentDefinition.getInterfaceComponent(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface) -1);
 			xd.parentId = n.ihash;
-			Cache.STORE.getIndexes()[3].putFile(currentInterface, IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface) -1, xd.encode());
-			IComponentDefinitions.getInterface(currentInterface, true); //since we need to reload the array
+			Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface) -1, xd.encode());
+			ComponentDefinition.getInterface(currentInterface, true); //since we need to reload the array
 			drawTree(currentInterface);
 			break;
 		case 2: //basic starter interface
-			IComponentDefinitions basic =  IComponentDefinitions.getInterfaceComponent(6, 0);
-			int place  =  IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface);
+			ComponentDefinition basic =  ComponentDefinition.getInterfaceComponent(6, 0);
+			int place  =  ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface);
 			Cache.STORE.getIndexes()[3].putFile(currentInterface, place, basic.encode());
-			for(IComponentDefinitions comp : IComponentDefinitions.getChildsByParent(6, IComponentDefinitions.getInterfaceComponent(6, 0).ihash)){
+			for(ComponentDefinition comp : ComponentDefinition.getChildsByParent(6, ComponentDefinition.getInterfaceComponent(6, 0).ihash)){
 				if(comp.text.toLowerCase().contains("brimhaven"))
 					comp.text = "My starter interface";
 				comp.parentId++;
-				Cache.STORE.getIndexes()[3].putFile(currentInterface,  IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface), comp.encode());
+				Cache.STORE.getIndexes()[3].putFile(currentInterface,  ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), comp.encode());
 			}
-			IComponentDefinitions.getInterface(currentInterface, true); //since we need to reload the array
+			ComponentDefinition.getInterface(currentInterface, true); //since we need to reload the array
 			drawTree(currentInterface);
 			break;
 		case 3: 
-			IComponentDefinitions hover = IComponentDefinitions.getInterfaceComponent(6, 36);
-			IComponentDefinitions rightClick2 = IComponentDefinitions.getInterfaceComponent(320, 150);
+			ComponentDefinition hover = ComponentDefinition.getInterfaceComponent(6, 36);
+			ComponentDefinition rightClick2 = ComponentDefinition.getInterfaceComponent(320, 150);
 			hover.rightclickOptions = rightClick2.rightclickOptions;
 			for(int i = 0; i < hover.rightclickOptions.length; i ++)
 				hover.rightclickOptions[i] = "";
@@ -2423,14 +2448,14 @@ public class InterfaceGui  extends JFrame {
 			hover.spriteId = 0;
 			hover.onMouseHoverScript[2] = 1;
 			hover.onMouseLeaveScript[2] = 0;
-			Cache.STORE.getIndexes()[3].putFile(currentInterface, IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface), hover.encode());
-			IComponentDefinitions.getInterface(currentInterface, true); //since we need to reload the array
+			Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), hover.encode());
+			ComponentDefinition.getInterface(currentInterface, true); //since we need to reload the array
 			drawTree(currentInterface);
 			break;
 		case 4:
-			IComponentDefinitions popupButton = IComponentDefinitions.getInterfaceComponent(762, 33);
-			IComponentDefinitions cont = IComponentDefinitions.getInterfaceComponent(762, 119);
-			IComponentDefinitions rightClick3 = IComponentDefinitions.getInterfaceComponent(320, 150);
+			ComponentDefinition popupButton = ComponentDefinition.getInterfaceComponent(762, 33);
+			ComponentDefinition cont = ComponentDefinition.getInterfaceComponent(762, 119);
+			ComponentDefinition rightClick3 = ComponentDefinition.getInterfaceComponent(320, 150);
 			popupButton.rightclickOptions = rightClick3.rightclickOptions;
 			for(int i = 0; i < popupButton.rightclickOptions.length; i ++)
 				popupButton.rightclickOptions[i] = "";
@@ -2439,13 +2464,13 @@ public class InterfaceGui  extends JFrame {
 			popupButton.optionMask = rightClick3.optionMask;
 			cont.parentId = -1;
 			popupButton.parentId = -1;
-			int place2 = IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface);
+			int place2 = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface);
 			Cache.STORE.getIndexes()[3].putFile(currentInterface, place2, cont.encode());
 			popupButton.popupScript[3] = "Click here to change your preset settings.";
-			popupButton.onMouseLeaveScript[2] = IComponentDefinitions.getInterfaceComponent(currentInterface, place2).ihash;
-			popupButton.popupScript[2] = IComponentDefinitions.getInterfaceComponent(currentInterface, place2).ihash;
-			Cache.STORE.getIndexes()[3].putFile(currentInterface, IComponentDefinitions.getInterfaceDefinitionsComponentsSize(currentInterface), popupButton.encode());
-			IComponentDefinitions.getInterface(currentInterface, true); //since we need to reload the array
+			popupButton.onMouseLeaveScript[2] = ComponentDefinition.getInterfaceComponent(currentInterface, place2).ihash;
+			popupButton.popupScript[2] = ComponentDefinition.getInterfaceComponent(currentInterface, place2).ihash;
+			Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), popupButton.encode());
+			ComponentDefinition.getInterface(currentInterface, true); //since we need to reload the array
 			drawTree(currentInterface);
 			break;
 		}
@@ -2494,10 +2519,10 @@ public class InterfaceGui  extends JFrame {
 		  /**
 		   * make sure you get them in the right order (containers)
 		   */
-		  List<IComponentDefinitions> test = this.getOrderedComps(interfaceId);
+		  List<ComponentDefinition> test = this.getOrderedComps(interfaceId);
 		  if(test == null)
 			  return;
-		  for(IComponentDefinitions component : test){
+		  for(ComponentDefinition component : test){
 			 
 			  ComponentPosition.setValues(component);
 			  /**
@@ -2510,15 +2535,15 @@ public class InterfaceGui  extends JFrame {
 			  	/* vars */
 			  	int width = component.width;
 		        int height = component.height;
-		    	int x  = IComponentDefinitions.getX(component, interfaceId);
-	        	int y  = IComponentDefinitions.getY(component, interfaceId);
+		    	int x  = ComponentDefinition.getX(component, interfaceId);
+	        	int y  = ComponentDefinition.getY(component, interfaceId);
 	        	
 			  	/**
 			  	 * if parent is hidden
 			  	 * TODO parent of parent
 			  	 */
 	        	
-			  	IComponentDefinitions parent = InterfaceUtils.getParent(component.parentId);//IComponentDefinitions.getParent(component, interfaceId);
+			  	ComponentDefinition parent = InterfaceUtils.getParent(component.parentId);//ComponentDefinition.getParent(component, interfaceId);
 			  	if(parent != null && parent.hidden)
 			  		continue;
 			  	/* setting correct values of the parent ofcourse*/
@@ -2575,9 +2600,9 @@ public class InterfaceGui  extends JFrame {
 		        	int blue = color.getBlue();
 		        	g.setColor(new Color(red,green,blue));
 		        	}
-		        	g.drawRect(IComponentDefinitions.getX(component, currentInterface), IComponentDefinitions.getY(component,currentInterface), component.width, component.height);
+		        	g.drawRect(ComponentDefinition.getX(component, currentInterface), ComponentDefinition.getY(component,currentInterface), component.width, component.height);
 		        	if(component.filled)
-		        		g.fillRect(IComponentDefinitions.getX(component, currentInterface), IComponentDefinitions.getY(component,currentInterface), component.width, component.height);
+		        		g.fillRect(ComponentDefinition.getX(component, currentInterface), ComponentDefinition.getY(component,currentInterface), component.width, component.height);
 		        	//g.setColor(Color.green);
 					//g.drawRect(component.positionX, component.positionY, component.width, component.height);
 		        }
@@ -2586,7 +2611,7 @@ public class InterfaceGui  extends JFrame {
 		         */
 		        if(component.type == 6 && showModels){
 		        	g.setColor(Color.BLUE);
-					g.drawRect(IComponentDefinitions.getX(component, interfaceId), IComponentDefinitions.getY(component, interfaceId), component.width, component.height);
+					g.drawRect(ComponentDefinition.getX(component, interfaceId), ComponentDefinition.getY(component, interfaceId), component.width, component.height);
 					
 		        }
 		        /**
@@ -2596,7 +2621,7 @@ public class InterfaceGui  extends JFrame {
 		        	g.setColor(Color.RED);
 					if(component.parentId > 0){
 					
-					g.drawRect(IComponentDefinitions.getX(component, interfaceId), IComponentDefinitions.getY(component, interfaceId), component.width, component.height);
+					g.drawRect(ComponentDefinition.getX(component, interfaceId), ComponentDefinition.getY(component, interfaceId), component.width, component.height);
 					}else {
 						g.setColor(Color.green);
 						g.drawRect(component.positionX, component.positionY, component.width, component.height);
@@ -2638,8 +2663,8 @@ public class InterfaceGui  extends JFrame {
 		        			    g.drawString(component.text, x2, y2);
 		        		 } else {
 		        			 /*position*/
-		        			 int positionX = IComponentDefinitions.getX(component,interfaceId);
-		        			 int positionY = IComponentDefinitions.getY(component,interfaceId);
+		        			 int positionX = ComponentDefinition.getX(component,interfaceId);
+		        			 int positionY = ComponentDefinition.getY(component,interfaceId);
 		        			 /*  not drAWING OUTSIDE THE CONTAINER*/
 		        			 if(positionX > parent.width + parent.positionX)
 		        				 positionX = parent.width - component.width;
@@ -2659,8 +2684,8 @@ public class InterfaceGui  extends JFrame {
 		        	 * testing 
 		        	 */
 		        	if(this.chckbxRealFonttesting.isSelected()) {
-		        	int positionX = IComponentDefinitions.getX(component,interfaceId);
-	        	    int positionY = IComponentDefinitions.getY(component,interfaceId);
+		        	int positionX = ComponentDefinition.getX(component,interfaceId);
+	        	    int positionY = ComponentDefinition.getY(component,interfaceId);
 		        	 int startX = (int) (positionX + component.width/2 - rect.getWidth()/2);
         			 for(BufferedImage im : FontDecoding.getTextArray(component)) {
         				 g.drawImage(colorImage(im, color),  startX, (int) (positionY + component.height/2 + rect.getHeight()/2), null);

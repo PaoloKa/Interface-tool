@@ -1,7 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="32d4825a-0ebe-44d8-bfb9-11ad927edefc" name="Default Changelist" comment="" />
+    <list default="true" id="32d4825a-0ebe-44d8-bfb9-11ad927edefc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/interfaces/ComponentConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/Components/ColorChooserButton$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/Components/ColorChooserButton$ColorChangedListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/Components/ColorChooserButton.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$13.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$14.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$15.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$15.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$16.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$16.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$17$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$17.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$17.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$18.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$18.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$19.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$19.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$20.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$20.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$21.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$21.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$22.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$22.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$23.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$23.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$24.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$24.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$25.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$25.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$26.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$26.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$27.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$27.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$28.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$28.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$29.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceGui.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceGui.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GUI/InterfaceUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/GUI/InterfaceUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/com/interfaces/InterfaceEditor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/com/rs/cache/loaders/IComponentDefinitions.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/com/rs/cache/loaders/IComponentDefinitions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Interface tool/GUI/InterfaceGui$28.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Interface tool/GUI/InterfaceGui$28.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Interface tool/GUI/InterfaceGui.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Interface tool/GUI/InterfaceGui.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Interface tool/GUI/InterfaceUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Interface tool/GUI/InterfaceUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Interface tool/com/rs/cache/loaders/IComponentDefinitions.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Interface tool/com/rs/cache/loaders/IComponentDefinitions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/ComponentPosition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/ComponentPosition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/InterfaceGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/InterfaceGui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/InterfacePacker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/InterfacePacker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/InterfaceUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/InterfaceUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/interfaces/FontDecoding.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/interfaces/FontDecoding.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/rs/cache/loaders/IComponentDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/rs/cache/loaders/ComponentDefinition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/rs/cache/loaders/ObjectDefinitions.java" beforeDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,16 +66,21 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI/InterfaceGui.java">
           <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1930">
+              <caret line="1891" column="70" selection-start-line="1891" selection-start-column="70" selection-end-line="1891" selection-end-column="70" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="84">
-              <caret line="1887" column="11" selection-start-line="1887" selection-start-column="11" selection-end-line="1887" selection-end-column="11" />
-              <folding>
-                <element signature="e#38278#38279#0" expanded="true" />
-                <element signature="e#38326#38327#0" expanded="true" />
-              </folding>
+              <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -30,29 +88,39 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/interfaces/ComponentType.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="70">
-              <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+            <state relative-caret-position="98">
+              <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="12" selection-end-column="18" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/interfaces/FontDecoding.java">
+        <entry file="file://$PROJECT_DIR$/src/com/interfaces/ComponentConstants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="56">
-              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+            <state relative-caret-position="28">
+              <caret line="2" selection-start-line="2" selection-end-line="6" selection-end-column="3" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/rs/cache/loaders/IComponentDefinitions.java">
+        <entry file="file://$PROJECT_DIR$/src/com/rs/cache/loaders/ComponentDefinition.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="709" column="30" selection-start-line="709" selection-start-column="30" selection-end-line="709" selection-end-column="30" />
+            <state relative-caret-position="238">
+              <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
               <folding>
-                <element signature="e#5868#5869#0" expanded="true" />
-                <element signature="e#5905#5906#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#4168#4197#0" expanded="true" />
+                <element signature="e#5851#5852#0" expanded="true" />
+                <element signature="e#5888#5889#0" expanded="true" />
+                <element signature="e#6877#6878#0" expanded="true" />
+                <element signature="e#6940#6941#0" expanded="true" />
+                <element signature="e#14066#14072#0" expanded="true" />
+                <element signature="e#14101#14131#0" expanded="true" />
+                <element signature="e#25159#25160#0" expanded="true" />
+                <element signature="e#25192#25193#0" expanded="true" />
+                <element signature="e#25528#25551#0" expanded="true" />
+                <element signature="e#26600#26623#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -61,17 +129,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/rs/cache/loaders/IComponentSettings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-286">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/rs/cache/loaders/ObjectDefinitions.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1946">
-              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+            <state relative-caret-position="392">
+              <caret line="28" column="5" lean-forward="true" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -79,7 +138,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI/ComponentPosition.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1154">
+            <state relative-caret-position="56">
               <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
             </state>
           </provider>
@@ -88,43 +147,41 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI/InterfaceUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="45" column="24" lean-forward="true" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
+            <state relative-caret-position="896">
+              <caret line="64" column="10" selection-start-line="64" selection-start-column="4" selection-end-line="64" selection-end-column="10" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/src.zip!/javax/swing/JFrame.java">
+        <entry file="file://$PROJECT_DIR$/config.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="670" column="21" selection-start-line="670" selection-start-column="21" selection-end-line="670" selection-end-column="21" />
-              <folding>
-                <element signature="e#23469#23470#0" expanded="true" />
-                <element signature="e#23522#23523#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="84">
+              <caret line="6" column="11" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/src.zip!/javax/swing/JTabbedPane.java">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/src.zip!/java/lang/Integer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="2393" column="21" selection-start-line="2393" selection-start-column="21" selection-end-line="2393" selection-end-column="21" />
-              <folding>
-                <element signature="e#82514#82515#0" expanded="true" />
-                <element signature="e#82566#82567#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="6972">
+              <caret line="531" column="22" selection-start-line="531" selection-start-column="22" selection-end-line="531" selection-end-column="22" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>saveint</find>
       <find>mainPanel</find>
       <find>panel_10</find>
       <find>script</find>
@@ -133,34 +190,58 @@
       <find>modelTab</find>
       <find>figureTab</find>
       <find>cleanva</find>
+      <find>populateJtree</find>
+      <find>configs</find>
+      <find>saveint</find>
+      <find>setval</find>
+      <find>setva</find>
+      <find>saveInt</find>
+      <find>saveInterface</find>
+      <find>paste</find>
+      <find>array4770</find>
+      <find>== 0</find>
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/config.properties" />
         <option value="$PROJECT_DIR$/src/GUI/InterfaceUtils.java" />
+        <option value="$PROJECT_DIR$/src/com/interfaces/ComponentConstants.java" />
+        <option value="$PROJECT_DIR$/src/com/rs/cache/loaders/IComponentDefinitions.java" />
         <option value="$PROJECT_DIR$/src/GUI/InterfaceGui.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1735" />
+    <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1813" />
-    <option name="height" value="1045" />
+    <option name="width" value="1874" />
+    <option name="height" value="1096" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="Interface tool" type="b2602c69:ProjectViewProjectNode" />
               <item name="Interface tool" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Interface tool" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Interface tool" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Interface tool" type="b2602c69:ProjectViewProjectNode" />
@@ -205,11 +286,10 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -258,59 +338,56 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1562680508584</updated>
-      <workItem from="1562680509879" duration="2631000" />
+      <workItem from="1562680509879" duration="7948000" />
+      <workItem from="1562692347169" duration="2878000" />
+      <workItem from="1562838581056" duration="1025000" />
+      <workItem from="1563533434498" duration="173000" />
+      <workItem from="1563533759876" duration="469000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2631000" />
+    <option name="totallyTimeSpent" value="12493000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1874" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Image Layers" />
-      <window_info id="Designer" />
-      <window_info id="UI Designer" />
-      <window_info id="Capture Tool" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2497332" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26103753" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Messages" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.329718" />
+      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.3298647" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.31633714" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Maven" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Maven" order="6" />
+      <window_info anchor="right" id="Capture Analysis" order="7" />
+      <window_info anchor="right" id="Palette&#9;" order="8" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/config.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="6" column="11" lean-forward="true" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/src.zip!/java/awt/Container.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="197">
@@ -354,81 +431,106 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/interfaces/InterfaceEditor.java" />
+    <entry file="file://$PROJECT_DIR$/src/GUI/Components/ColorChooserButton.java" />
+    <entry file="file://$PROJECT_DIR$/.gitattributes">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/interfaces/FontDecoding.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="6" column="11" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_101/src.zip!/java/lang/Integer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6972">
+          <caret line="531" column="22" selection-start-line="531" selection-start-column="22" selection-end-line="531" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/InterfaceUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="45" column="24" lean-forward="true" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
+        <state relative-caret-position="896">
+          <caret line="64" column="10" selection-start-line="64" selection-start-column="4" selection-end-line="64" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/interfaces/ComponentConstants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="2" selection-start-line="2" selection-end-line="6" selection-end-column="3" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/interfaces/ComponentType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="70">
-          <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/interfaces/InterfaceEditor.java">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="98">
-          <caret line="236" column="31" selection-start-line="236" selection-start-column="31" selection-end-line="236" selection-end-column="31" />
+          <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="12" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/interfaces/FontDecoding.java">
+    <entry file="file://$PROJECT_DIR$/src/com/rs/cache/loaders/ComponentDefinition.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
+        <state relative-caret-position="238">
+          <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4168#4197#0" expanded="true" />
+            <element signature="e#5851#5852#0" expanded="true" />
+            <element signature="e#5888#5889#0" expanded="true" />
+            <element signature="e#6877#6878#0" expanded="true" />
+            <element signature="e#6940#6941#0" expanded="true" />
+            <element signature="e#14066#14072#0" expanded="true" />
+            <element signature="e#14101#14131#0" expanded="true" />
+            <element signature="e#25159#25160#0" expanded="true" />
+            <element signature="e#25192#25193#0" expanded="true" />
+            <element signature="e#25528#25551#0" expanded="true" />
+            <element signature="e#26600#26623#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/rs/cache/loaders/ObjectDefinitions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-686">
           <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/rs/cache/loaders/IComponentSettings.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-286">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/Components/ColorChooserButton.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="13" column="17" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/rs/cache/loaders/ObjectDefinitions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1946">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        <state relative-caret-position="392">
+          <caret line="28" column="5" lean-forward="true" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/ComponentPosition.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1154">
+        <state relative-caret-position="56">
           <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/rs/cache/loaders/IComponentDefinitions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="709" column="30" selection-start-line="709" selection-start-column="30" selection-end-line="709" selection-end-column="30" />
-          <folding>
-            <element signature="e#5868#5869#0" expanded="true" />
-            <element signature="e#5905#5906#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/InterfaceGui.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1930">
+          <caret line="1891" column="70" selection-start-line="1891" selection-start-column="70" selection-end-line="1891" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
-          <caret line="1887" column="11" selection-start-line="1887" selection-start-column="11" selection-end-line="1887" selection-end-column="11" />
-          <folding>
-            <element signature="e#38278#38279#0" expanded="true" />
-            <element signature="e#38326#38327#0" expanded="true" />
-          </folding>
+          <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
         </state>
       </provider>
     </entry>

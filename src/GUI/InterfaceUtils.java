@@ -1,6 +1,6 @@
 package GUI;
 
-import com.rs.cache.loaders.IComponentDefinitions;
+import com.rs.cache.loaders.ComponentDefinition;
 
 public class InterfaceUtils {
 	
@@ -9,10 +9,10 @@ public class InterfaceUtils {
 	 * @param component
 	 * @return
 	 */
-	public static boolean isHidden(IComponentDefinitions component) {
+	public static boolean isHidden(ComponentDefinition component) {
 		if(component.hidden)
 			return true;
-		IComponentDefinitions parent = getParent(component.parentId);
+		ComponentDefinition parent = getParent(component.parentId);
 		boolean hidden = false;
 		while(parent != null) {
 			if(parent.hidden) {
@@ -28,13 +28,13 @@ public class InterfaceUtils {
 	 * @param parentHash
 	 * @return
 	 */
-	public static IComponentDefinitions getParent(int parentHash) {
+	public static ComponentDefinition getParent(int parentHash) {
 		if(parentHash == -1)
 			return null;
 		int interfaceId = parentHash >> 16;
 		int baseHash = interfaceId << 16;
 		int componentId = parentHash - baseHash;
-		return IComponentDefinitions.getInterfaceComponent(interfaceId, componentId);
+		return ComponentDefinition.getInterfaceComponent(interfaceId, componentId);
 	}
 	/**
 	 * turns a string into a 'object array of script inputs'
@@ -42,10 +42,15 @@ public class InterfaceUtils {
 	 * @return
 	 */
 	public static Object[] getScriptArray(String input) {
-		if(input == null || input == "")
+		if(input == null || input == "" || input == " ")
 			return null;
 		String[] values = input.split(";");
 		Object[] objs = new Object[values.length];
+		try{
+			Integer.parseInt(values[0]);
+		} catch(Exception exp){ //return null if the first value isn't a number
+			return null;
+		}
 		for(int i = 0; i < values.length; i++) {
 			try{
 				int x = Integer.parseInt(values[i]);
@@ -55,6 +60,18 @@ public class InterfaceUtils {
 			}
 		}
 		return objs;		
+	}
+
+	public static int[] getConfigArray(String input){
+		if(input == null || input.isEmpty() || input.equalsIgnoreCase(" "))
+			return null;
+		String[] values = input.split(";");
+		int[] intArray = new int[values.length];
+		for(int i =0; i < values.length; i++){
+			intArray[i] = Integer.parseInt(values[i]);
+		}
+		return intArray;
+
 	}
 
 }

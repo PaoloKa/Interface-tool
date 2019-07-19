@@ -5,28 +5,22 @@ import java.util.Hashtable;
 
 import com.alex.io.InputStream;
 import com.alex.io.OutputStream;
-import com.alex.utils.Utils;
+import com.interfaces.ComponentConstants;
 import com.rs.cache.Cache;
 
 import GUI.ComponentPosition;
 import GUI.InterfaceUtils;
 /**
- * INFO
- * Types
- * - 0 = container
- * 3 = rectangle
- * 4 = font
- * 5 = sprite
- * @author paolo
- *
+ * Interface tool
+ * paolo 19/07/2019
+ * #Shnek6969
  */
-@SuppressWarnings("unused")
-public class IComponentDefinitions {
+public class ComponentDefinition {
 
-	public static IComponentDefinitions[][] icomponentsdefs = new IComponentDefinitions[getInterfaceDefinitionsSize()][];
+	public static ComponentDefinition[][] icomponentsdefs = new ComponentDefinition[getInterfaceDefinitionsSize()][];
 	private static IComponentSettings GLOBAL_SETTINGS = new IComponentSettings(0, -1);
 	/**
-	 * positions 
+	 * positions
 	 */
 	public int positionX;
 	public int positionY;
@@ -128,7 +122,7 @@ public class IComponentDefinitions {
 	public int[] anIntArray4789;
 	public String text;
 	public int anInt4792;
-	public IComponentDefinitions[] aWidgetArray4793;
+	public ComponentDefinition[] aWidgetArray4793;
 	public int anInt4794;
 	public int anInt4795;
 	public int anInt4796;
@@ -139,7 +133,7 @@ public class IComponentDefinitions {
 	public int anInt4801;
 	public boolean aBoolean4802;
 	public Object[] anObjectArray4803;
-	public IComponentDefinitions[] aWidgetArray4804;
+	public ComponentDefinition[] aWidgetArray4804;
 	public int[] anIntArray4805;
 	public byte[] aByteArray4806;
 	public Object[] anObjectArray4807;
@@ -170,7 +164,7 @@ public class IComponentDefinitions {
 	public int[] anIntArray4833;
 	public Object[] popupScript;
 	public int textHorizontalAli;
-	public IComponentDefinitions aWidget4836;
+	public ComponentDefinition aWidget4836;
 	private short[] aShortArray4837;
 	public int[] configs;
 	public int targetLeaveCursor;
@@ -194,7 +188,7 @@ public class IComponentDefinitions {
 	public int[] opCursors;
 	public int modelId;
 	public boolean aBoolean4865;
-	
+
 	public int componentId;
 	public int interfaceId;
 
@@ -204,17 +198,17 @@ public class IComponentDefinitions {
 	 * @param component component if you need
 	 * @return
 	 */
-	public static IComponentDefinitions getInterfaceComponent(int interfaceId,
-			int component) {
-		IComponentDefinitions[] inter = getInterface(interfaceId);
+	public static ComponentDefinition getInterfaceComponent(int interfaceId,
+															int component) {
+		ComponentDefinition[] inter = getInterface(interfaceId);
 		if (inter == null || component >= inter.length){
 			//system.out.println("Component is null");
 			return null;
 		}
 		return inter[component];
 	}
-	
-	public static IComponentDefinitions[] getInterface(int id) {
+
+	public static ComponentDefinition[] getInterface(int id) {
 		return getInterface(id, false);
 	}
 	/**
@@ -222,16 +216,16 @@ public class IComponentDefinitions {
 	 * @param id
 	 * @return
 	 */
-	
-	public static IComponentDefinitions[] getInterface(int id, boolean reload) {
+
+	public static ComponentDefinition[] getInterface(int id, boolean reload) {
 		if (id >= icomponentsdefs.length)
 			return null;
 		if (icomponentsdefs[id] == null || reload) {
-			icomponentsdefs[id] = new IComponentDefinitions[getInterfaceDefinitionsComponentsSize(id)];
+			icomponentsdefs[id] = new ComponentDefinition[getInterfaceDefinitionsComponentsSize(id)];
 			for (int i = 0; i < icomponentsdefs[id].length; i++) {
 				byte[] data = Cache.STORE.getIndexes()[3].getFile(id, i);
 				if (data != null) {
-					IComponentDefinitions defs = icomponentsdefs[id][i] = new IComponentDefinitions();
+					ComponentDefinition defs = icomponentsdefs[id][i] = new ComponentDefinition();
 					defs.ihash = i + (id << 16);
 					/*if (data[0] != -1) {
 						if(id == 1312)
@@ -239,7 +233,7 @@ public class IComponentDefinitions {
 						continue;
 					}*/
 					defs.decode(new InputStream(data), i, id);
-					
+
 				} else {
 					System.out.println("data is null file id :"+i);
 				}
@@ -247,11 +241,11 @@ public class IComponentDefinitions {
 		}
 		return icomponentsdefs[id];
 	}
-	
+
 	public static int getInterfaceDefinitionsSize() {
 		return Cache.STORE.getIndexes()[3].getLastArchiveId() +1;
 	}
-	
+
 	public static int getInterfaceDefinitionsComponentsSize(int interfaceId) {
 		return Cache.STORE.getIndexes()[3].getLastFileId(interfaceId) + 1;
 	}
@@ -273,14 +267,14 @@ public class IComponentDefinitions {
 		out.writeShort(this.basePositionY);
 		out.writeShort(this.baseWidth);
 		out.writeShort(this.baseHeight);
-		
+
 		out.writeByte(this.aspectWidthType);
 		out.writeByte(this.aspectHeightType);
 		out.writeByte(this.aspectXType);
 		out.writeByte(this.aspectYType);
 		if(parentId == -1  || parentId == 65535)
 			out.writeShort(65535);
-		else 
+		else
 			out.writeShort(this.parentId);// - (ihash & ~0xffff));
 		if(this.hidden)
 			out.writeByte(1);
@@ -289,20 +283,20 @@ public class IComponentDefinitions {
 		/**
 		 * container
 		 */
-		if(type == 0){
+		if(type == ComponentConstants.CONTAINER){
 			out.writeShort(this.layerWidth);
 			out.writeShort(this.layerHeight);
 			if((newInt ^ 0xffffffff) > -1) {
 				if(disableHover)
 					out.writeByte(1);
-				else 
+				else
 					out.writeByte(0);
 			}
 		}
 		/**
 		 * sprites
 		 */
-		if(type == 5){
+		if(type == ComponentConstants.SPRITE){
 			out.writeInt(this.spriteId);
 			out.writeShort(this.anInt4728);
 			out.writeByte(flag);
@@ -362,20 +356,20 @@ public class IComponentDefinitions {
 			if ((aspectHeightType ^ 0xffffffff) != -1) {
 				out.writeShort(anInt4849);
 			}
-			
-		} 
+
+		}
 		/**
 		 * text
 		 */
-		if(type == 4){
+		if(type == ComponentConstants.TEXT){
 			if ((ihash >> 16) > 1144)
 				out.writeBigSmart(fontId );
-			else 
+			else
 				out.writeShort(fontId);
 			if (newInt >= 2) {
 				if(aBoolean4832)
 					out.writeByte(1);
-				else 
+				else
 					out.writeByte(0);
 			}
 			out.writeString(text);
@@ -384,27 +378,27 @@ public class IComponentDefinitions {
 			out.writeByte(textVerticalAli);
 			if(shadow)
 				out.writeByte(1);
-			else 
+			else
 				out.writeByte(0);
 			out.writeInt(color);
 			out.writeByte(transparency);
 			if (newInt >= 0)
 				out.writeByte(multiline);
 		}
-		if(type == 3){
+		if(type == ComponentConstants.FIGURE){
 			out.writeInt(this.color);
 			if(filled)
 				out.writeByte(1);
-			else 
+			else
 				out.writeByte(0);
 			out.writeByte(transparency);
 		}
-		if(type == 9){
+		if(type == ComponentConstants.UNKNOWN){
 			out.writeByte(anInt4752);
 			out.writeInt(color);
 			if(aBoolean4721)
 				out.writeByte(1);
-			else 
+			else
 				out.writeByte(0);
 		}
 		out.write24BitInt(optionMask);
@@ -415,40 +409,40 @@ public class IComponentDefinitions {
 			 * TODO loop shit , almost always 0 so dw
 			 */
 			for(int i = 0; i < anIntArray4705.length; i++){
-				
+
 				out.writeInt(anIntArray4705[i]);
 				out.writeByte(aByteArray4806[i]);
-				out.writeByte(aByteArray4733[i]);	
+				out.writeByte(aByteArray4733[i]);
 			}
-			
+
 		}
-		
+
 		out.writeString(Name);
 		if(rightclickOptions != null)
 			out.writeByte(rightclickOptions.length);
 		else
 			out.writeByte(0);
 		if(rightclickOptions != null) {
-		if(rightclickOptions.length > 0){
-			for (int index = 0; index  < rightclickOptions.length ;index++){
-				System.out.print(rightclickOptions[index]);
-				out.writeString(this.rightclickOptions[index]+"");
-			}
-				
+			if(rightclickOptions.length > 0){
+				for (int index = 0; index  < rightclickOptions.length ;index++){
+					System.out.print(rightclickOptions[index]);
+					out.writeString(this.rightclickOptions[index]+"");
+				}
+
 			}
 		}
 		int i_28_ = menuOptionsCount  >> 4;
-			if((i_28_ ^ 0xffffffff) < -1){
-				out.writeByte(Option);
-				System.out.println("Option= "+Option);
-				out.writeShort(opCursors[Option]);
-			} if ((i_28_ ^ 0xffffffff) < -2) {
-				out.writeByte(option);
-				out.writeShort(opCursors[option]);
-			}
+		if((i_28_ ^ 0xffffffff) < -1){
+			out.writeByte(Option);
+			System.out.println("Option= "+Option);
+			out.writeShort(opCursors[Option]);
+		} if ((i_28_ ^ 0xffffffff) < -2) {
+			out.writeByte(option);
+			out.writeShort(opCursors[option]);
+		}
 		if(aString4784 == null)
 			out.writeString("");
-		else 
+		else
 			out.writeString(aString4784);
 		out.writeByte(anInt4708);
 		out.writeByte(anInt4795);
@@ -467,51 +461,51 @@ public class IComponentDefinitions {
 			for(int i = 0; i < hashInt1.size(); i ++){
 				out.writeLong(hashLong1.get(i));
 				out.writeInt(hashInt1.get(i));
-				
+
 			}
-				
+
 			out.writeByte(i_37_);
 			for(int i = 0; i < hashInt1.size(); i ++){
 				out.writeLong(hashLong2.get(i));
 				out.writeString(hashString2.get(i));
-				
+
 			}
 		}
-			encodeScript(onLoadScript,out);
-			encodeScript(onMouseHoverScript,out);
-			encodeScript(onMouseLeaveScript,out);
-			encodeScript(anObjectArray4771,out);
-			encodeScript(anObjectArray4768 ,out);
-			encodeScript(anObjectArray4807 ,out);
-			encodeScript(anObjectArray4742,out);
-			encodeScript(anObjectArray4788 ,out);
-			encodeScript(anObjectArray4701 ,out);
-			encodeScript(anObjectArray4770 ,out);
-			if ((newInt ^ 0xffffffff) <= -1) {
-				encodeScript(anObjectArray4751,out);	
-			}
-			encodeScript(popupScript,out);
-			encodeScript(anObjectArray4774,out);
-			encodeScript(anObjectArray4803 ,out);
-			encodeScript(anObjectArray4680,out);
-			encodeScript(anObjectArray4856 ,out);
-			encodeScript(anObjectArray4852 ,out);
-			encodeScript(anObjectArray4711,out);
-			encodeScript(anObjectArray4753,out);
-			encodeScript(anObjectArray4688	,out);
-			encodeScript(anObjectArray4775 ,out);
-			
-			
-			encodeMethod4150(this.configs	,out);
-			encodeMethod4150(this.anIntArray4833 	,out);
-			encodeMethod4150(this.anIntArray4789	,out);
-			encodeMethod4150(this.anIntArray4829	,out);
-			encodeMethod4150(this.anIntArray4805    ,out);
+		encodeScript(onLoadScript,out);
+		encodeScript(onMouseHoverScript,out);
+		encodeScript(onMouseLeaveScript,out);
+		encodeScript(anObjectArray4771,out);
+		encodeScript(anObjectArray4768 ,out);
+		encodeScript(anObjectArray4807 ,out);
+		encodeScript(anObjectArray4742,out);
+		encodeScript(anObjectArray4788 ,out);
+		encodeScript(anObjectArray4701 ,out);
+		encodeScript(anObjectArray4770 ,out);
+		if ((newInt ^ 0xffffffff) <= -1) {
+			encodeScript(anObjectArray4751,out);
+		}
+		encodeScript(popupScript,out);
+		encodeScript(anObjectArray4774,out);
+		encodeScript(anObjectArray4803 ,out);
+		encodeScript(anObjectArray4680,out);
+		encodeScript(anObjectArray4856 ,out);
+		encodeScript(anObjectArray4852 ,out);
+		encodeScript(anObjectArray4711,out);
+		encodeScript(anObjectArray4753,out);
+		encodeScript(anObjectArray4688	,out);
+		encodeScript(anObjectArray4775 ,out);
+
+
+		encodeScripts3(this.configs	,out);
+		encodeScripts3(this.anIntArray4833 	,out);
+		encodeScripts3(this.anIntArray4789	,out);
+		encodeScripts3(this.anIntArray4829	,out);
+		encodeScripts3(this.anIntArray4805    ,out);
 		byte[] data = new byte[out.getOffset()];
 		out.setOffset(0);
 		out.getBytes(data, 0, data.length -1);
 		return data;
-		
+
 	}
 	public int checkInt;
 	public int flag;
@@ -533,13 +527,13 @@ public class IComponentDefinitions {
 	private ArrayList<String> hashString2 = new ArrayList();
 	private ArrayList<Long> hashLong1 = new ArrayList<Long>();
 	private ArrayList<Long> hashLong2 = new ArrayList();
-	
-	
-	
-	
+
+
+
+
 	@SuppressWarnings("unchecked")
 	final void decode(InputStream stream, int id, int interfaceId) {
-		 newInt = (byte) stream.readUnsignedByte();
+		newInt = (byte) stream.readUnsignedByte();
 		if (newInt == 255) {
 			newInt = -1;
 		}
@@ -550,7 +544,7 @@ public class IComponentDefinitions {
 			type &= 0x7f;
 			name = stream.readString();
 		}
-		contentType = stream.readUnsignedShort(); //mostly 0 still have to found out 
+		contentType = stream.readUnsignedShort(); //mostly 0 still have to found out
 		basePositionX = stream.readShort();
 		basePositionY = stream.readShort();
 		baseWidth = stream.readUnsignedShort();
@@ -574,7 +568,7 @@ public class IComponentDefinitions {
 		/**
 		 * container
 		 */
-		if (type == 0) {
+		if (type == ComponentConstants.CONTAINER) {
 			layerWidth = stream.readUnsignedShort(); //scroll x ?
 			layerHeight = stream.readUnsignedShort();	//scroll y ?
 			if ((newInt ^ 0xffffffff) > -1) {
@@ -584,10 +578,10 @@ public class IComponentDefinitions {
 		/**
 		 * sprite
 		 */
-		if (type == 5) {
+		if (type == ComponentConstants.SPRITE) {
 			spriteId = stream.readInt();
 			anInt4728 = stream.readUnsignedShort();
-			 flag2 = stream.readUnsignedByte();
+			flag2 = stream.readUnsignedByte();
 			repeat_ = (flag2 & 0x1 ^ 0xffffffff) != -1; // repeat ?
 			alpha = (flag2 & 0x2) != 0;
 			transparency = stream.readUnsignedByte();
@@ -631,7 +625,7 @@ public class IComponentDefinitions {
 				anInt4682 = stream.readUnsignedShort();
 				anInt4787 = stream.readShort();
 			}
-			
+
 			if ((ihash >> 16) > 1144)
 				animationId = stream.readBigSmart();
 			else {
@@ -650,7 +644,7 @@ public class IComponentDefinitions {
 		/**
 		 * text
 		 */
-		if (type == 4) {
+		if (type == ComponentConstants.TEXT) {
 			if ((ihash >> 16) > 1144)
 				fontId = stream.readBigSmart();
 			else {
@@ -673,13 +667,13 @@ public class IComponentDefinitions {
 				multiline = stream.readUnsignedByte();
 			}
 		}
-		if (type == 3) {
+		if (type == ComponentConstants.FIGURE) {
 			color = stream.readInt();
-			filled = (stream.readUnsignedByte() ^ 0xffffffff) == -2; //filled ? 
+			filled = (stream.readUnsignedByte() ^ 0xffffffff) == -2; //filled ?
 			transparency = stream.readUnsignedByte();
 		}
-		if (type == 9) {
-			
+		if (type == ComponentConstants.UNKNOWN) {
+
 			anInt4752 = stream.readUnsignedByte();
 			color = stream.readInt();
 			aBoolean4721 = stream.readUnsignedByte() == 1;
@@ -704,7 +698,7 @@ public class IComponentDefinitions {
 				if (b_23_ != 0) {
 					aBoolean4802 = true;
 				}
-				 b_24_ = (byte) stream.readByte();
+				b_24_ = (byte) stream.readByte();
 				//system.out.println(" Index : "+i_22_);
 				//system.out.println("anInt4761="+anInt4761);
 				anIntArray4705[i_22_] = i_21_;
@@ -713,10 +707,10 @@ public class IComponentDefinitions {
 			}
 		}
 		Name = stream.readString();
-		
+
 		int  options_length = stream.readUnsignedByte();
 		menuOptionsCount =  options_length & 0xf ;
-		int menuCursorMask = options_length >> 4; 
+		int menuCursorMask = options_length >> 4;
 		//System.out.println(this.interfaceId+" "+this.componentId+" =  menuCursorMask: "+menuCursorMask+ " menuOptionsCount: "+menuOptionsCount);
 		if (options_length > 0) {
 			rightclickOptions = new String[options_length];
@@ -729,12 +723,12 @@ public class IComponentDefinitions {
 			opCursors = new int[Option - -1];
 			for (int i_30_ = 0; (i_30_ ^ 0xffffffff) > (opCursors.length ^ 0xffffffff); i_30_++){
 				opCursors[i_30_] = -1;
-				
+
 			}
 			opCursors[Option] = stream.readUnsignedShort();
-	
+
 		}
-		
+
 		if (menuCursorMask > 1) {
 			option = stream.readUnsignedByte();
 			opCursors[option] = stream.readUnsignedShort();
@@ -773,7 +767,7 @@ public class IComponentDefinitions {
 		}
 		activeProperties = new IComponentSettings(optionMask, mask);
 		if (newInt >= 0) {
-			 i_33_ = stream.readUnsignedByte();
+			i_33_ = stream.readUnsignedByte();
 			for (int i_34_ = 0; i_33_ > i_34_; i_34_++) {
 				int i_35_ = stream.read24BitInt();
 				int i_36_ = stream.readInt();
@@ -781,11 +775,11 @@ public class IComponentDefinitions {
 				hashInt1.add(i_36_);
 				//system.out.println("_i_36"+i_36_);
 				hashLong1.add((long)i_35_);
-				
+
 			}
 			i_37_ = stream.readUnsignedByte();
 			for (int i_38_ = 0; i_38_ < i_37_; i_38_++) {
-				 i_39_ = stream.read24BitInt();
+				i_39_ = stream.read24BitInt();
 				String string = stream.readJagString();
 				aHashTable4823.put((long) i_39_, string);
 				hashLong2.add((long)i_39_);
@@ -804,7 +798,7 @@ public class IComponentDefinitions {
 		anObjectArray4701 = decodeScript(stream);
 		anObjectArray4770 = decodeScript(stream);
 		if(anObjectArray4770 != null){
-			
+
 		}
 		if ((newInt ^ 0xffffffff) <= -1) {
 			anObjectArray4751 = decodeScript(stream);
@@ -825,51 +819,45 @@ public class IComponentDefinitions {
 		anObjectArray4753 = decodeScript(stream);
 		anObjectArray4688 = decodeScript(stream);
 		anObjectArray4775 = decodeScript(stream);
-		configs = method4150(stream);
-		anIntArray4833 = method4150(stream);
-		anIntArray4789 = method4150(stream);
-		anIntArray4829 = method4150(stream);
-		anIntArray4805 = method4150(stream);
+		configs = decodeScripts3(stream);
+		anIntArray4833 = decodeScripts3(stream);
+		anIntArray4789 = decodeScripts3(stream);
+		anIntArray4829 = decodeScripts3(stream);
+		anIntArray4805 = decodeScripts3(stream);
 	}
 
 	public Object[] arguments;
-	
+
 	private final Object[] decodeScript(InputStream buffer) {
-		
+
 		int length = buffer.readUnsignedByte();
 		if (length == 0) {
-		//	System.out.println("End script");
 			return null;
 		}
-		//System.out.println("Component: "+this.componentId +" Interface "+this.interfaceId);
 		Object[] objects = new Object[length];
 		for (int index = 0; length > index; index++) {
 			int type = buffer.readUnsignedByte();
-			//// 0 int 
-			/// 1 string
-			if (type == 0) { 
+			if (type == ComponentConstants.CONTAINER) {
 				int int1 = new Integer(buffer.readInt());
-				//System.out.println(index+ "Int :"+int1);
 				objects[index] = int1;
 			} else if ((type ^ 0xffffffff) == -2) {
 				objects[index] = buffer.readString();
-			//	System.out.println(index+" String."+objects[index]);
 			}
 		}
 		hasScripts = true;
 		//System.out.println("End script");
 		return objects;
 	}
-	
+
 	private void encodeScript(Object[] obj,OutputStream out){
 		int length;
 		if(obj == null)
 			length = 0;
 		else
 			length = obj.length;
-	    out.writeByte(length);
-	    if(obj == null)
-	    	return;
+		out.writeByte(length);
+		if(obj == null)
+			return;
 		for(int index = 0; index < length; index++){
 			Object arg = obj[index];
 			if(arg instanceof String){
@@ -881,13 +869,13 @@ public class IComponentDefinitions {
 			}
 		}
 	}
-	
+
 	/**
 	 * encodes method 4150 custom method
 	 * @param arr
 	 * @param out
 	 */
-	private void encodeMethod4150(int[] arr, OutputStream out){
+	private void encodeScripts3(int[] arr, OutputStream out){
 		int length;
 		if(arr == null)
 			length = 0;
@@ -899,61 +887,59 @@ public class IComponentDefinitions {
 		}
 	}
 
-	private final int[] method4150(InputStream buffer) {
+	private final int[] decodeScripts3(InputStream buffer) {
 		int length = buffer.readUnsignedByte();
 		if (length == 0) {
 			return null;
 		}
-		//System.out.println("2 : Component: "+this.componentId +" Interface "+this.interfaceId);
 		int[] is = new int[length];
 		for (int index = 0; index < length; index++){
 			is[index] = buffer.readInt();
-			//System.out.println(is[index]);
 		}
 		return is;
 	}
 	/**
-	 * archive ? 
+	 * archive ?
 	 * @param i
 	 * @return
 	 */
 	static final int method925(int i) {
 		return (i & 0x3fda8) >> 11;
-	}	
+	}
 	/**
 	 * returns all the childeren of a sprite
 	 * @param interfaceId
-	 * @param parent
+	 * @param hash
 	 * @return
 	 */
-	public static  ArrayList<IComponentDefinitions> getChildsByParent(int interfaceId, int hash){
-		IComponentDefinitions[] allComponents = getInterface(interfaceId);
-		ArrayList<IComponentDefinitions> foundChilderen = new ArrayList<IComponentDefinitions>();
-		for (IComponentDefinitions component : allComponents){
+	public static  ArrayList<ComponentDefinition> getChildsByParent(int interfaceId, int hash){
+		ComponentDefinition[] allComponents = getInterface(interfaceId);
+		ArrayList<ComponentDefinition> foundChilderen = new ArrayList<ComponentDefinition>();
+		for (ComponentDefinition component : allComponents){
 			if(component == null) continue;
 			if(hash == component.parentId)
 				foundChilderen.add(component);
 		}
 		return foundChilderen;
 	}
-	public static boolean containsContainers(ArrayList<IComponentDefinitions> list, int baseParent){	
-		for(IComponentDefinitions c : list){
+	public static boolean containsContainers(ArrayList<ComponentDefinition> list, int baseParent){
+		for(ComponentDefinition c : list){
 			if(c == null)
 				continue;
 			if(c.parentId != baseParent)
-			return true;		
+				return true;
 		}
 		return false;
 	}
-	
-	
-	public static boolean hasChilds(int interfaceId, int parentHash){	
-		IComponentDefinitions[] list = IComponentDefinitions.getInterface(interfaceId);
-		for(IComponentDefinitions c : list){
+
+
+	public static boolean hasChilds(int interfaceId, int parentHash){
+		ComponentDefinition[] list = ComponentDefinition.getInterface(interfaceId);
+		for(ComponentDefinition c : list){
 			if(c == null)
 				continue;
 			if(c.parentId == parentHash)
-				return true;		
+				return true;
 		}
 		return false;
 	}
@@ -962,72 +948,72 @@ public class IComponentDefinitions {
 	 * @param interfaceId
 	 * @return
 	 */
-	public static ArrayList<IComponentDefinitions> getInterfaceContainers(int interfaceId){
-		IComponentDefinitions[] possibleParents = getInterface(interfaceId);
-		ArrayList<IComponentDefinitions> containers = new ArrayList<IComponentDefinitions>();
+	public static ArrayList<ComponentDefinition> getInterfaceContainers(int interfaceId){
+		ComponentDefinition[] possibleParents = getInterface(interfaceId);
+		ArrayList<ComponentDefinition> containers = new ArrayList<ComponentDefinition>();
 		if(possibleParents == null)
 			return null;
-		for(IComponentDefinitions component : possibleParents){
+		for(ComponentDefinition component : possibleParents){
 			if(component == null)
-				  continue;
-			if(component.type == 0 && component.hasChilds(interfaceId, component.ihash)){
+				continue;
+			if(component.type == ComponentConstants.CONTAINER && component.hasChilds(interfaceId, component.ihash)){
 				////system.out.println("Container id: "+component.componentId);
 				containers.add(component);
 			}
 		}
-		
+
 		return containers;
 	}
-	
-	public static IComponentDefinitions[][] getContainersAndChilds(int interfaceId){
-		int containerAmount = getInterfaceContainers(interfaceId).size();
-		IComponentDefinitions arr[][] = new IComponentDefinitions[containerAmount][];
-		ArrayList<IComponentDefinitions> containers = getInterfaceContainers(interfaceId);
-		 for(int i = 0; i < containerAmount; i++){
-			 int childSize = getChildsByParent(interfaceId, containers.get(0).ihash).size();
-			 arr[i] = new IComponentDefinitions[childSize];
-			 for(int i2 = 0; i2 < childSize; i2++){
-				 arr[i][i2] = getChildsByParent(interfaceId, containers.get(0).ihash).get(i2);
-			 }
-		 }
-		 return arr;
-	}
-	
 
-	public static int getX(IComponentDefinitions c, int inter){
-			if(c.parentId == -1)
-				return c.positionX;
-			IComponentDefinitions parent = InterfaceUtils.getParent(c.parentId);
-			int positionX = c.positionX;
-			while(parent != null) {
-				ComponentPosition.setValues(parent);
-				positionX += parent.positionX;
-				parent = InterfaceUtils.getParent(parent.parentId);
+	public static ComponentDefinition[][] getContainersAndChilds(int interfaceId){
+		int containerAmount = getInterfaceContainers(interfaceId).size();
+		ComponentDefinition arr[][] = new ComponentDefinition[containerAmount][];
+		ArrayList<ComponentDefinition> containers = getInterfaceContainers(interfaceId);
+		for(int i = 0; i < containerAmount; i++){
+			int childSize = getChildsByParent(interfaceId, containers.get(0).ihash).size();
+			arr[i] = new ComponentDefinition[childSize];
+			for(int i2 = 0; i2 < childSize; i2++){
+				arr[i][i2] = getChildsByParent(interfaceId, containers.get(0).ihash).get(i2);
 			}
-			return positionX;
+		}
+		return arr;
 	}
-	
-	public static int getY(IComponentDefinitions c, int inter){
+
+
+	public static int getX(ComponentDefinition c, int inter){
+		if(c.parentId == -1)
+			return c.positionX;
+		ComponentDefinition parent = InterfaceUtils.getParent(c.parentId);
+		int positionX = c.positionX;
+		while(parent != null) {
+			ComponentPosition.setValues(parent);
+			positionX += parent.positionX;
+			parent = InterfaceUtils.getParent(parent.parentId);
+		}
+		return positionX;
+	}
+
+	public static int getY(ComponentDefinition c, int inter){
 		if(c.parentId == -1)
 			return c.positionY;
-		IComponentDefinitions parent = InterfaceUtils.getParent(c.parentId);
+		ComponentDefinition parent = InterfaceUtils.getParent(c.parentId);
 		int positionY = c.positionY;
 		while(parent != null) {
 			ComponentPosition.setValues(parent);
 			positionY += parent.positionY;
 			parent = InterfaceUtils.getParent(parent.parentId);
 		}
-		
+
 		return positionY;
 	}
 
-	
 
-	
+
+
 	/**
 	 * constructor
 	 */
-	public IComponentDefinitions() {
+	public ComponentDefinition() {
 		targetOverCursor = -1;
 		aBoolean4730 = false;
 		anInt4747 = 0;
@@ -1117,7 +1103,7 @@ public class IComponentDefinitions {
 		anInt4842 = 0;
 		targetLeaveCursor = -1;
 	}
-	
-	
+
+
 
 }

@@ -1,16 +1,12 @@
 package com.interfaces;
 
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
-import com.rs.cache.loaders.IComponentDefinitions;
+import com.rs.cache.loaders.ComponentDefinition;
 
 public class FontDecoding {
 	
@@ -24,7 +20,7 @@ public class FontDecoding {
 	 * @return
 	 */
 	
-	public static BufferedImage[] getTextArray(IComponentDefinitions component){
+	public static BufferedImage[] getTextArray(ComponentDefinition component){
 		BufferedImage[] arr =  new BufferedImage[component.text.length()];
 		int counter = 0;
 		for(char c : component.text.toCharArray()){
