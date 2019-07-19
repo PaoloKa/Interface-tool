@@ -93,7 +93,6 @@ public class InterfaceGui  extends JFrame {
 				try {
 					try
 					{
-
 						UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceRavenGraphiteLookAndFeel");
 						JFrame.setDefaultLookAndFeelDecorated(true);
 						JDialog.setDefaultLookAndFeelDecorated(true);

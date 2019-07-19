@@ -6,16 +6,7 @@ package com.interfaces;
  * #Shnek6969
  */
 public class ComponentConstants {
-
-    /**
-     * CONTAINER(0),
-     * 		SPRITE(5),
-     * 		MODEL(6),
-     * 		TEXT(4),
-     * 		UNKNOWN(9),
-     * 		FIGURE(3);
-     */
-
+    
     public static final int MODEL = 6;
     public static final int FIGURE = 3;
     public static final int TEXT = 4;
