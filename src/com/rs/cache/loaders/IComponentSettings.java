@@ -1,5 +1,9 @@
 package com.rs.cache.loaders;
-
+/**
+ * Interface tool
+ * paolo 19/07/2019
+ * #Shnek6969
+ */
 public class IComponentSettings {
 	public int settings;
 	public int anInt4602;
@@ -54,8 +58,8 @@ public class IComponentSettings {
 		return 0x7f & settings >> -809958741;
 	}
 
-	public IComponentSettings(int arg0, int arg1) {
-		settings = arg0;
-		anInt4602 = arg1;
+	public IComponentSettings(int settings, int unknown) {
+		this.settings = settings;
+		anInt4602 = unknown;
 	}
 }

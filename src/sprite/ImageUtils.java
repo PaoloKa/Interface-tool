@@ -26,10 +26,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.awt.image.FilteredImageSource;
-import java.awt.image.ImageFilter;
-import java.awt.image.RGBImageFilter;
+import java.awt.image.*;
 
 /**
  * 
@@ -126,5 +123,48 @@ public class ImageUtils {
     	g2d.dispose();    	
     	return copy;
     }
+
+	/**
+	 * used to resize images
+	 * @param img
+	 * @param newW
+	 * @param newH
+	 * @return
+	 */
+	public static BufferedImage resize(BufferedImage img, int newW, int newH) {
+		if(newW <= 0)
+			newW = img.getWidth();
+		if(newH <= 0)
+			newH = img.getHeight();
+		Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+		BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2d = dimg.createGraphics();
+		g2d.drawImage(tmp, 0, 0, null);
+		g2d.dispose();
+		return dimg;
+	}
+
+	/**
+	 * recolours the full image
+	 * @param image
+	 * @param col
+	 * @return
+	 */
+	public static BufferedImage colorImage(BufferedImage image, Color col) {
+		int width = image.getWidth();
+		int height = image.getHeight();
+		WritableRaster raster = image.getRaster();
+
+		for (int xx = 0; xx < width; xx++) {
+			for (int yy = 0; yy < height; yy++) {
+				int[] pixels = raster.getPixel(xx, yy, (int[]) null);
+				pixels[0] = col.getRed();
+				pixels[1] = col.getGreen();
+				pixels[2] = col.getBlue();
+				raster.setPixel(xx, yy, pixels);
+			}
+		}
+		return image;
+	}
 
 }
