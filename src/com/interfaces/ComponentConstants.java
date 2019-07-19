@@ -23,5 +23,6 @@ public class ComponentConstants {
     public static final int SPRITE = 5;
     public static final int UNKNOWN = 9;
 
+    public static final int CLICK_MASK = 30;
 
 }

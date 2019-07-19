@@ -1013,13 +1013,6 @@ public class InterfaceGui  extends JFrame {
 				if(currentInterface <= 0)
 					return;
 				ComponentDefinition comp = ComponentDefinition.getInterfaceComponent(6, 38);
-				ComponentDefinition rightClick = ComponentDefinition.getInterfaceComponent(320, 150);
-				comp.rightclickOptions = rightClick.rightclickOptions;
-				for(int i = 0; i < comp.rightclickOptions.length; i ++)
-					comp.rightclickOptions[i] = "";
-				comp.opCursors = rightClick.opCursors;
-				comp.Option = rightClick.Option;
-				comp.optionMask = rightClick.optionMask;
 				comp.basePositionX = 0;
 				comp.basePositionY =0;
 				comp.parentId = -1;
@@ -1040,17 +1033,6 @@ public class InterfaceGui  extends JFrame {
 				if(currentInterface <= 0)
 					return;
 				ComponentDefinition comp = ComponentDefinition.getInterfaceComponent(4, 5);
-				ComponentDefinition rightClick = ComponentDefinition.getInterfaceComponent(320, 150);
-				System.out.println(comp.rightclickOptions+" "+rightClick.rightclickOptions);
-				System.out.println(comp.opCursors+" "+rightClick.opCursors);
-				System.out.println(comp.Option+" "+rightClick.Option);
-				System.out.println(comp.optionMask+" "+rightClick.optionMask);
-				comp.rightclickOptions = rightClick.rightclickOptions;
-				for(int i = 0; i < comp.rightclickOptions.length; i ++)
-					comp.rightclickOptions[i] = "";
-				comp.opCursors = rightClick.opCursors;
-				comp.Option = rightClick.Option;
-				comp.optionMask = rightClick.optionMask;
 				comp.basePositionX = 0;
 				comp.basePositionY =0;
 				comp.parentId = -1;
@@ -1070,13 +1052,6 @@ public class InterfaceGui  extends JFrame {
 				if(currentInterface <= 0)
 					return;
 				ComponentDefinition comp = ComponentDefinition.getInterfaceComponent(6, 0);
-				ComponentDefinition rightClick = ComponentDefinition.getInterfaceComponent(320, 150);
-				comp.rightclickOptions = rightClick.rightclickOptions;
-				for(int i = 0; i < comp.rightclickOptions.length; i ++)
-					comp.rightclickOptions[i] = "";
-				comp.opCursors = rightClick.opCursors;
-				comp.Option = rightClick.Option;
-				comp.optionMask = rightClick.optionMask;
 				comp.basePositionX = 0;
 				comp.basePositionY =0;
 				comp.baseHeight = 50;
@@ -1098,13 +1073,6 @@ public class InterfaceGui  extends JFrame {
 				if(currentInterface <= 0)
 					return;
 				ComponentDefinition comp = ComponentDefinition.getInterfaceComponent(732, 3);
-				ComponentDefinition rightClick = ComponentDefinition.getInterfaceComponent(320, 150);
-				comp.rightclickOptions = rightClick.rightclickOptions;
-				for(int i = 0; i < comp.rightclickOptions.length; i ++)
-					comp.rightclickOptions[i] = "";
-				comp.opCursors = rightClick.opCursors;
-				comp.Option = rightClick.Option;
-				comp.optionMask = rightClick.optionMask;
 				comp.basePositionX = 0;
 				comp.basePositionY =0;
 				comp.parentId = -1;
@@ -1123,13 +1091,6 @@ public class InterfaceGui  extends JFrame {
 				if(currentInterface <= 0)
 					return;
 				ComponentDefinition comp = ComponentDefinition.getInterfaceComponent(640, 0);
-				ComponentDefinition rightClick = ComponentDefinition.getInterfaceComponent(320, 150);
-				comp.rightclickOptions = rightClick.rightclickOptions;
-				for(int i = 0; i < comp.rightclickOptions.length; i ++)
-					comp.rightclickOptions[i] = "";
-				comp.opCursors = rightClick.opCursors;
-				comp.Option = rightClick.Option;
-				comp.optionMask = rightClick.optionMask;
 				comp.basePositionX = 0;
 				comp.basePositionY =0;
 				comp.parentId = -1;
@@ -1820,10 +1781,7 @@ public class InterfaceGui  extends JFrame {
 			changedComponent.fontId = Integer.parseInt(this.txt_font.getText());
 		if(!this.txt_animationId.getText().isEmpty())
 			changedComponent.animationId = Integer.parseInt(this.txt_animationId.getText());
-		if(chckbxHidden.isSelected())
-			changedComponent.hidden = true;
-		else
-			changedComponent.hidden = false;
+		changedComponent.hidden = chckbxHidden.isSelected();
 		changedComponent.hFlip = this.chckbxHorizontalFlip.isSelected();
 		changedComponent.vFlip = this.chckbxVerticalFlip.isSelected();
 		changedComponent.repeat_ = changedComponent.repeat_;//this.chckbxRepeat.isSelected();
@@ -1836,53 +1794,14 @@ public class InterfaceGui  extends JFrame {
 		changedComponent.textVerticalAli = Integer.parseInt(this.txt_yali.getText());
 		/**
 		 * saving texts
+		 * TODO more options
 		 */
-		/*if(this.txt_option5.getText() != ""){
-			changedComponent.rightclickOptions = new String[6];
-			changedComponent.rightclickOptions[0] = this.txt_leftclick.getText();
-			changedComponent.rightclickOptions[1] = this.txt_option1.getText();
-			changedComponent.rightclickOptions[2] = this.txt_option2.getText();
-			changedComponent.rightclickOptions[3] = this.txt_option3.getText();
-			changedComponent.rightclickOptions[4] = this.txt_option4.getText();
-			changedComponent.rightclickOptions[5] = this.txt_option5.getText();
-
-		} else if(this.txt_option4.getText() != "" && this.txt_option5.getText() == ""){
-			changedComponent.rightclickOptions = new String[5];
-			changedComponent.rightclickOptions[0] = this.txt_leftclick.getText();
-			changedComponent.rightclickOptions[1] = this.txt_option1.getText();
-			changedComponent.rightclickOptions[2] = this.txt_option2.getText();
-			changedComponent.rightclickOptions[3] = this.txt_option3.getText();
-			changedComponent.rightclickOptions[4] = this.txt_option4.getText();
-		} else if(this.txt_option3.getText() != "" && this.txt_option4.getText() == "" && this.txt_option5.getText() == ""){
-			changedComponent.rightclickOptions = new String[4];
-			changedComponent.rightclickOptions[0] = this.txt_leftclick.getText();
-			changedComponent.rightclickOptions[1] = this.txt_option1.getText();
-			changedComponent.rightclickOptions[2] = this.txt_option2.getText();
-			changedComponent.rightclickOptions[3] = this.txt_option3.getText();
-		}
-		 else if(this.txt_option2.getText() != "" && this.txt_option3.getText() == "" && this.txt_option4.getText() == "" && this.txt_option5.getText() == ""){
-				changedComponent.rightclickOptions = new String[3];
-				changedComponent.rightclickOptions[0] = this.txt_leftclick.getText();
-				changedComponent.rightclickOptions[1] = this.txt_option1.getText();
-				changedComponent.rightclickOptions[2] = this.txt_option2.getText();
-			}
-		 else if(this.txt_option1.getText() != "" && this.txt_option2.getText() == "" && this.txt_option3.getText() == "" && this.txt_option4.getText() == "" && this.txt_option5.getText() == ""){
-				changedComponent.rightclickOptions = new String[2];
-				changedComponent.rightclickOptions[0] = this.txt_leftclick.getText();
-				changedComponent.rightclickOptions[1] = this.txt_option1.getText();
-			}
-		 else */if(!this.txt_leftclick.getText().equals("")){// && this.txt_option1.getText() == "" && this.txt_option2.getText() == "" && this.txt_option3.getText() == "" && this.txt_option4.getText() == "" && this.txt_option5.getText() == ""){
-			//changedComponent.rightclickOptions = new String[1];
-			ComponentDefinition rightClick = ComponentDefinition.getInterfaceComponent(320, 150);
-			changedComponent.rightclickOptions = rightClick.rightclickOptions;
-			for(int i = 0; i < changedComponent.rightclickOptions.length; i ++)
-				changedComponent.rightclickOptions[i] = "";
-			changedComponent.opCursors = rightClick.opCursors;
-			changedComponent.Option = rightClick.Option;
-			changedComponent.optionMask = rightClick.optionMask;
+		if(!this.txt_leftclick.getText().isEmpty()){
+			if(changedComponent.rightclickOptions == null)
+				changedComponent.rightclickOptions = new String[5];
+			changedComponent.optionMask = ComponentConstants.CLICK_MASK;
 			changedComponent.rightclickOptions[0] = this.txt_leftclick.getText();
 		}
-
 		/**
 		 * saving scripts
 		 */

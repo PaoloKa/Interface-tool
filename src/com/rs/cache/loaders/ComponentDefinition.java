@@ -425,8 +425,7 @@ public class ComponentDefinition {
 		if(rightclickOptions != null) {
 			if(rightclickOptions.length > 0){
 				for (int index = 0; index  < rightclickOptions.length ;index++){
-					System.out.print(rightclickOptions[index]);
-					out.writeString(this.rightclickOptions[index]+"");
+					out.writeString(this.rightclickOptions[index] == null ? "" :this.rightclickOptions[index] +"");
 				}
 
 			}
