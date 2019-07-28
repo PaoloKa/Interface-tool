@@ -202,7 +202,7 @@ public class ComponentDefinition {
 															int component) {
 		ComponentDefinition[] inter = getInterface(interfaceId);
 		if (inter == null || component >= inter.length){
-			//system.out.println("Component is null");
+			System.out.println("Component is null");
 			return null;
 		}
 		return inter[component];
@@ -228,7 +228,7 @@ public class ComponentDefinition {
 					ComponentDefinition defs = icomponentsdefs[id][i] = new ComponentDefinition();
 					defs.ihash = i + (id << 16);
 					/*if (data[0] != -1) {
-						if(id == 1312)
+						if(id == 746)
 							System.out.println("Interafec= "+id+" Component"+i+" is null.");
 						continue;
 					}*/
@@ -700,9 +700,11 @@ public class ComponentDefinition {
 				b_24_ = (byte) stream.readByte();
 				//system.out.println(" Index : "+i_22_);
 				//system.out.println("anInt4761="+anInt4761);
-				anIntArray4705[i_22_] = i_21_;
-				aByteArray4806[i_22_] = b_23_;
-				aByteArray4733[i_22_] = b_24_;
+				if(i_22_ > -1) {
+					anIntArray4705[i_22_] = i_21_;
+					aByteArray4806[i_22_] = b_23_;
+					aByteArray4733[i_22_] = b_24_;
+				}
 			}
 		}
 		Name = stream.readString();
@@ -921,17 +923,7 @@ public class ComponentDefinition {
 		}
 		return foundChilderen;
 	}
-	public static boolean containsContainers(ArrayList<ComponentDefinition> list, int baseParent){
-		for(ComponentDefinition c : list){
-			if(c == null)
-				continue;
-			if(c.parentId != baseParent)
-				return true;
-		}
-		return false;
-	}
-
-
+	
 	public static boolean hasChilds(int interfaceId, int parentHash){
 		ComponentDefinition[] list = ComponentDefinition.getInterface(interfaceId);
 		for(ComponentDefinition c : list){
@@ -963,21 +955,6 @@ public class ComponentDefinition {
 
 		return containers;
 	}
-
-	public static ComponentDefinition[][] getContainersAndChilds(int interfaceId){
-		int containerAmount = getInterfaceContainers(interfaceId).size();
-		ComponentDefinition arr[][] = new ComponentDefinition[containerAmount][];
-		ArrayList<ComponentDefinition> containers = getInterfaceContainers(interfaceId);
-		for(int i = 0; i < containerAmount; i++){
-			int childSize = getChildsByParent(interfaceId, containers.get(0).ihash).size();
-			arr[i] = new ComponentDefinition[childSize];
-			for(int i2 = 0; i2 < childSize; i2++){
-				arr[i][i2] = getChildsByParent(interfaceId, containers.get(0).ihash).get(i2);
-			}
-		}
-		return arr;
-	}
-
 
 	public static int getX(ComponentDefinition c, int inter){
 		if(c.parentId == -1)

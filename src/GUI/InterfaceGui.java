@@ -5,6 +5,7 @@ import java.awt.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 
@@ -30,11 +31,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -42,20 +38,71 @@ import javax.swing.border.TitledBorder;
 
 
 public class InterfaceGui  extends JFrame {
-	/**
-	 *
-	 */
+
 	private static final long serialVersionUID = 1L;
-	private final JPanel scriptTab;
-	private final JPanel modelTab;
-	private final JPanel figureTab;
-	/**
-	 * paths
-	 */
-	/**
-	 * components
-	 */
-	protected JList interface_list;
+    private JTextField txt_type;
+    private JTextField txt_hash;
+	private JTabbedPane tabbedPane;
+    private JTextField txt_x;
+    private JTextField txt_y;
+    private JTextField txt_height;
+    private JTextField txt_widht;
+    private JTextField txt_text;
+    private JTextField txt_leftclick;
+    private JTextField txt_parent;
+    private JTextField txt_option1;
+	private JTextField txt_option2;
+    private JTextField txt_option3;
+    private JTextField txt_option4;
+	private JTextField txt_option5;
+    private JTextField txt_modex;
+    private JTextField txt_positionmodeY;
+    private JCheckBox chckbxShowHiddenComps;
+	private JCheckBox chckbxShowRectangles;
+    private JTextField txt_border;
+	private JMenuItem mntmPackSprite;
+    private JTextField txt_sprite;
+    private JTextField txt_modeHeight;
+	private JTextField txt_widthMode;
+    private JTextField txt_model;
+	private JCheckBox chckbxHidden;
+    private JTextField txt_popup;
+    private JTextField txt_fullonhover;
+    private JTextField txt_mouseLeave;
+    private JTextField txt_onload;
+    private JTextField txt_anObjectArray4771;
+    private JTextField txt_anObjectArray4768;
+    private JTextField txt_anObjectArray4807;
+    private JTextField txt_anObjectArray4742;
+    private JTextField txt_anObjectArray4788;
+    private JTextField txt_anObjectArray4701;
+    private JTextField txt_configs;
+    private JTextField txt_anObjectArray4770;
+    private JTextField txt_font;
+    private JTextField txt_animationId;
+    private JTextField txt_color;
+    private JTextField txt_trans;
+    private JTextField txt_multi;
+	private JTextField txt_qcopy_inter;
+	private JTextField txt_qcopy_comp;
+	private JTextField txt_scrollX;
+	private JTextField txt_scrollY;
+    private JTextField txt_anIntArray4833;
+    private JTextField txt_anIntArray4789;
+    private JTextField txt_anIntArray4829;
+    private JTextField txt_anIntArray4805;
+    private JTextField txt_anObjectArray4774;
+    private JTextField txt_anObjectArray4803;
+    private JTextField txt_anObjectArray4680;
+    private JTextField txt_anObjectArray4856;
+    private JTextField txt_anObjectArray4852;
+    private JTextField txt_anObjectArray4711;
+    private JTextField txt_anObjectArray4753;
+	private JTextField txt_anObjectArray4688;
+    private JTextField txt_anObjectArray4775;
+    private JTextField txt_xali;
+	private JTextField txt_yali;
+    protected JList interface_list;
 	private JTextField txt_interId;
 	protected JPanel panel;
 	protected JScrollPane scrollPane_2 ;
@@ -70,11 +117,8 @@ public class InterfaceGui  extends JFrame {
 	private JCheckBox chckbxRealFonttesting;
 	public static JProgressBar progressBar;
 	public ProgressMonitor progressMonitor;
-	/*
-	 * *drawing
-	 */
-	private  Graphics g;
-	private  BufferedImage  result;
+	private JTextArea textArea = new JTextArea(15, 30);
+    private  BufferedImage  result;
 
 	/**
 	 * icomp shit
@@ -96,6 +140,7 @@ public class InterfaceGui  extends JFrame {
 						UIManager.setLookAndFeel("org.jvnet.substance.skin.SubstanceRavenGraphiteLookAndFeel");
 						JFrame.setDefaultLookAndFeelDecorated(true);
 						JDialog.setDefaultLookAndFeelDecorated(true);
+
 					}
 					catch(Exception e){
 						JOptionPane.showMessageDialog(null,
@@ -122,6 +167,8 @@ public class InterfaceGui  extends JFrame {
 	 */
 	public InterfaceGui() {
 		setTitle("Interface editor");
+        TextAreaOutputStream taOutputStream = new TextAreaOutputStream(textArea, "Console");
+        //System.setOut(new PrintStream(taOutputStream));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1035, 743);
 		getContentPane().setLayout(null);
@@ -135,19 +182,14 @@ public class InterfaceGui  extends JFrame {
 		getContentPane().add(scrollPane);
 		interface_list = new JList(populateList());
 		scrollPane.setViewportView(interface_list);
-		interface_list.addListSelectionListener(new ListSelectionListener() {
-
-			@Override
-			public void valueChanged(ListSelectionEvent evt) {
-				if (evt.getValueIsAdjusting())
-					return;
-				int id  = Integer.parseInt(interface_list.getSelectedValue().toString().replaceAll("Interface: ", ""));
-				currentInterface = id;
-				drawTree(id);
-				cleanValues();
-			}
-
-		});
+		interface_list.addListSelectionListener(evt -> {
+            if (evt.getValueIsAdjusting())
+                return;
+            int id  = Integer.parseInt(interface_list.getSelectedValue().toString().replaceAll("Interface: ", ""));
+            currentInterface = id;
+            drawTree(id);
+            cleanValues();
+        });
 
 		final JPopupMenu popupMenu = new JPopupMenu();
 		JMenuItem export = new JMenuItem("Export");
@@ -163,18 +205,13 @@ public class InterfaceGui  extends JFrame {
 				}
 			}
 		});
-		export.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					exportInterface(currentInterface);
-				} catch (IOException e) {
-					JOptionPane.showMessageDialog(scrollPane_2, "File could not be dumped, error: "+e.getMessage());
-				}
-			}
-
-		});
+		export.addActionListener(arg0 -> {
+            try {
+                exportInterface(currentInterface);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(scrollPane_2, "File could not be dumped, error: "+e.getMessage());
+            }
+        });
 		/*
 		 * input field for finding a interface
 		 */
@@ -234,7 +271,7 @@ public class InterfaceGui  extends JFrame {
 		/**
 		 * component buttons
 		 */
-		btnCopy = new JButton("copy");
+        JButton btnCopy = new JButton("copy");
 		btnCopy.setToolTipText("Copy selected interface");
 		btnCopy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -244,7 +281,7 @@ public class InterfaceGui  extends JFrame {
 		btnCopy.setBounds(904, 404, 78, 32);
 		getContentPane().add(btnCopy);
 
-		btnDelete = new JButton("delete");
+        JButton btnDelete = new JButton("delete");
 		btnDelete.setToolTipText("Deletes the selected component");
 		btnDelete.setBounds(728, 404, 78, 32);
 		btnDelete.addActionListener(new ActionListener() {
@@ -279,7 +316,7 @@ public class InterfaceGui  extends JFrame {
 		});
 		getContentPane().add(btnDelete);
 
-		btnNewButton = new JButton("paste");
+        JButton btnNewButton = new JButton("paste");
 		btnNewButton.setToolTipText("Past your copied component into the selected interface");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -304,11 +341,11 @@ public class InterfaceGui  extends JFrame {
 		 * tab 3
 		 */
 
-		generalTab = new JPanel();
+        JPanel generalTab = new JPanel();
 		tabbedPane.addTab("General", null, generalTab, null);
 		generalTab.setLayout(null);
 
-		txtType = new JTextField();
+        JTextField txtType = new JTextField();
 		txtType.setBounds(10, 11, 67, 20);
 		generalTab.add(txtType);
 		txtType.setEditable(false);
@@ -321,7 +358,7 @@ public class InterfaceGui  extends JFrame {
 		generalTab.add(txt_type);
 		txt_type.setColumns(10);
 
-		txtHash = new JTextField();
+        JTextField txtHash = new JTextField();
 		txtHash.setBounds(10, 31, 86, 20);
 		generalTab.add(txtHash);
 		txtHash.setEditable(false);
@@ -338,7 +375,7 @@ public class InterfaceGui  extends JFrame {
 		generalTab.add(txt_x);
 		txt_x.setColumns(10);
 
-		txtXPosition = new JTextField();
+        JTextField txtXPosition = new JTextField();
 		txtXPosition.setEditable(false);
 		txtXPosition.setText("X position");
 		txtXPosition.setBounds(10, 49, 86, 20);
@@ -351,7 +388,7 @@ public class InterfaceGui  extends JFrame {
 		generalTab.add(txt_y);
 		txt_y.setColumns(10);
 
-		txtYPosition = new JTextField();
+        JTextField txtYPosition = new JTextField();
 		txtYPosition.setEditable(false);
 		txtYPosition.setText("Y position");
 		txtYPosition.setBounds(10, 68, 86, 20);
@@ -363,14 +400,14 @@ public class InterfaceGui  extends JFrame {
 		generalTab.add(txt_height);
 		txt_height.setColumns(10);
 
-		txtHeight = new JTextField();
+        JTextField txtHeight = new JTextField();
 		txtHeight.setEditable(false);
 		txtHeight.setText("Height");
 		txtHeight.setBounds(10, 86, 86, 20);
 		generalTab.add(txtHeight);
 		txtHeight.setColumns(10);
 
-		txtWidht = new JTextField();
+        JTextField txtWidht = new JTextField();
 		txtWidht.setEditable(false);
 		txtWidht.setText("Widht");
 		txtWidht.setBounds(10, 106, 86, 20);
@@ -386,7 +423,7 @@ public class InterfaceGui  extends JFrame {
 		chckbxHidden.setBounds(224, 114, 97, 23);
 		generalTab.add(chckbxHidden);
 
-		txtParent = new JTextField();
+        JTextField txtParent = new JTextField();
 		txtParent.setToolTipText("Parent id is the hash id of another component");
 		txtParent.setEditable(false);
 		txtParent.setText("Parent");
@@ -399,7 +436,7 @@ public class InterfaceGui  extends JFrame {
 		generalTab.add(txt_parent);
 		txt_parent.setColumns(10);
 
-		text_positionmodeX = new JTextField();
+        JTextField text_positionmodeX = new JTextField();
 		text_positionmodeX.setText("Position mode x");
 		text_positionmodeX.setEditable(false);
 		text_positionmodeX.setBounds(198, 31, 123, 20);
@@ -411,7 +448,7 @@ public class InterfaceGui  extends JFrame {
 		generalTab.add(txt_modex);
 		txt_modex.setColumns(10);
 
-		text_modeY = new JTextField();
+        JTextField text_modeY = new JTextField();
 		text_modeY.setText("Position mode y");
 		text_modeY.setEditable(false);
 		text_modeY.setBounds(198, 49, 123, 20);
@@ -423,14 +460,14 @@ public class InterfaceGui  extends JFrame {
 		generalTab.add(txt_positionmodeY);
 		txt_positionmodeY.setColumns(10);
 
-		txtHeightMode = new JTextField();
+        JTextField txtHeightMode = new JTextField();
 		txtHeightMode.setText("Height mode");
 		txtHeightMode.setEditable(false);
 		txtHeightMode.setColumns(10);
 		txtHeightMode.setBounds(198, 67, 123, 20);
 		generalTab.add(txtHeightMode);
 
-		txtWidhtMode = new JTextField();
+        JTextField txtWidhtMode = new JTextField();
 		txtWidhtMode.setText("Widht mode");
 		txtWidhtMode.setEditable(false);
 		txtWidhtMode.setColumns(10);
@@ -447,7 +484,7 @@ public class InterfaceGui  extends JFrame {
 		txt_widthMode.setBounds(318, 87, 51, 20);
 		generalTab.add(txt_widthMode);
 
-		txtColor = new JTextField();
+        JTextField txtColor = new JTextField();
 		txtColor.setText("Color");
 		txtColor.setEditable(false);
 		txtColor.setColumns(10);
@@ -459,7 +496,7 @@ public class InterfaceGui  extends JFrame {
 		txt_color.setBounds(96, 127, 86, 20);
 		generalTab.add(txt_color);
 
-		txtTransparency = new JTextField();
+        JTextField txtTransparency = new JTextField();
 		txtTransparency.setEditable(false);
 		txtTransparency.setText("Transparency");
 		txtTransparency.setBounds(10, 146, 101, 22);
@@ -481,18 +518,18 @@ public class InterfaceGui  extends JFrame {
 		generalTab.add(txt_scrollY);
 		txt_scrollY.setColumns(10);
 
-		lblContainerScrollX = new JLabel("Container scroll X");
+        JLabel lblContainerScrollX = new JLabel("Container scroll X");
 		lblContainerScrollX.setBounds(10, 192, 86, 14);
 		generalTab.add(lblContainerScrollX);
 
-		lblContainerScrollY = new JLabel("Container scroll Y");
+        JLabel lblContainerScrollY = new JLabel("Container scroll Y");
 		lblContainerScrollY.setBounds(11, 215, 85, 14);
 		generalTab.add(lblContainerScrollY);
-		textTab = new JPanel();
+        JPanel textTab = new JPanel();
 		tabbedPane.addTab("Text", null, textTab, null);
 		textTab.setLayout(null);
 
-		txtText = new JTextField();
+        JTextField txtText = new JTextField();
 		txtText.setText("Text");
 		txtText.setEditable(false);
 		txtText.setBounds(10, 11, 86, 20);
@@ -504,7 +541,7 @@ public class InterfaceGui  extends JFrame {
 		textTab.add(txt_text);
 		txt_text.setColumns(10);
 
-		txtLeftClick = new JTextField();
+        JTextField txtLeftClick = new JTextField();
 		txtLeftClick.setEditable(false);
 		txtLeftClick.setText("Left click");
 		txtLeftClick.setBounds(10, 29, 86, 20);
@@ -516,7 +553,7 @@ public class InterfaceGui  extends JFrame {
 		textTab.add(txt_leftclick);
 		txt_leftclick.setColumns(10);
 
-		txtRightclick = new JTextField();
+        JTextField txtRightclick = new JTextField();
 		txtRightclick.setEditable(false);
 		txtRightclick.setText("Rightclick 1");
 		txtRightclick.setBounds(206, 11, 86, 20);
@@ -533,14 +570,14 @@ public class InterfaceGui  extends JFrame {
 		textTab.add(txt_option2);
 		txt_option2.setColumns(10);
 
-		txtRightclick_1 = new JTextField();
+        JTextField txtRightclick_1 = new JTextField();
 		txtRightclick_1.setEditable(false);
 		txtRightclick_1.setText("Rightclick 2");
 		txtRightclick_1.setBounds(206, 29, 86, 20);
 		textTab.add(txtRightclick_1);
 		txtRightclick_1.setColumns(10);
 
-		txtRightclick_2 = new JTextField();
+        JTextField txtRightclick_2 = new JTextField();
 		txtRightclick_2.setText("Rightclick 3");
 		txtRightclick_2.setEditable(false);
 		txtRightclick_2.setColumns(10);
@@ -552,7 +589,7 @@ public class InterfaceGui  extends JFrame {
 		textTab.add(txt_option3);
 		txt_option3.setColumns(10);
 
-		txtRightclick_3 = new JTextField();
+        JTextField txtRightclick_3 = new JTextField();
 		txtRightclick_3.setEditable(false);
 		txtRightclick_3.setText("Rightclick 4");
 		txtRightclick_3.setBounds(206, 69, 86, 20);
@@ -569,14 +606,14 @@ public class InterfaceGui  extends JFrame {
 		textTab.add(txt_option5);
 		txt_option5.setColumns(10);
 
-		txtRightclick_4 = new JTextField();
+        JTextField txtRightclick_4 = new JTextField();
 		txtRightclick_4.setText("Rightclick 5");
 		txtRightclick_4.setEditable(false);
 		txtRightclick_4.setBounds(206, 87, 86, 20);
 		textTab.add(txtRightclick_4);
 		txtRightclick_4.setColumns(10);
 
-		txtfond = new JTextField();
+        JTextField txtfond = new JTextField();
 		txtfond.setText("Font id");
 		txtfond.setEditable(false);
 		txtfond.setBounds(10, 50, 86, 20);
@@ -588,7 +625,7 @@ public class InterfaceGui  extends JFrame {
 		textTab.add(txt_font);
 		txt_font.setColumns(10);
 
-		txtMulti = new JTextField();
+        JTextField txtMulti = new JTextField();
 		txtMulti.setEditable(false);
 		txtMulti.setText("Multi");
 		txtMulti.setBounds(10, 68, 86, 22);
@@ -618,11 +655,11 @@ public class InterfaceGui  extends JFrame {
 		lblYAli.setBounds(39, 165, 46, 14);
 		textTab.add(lblYAli);
 
-		modelTab = new JPanel();
+        JPanel modelTab = new JPanel();
 		tabbedPane.addTab("Model", null, modelTab, null);
 		modelTab.setLayout(null);
 
-		textField_4 = new JTextField();
+        JTextField textField_4 = new JTextField();
 		textField_4.setBounds(10, 11, 86, 20);
 		textField_4.setText("Model id");
 		textField_4.setEditable(false);
@@ -634,7 +671,7 @@ public class InterfaceGui  extends JFrame {
 		txt_model.setColumns(10);
 		modelTab.add(txt_model);
 
-		txtAnimationId = new JTextField();
+        JTextField txtAnimationId = new JTextField();
 		txtAnimationId.setEditable(false);
 		txtAnimationId.setText("animation id");
 		txtAnimationId.setBounds(10, 31, 86, 20);
@@ -646,18 +683,18 @@ public class InterfaceGui  extends JFrame {
 		modelTab.add(txt_animationId);
 		txt_animationId.setColumns(10);
 
-		figureTab = new JPanel();
+        JPanel figureTab = new JPanel();
 		tabbedPane.addTab("Rectangle", null, figureTab, null);
 		figureTab.setLayout(null);
 
 		chckbxFilled = new JCheckBox("Filled");
 		chckbxFilled.setBounds(147, 71, 113, 25);
 		figureTab.add(chckbxFilled);
-		spriteTab = new JPanel();
+        JPanel spriteTab = new JPanel();
 		tabbedPane.addTab("Sprite", null, spriteTab, null);
 		spriteTab.setLayout(null);
 
-		txtTest = new JTextField();
+        JTextField txtTest = new JTextField();
 		txtTest.setEditable(false);
 		txtTest.setText("Border thickness");
 		txtTest.setBounds(137, 11, 140, 20);
@@ -681,7 +718,7 @@ public class InterfaceGui  extends JFrame {
 		chckbxVerticalFlip.setBounds(10, 62, 97, 23);
 		spriteTab.add(chckbxVerticalFlip);
 
-		textField = new JTextField();
+        JTextField textField = new JTextField();
 		textField.setText("Sprite id");
 		textField.setEditable(false);
 		textField.setColumns(10);
@@ -693,11 +730,11 @@ public class InterfaceGui  extends JFrame {
 		txt_sprite.setBounds(221, 37, 90, 20);
 		spriteTab.add(txt_sprite);
 
-		scriptTab = new JPanel();
+        JPanel scriptTab = new JPanel();
 		tabbedPane.addTab("Scripts", null, scriptTab, null);
 		scriptTab.setLayout(null);
 
-		txtOnhover = new JTextField();
+        JTextField txtOnhover = new JTextField();
 		txtOnhover.setText("Mouse over");
 		txtOnhover.setEditable(false);
 		txtOnhover.setBounds(0, 11, 131, 20);
@@ -709,7 +746,7 @@ public class InterfaceGui  extends JFrame {
 		scriptTab.add(txt_fullonhover);
 		txt_fullonhover.setColumns(10);
 
-		txtMouseLeave = new JTextField();
+        JTextField txtMouseLeave = new JTextField();
 		txtMouseLeave.setEnabled(false);
 		txtMouseLeave.setText("Mouse leave");
 		txtMouseLeave.setBounds(0, 32, 131, 20);
@@ -721,7 +758,7 @@ public class InterfaceGui  extends JFrame {
 		scriptTab.add(txt_mouseLeave);
 		txt_mouseLeave.setColumns(10);
 
-		txtAnobjectarray = new JTextField();
+        JTextField txtAnobjectarray = new JTextField();
 		txtAnobjectarray.setEnabled(false);
 		txtAnobjectarray.setText("onload");
 		txtAnobjectarray.setBounds(0, 52, 131, 20);
@@ -733,7 +770,7 @@ public class InterfaceGui  extends JFrame {
 		scriptTab.add(txt_onload);
 		txt_onload.setColumns(10);
 
-		txtAnobjectarray_1 = new JTextField();
+        JTextField txtAnobjectarray_1 = new JTextField();
 		txtAnobjectarray_1.setEnabled(false);
 		txtAnobjectarray_1.setText("anObjectArray4771");
 		txtAnobjectarray_1.setBounds(0, 74, 131, 20);
@@ -745,7 +782,7 @@ public class InterfaceGui  extends JFrame {
 		scriptTab.add(txt_anObjectArray4771);
 		txt_anObjectArray4771.setColumns(10);
 
-		txtAnobjectarray_7 = new JTextField();
+        JTextField txtAnobjectarray_7 = new JTextField();
 		txtAnobjectarray_7.setText("anObjectArray4770");
 		txtAnobjectarray_7.setEnabled(false);
 		txtAnobjectarray_7.setColumns(10);
@@ -757,7 +794,7 @@ public class InterfaceGui  extends JFrame {
 		txt_anObjectArray4770.setBounds(127, 92, 351, 20);
 		scriptTab.add(txt_anObjectArray4770);
 
-		txtPopup = new JTextField();
+        JTextField txtPopup = new JTextField();
 		txtPopup.setBounds(0, 112, 131, 21);
 		scriptTab.add(txtPopup);
 		txtPopup.setEditable(false);
@@ -769,7 +806,7 @@ public class InterfaceGui  extends JFrame {
 		scriptTab.add(txt_popup);
 		txt_popup.setColumns(10);
 
-		txtAnobjectarray_2 = new JTextField();
+        JTextField txtAnobjectarray_2 = new JTextField();
 		txtAnobjectarray_2.setBounds(0, 132, 131, 20);
 		scriptTab.add(txtAnobjectarray_2);
 		txtAnobjectarray_2.setEnabled(false);
@@ -781,7 +818,7 @@ public class InterfaceGui  extends JFrame {
 		scriptTab.add(txt_anObjectArray4768);
 		txt_anObjectArray4768.setColumns(10);
 
-		txtAnobjectarray_3 = new JTextField();
+        JTextField txtAnobjectarray_3 = new JTextField();
 		txtAnobjectarray_3.setBounds(0, 151, 131, 20);
 		scriptTab.add(txtAnobjectarray_3);
 		txtAnobjectarray_3.setEnabled(false);
@@ -793,7 +830,7 @@ public class InterfaceGui  extends JFrame {
 		scriptTab.add(txt_anObjectArray4807);
 		txt_anObjectArray4807.setColumns(10);
 
-		txtAnobjectarray_4 = new JTextField();
+        JTextField txtAnobjectarray_4 = new JTextField();
 		txtAnobjectarray_4.setBounds(0, 171, 131, 20);
 		scriptTab.add(txtAnobjectarray_4);
 		txtAnobjectarray_4.setEnabled(false);
@@ -805,7 +842,7 @@ public class InterfaceGui  extends JFrame {
 		scriptTab.add(txt_anObjectArray4742);
 		txt_anObjectArray4742.setColumns(10);
 
-		txtAnobjectarray_5 = new JTextField();
+        JTextField txtAnobjectarray_5 = new JTextField();
 		txtAnobjectarray_5.setBounds(0, 191, 131, 20);
 		scriptTab.add(txtAnobjectarray_5);
 		txtAnobjectarray_5.setEditable(false);
@@ -817,7 +854,7 @@ public class InterfaceGui  extends JFrame {
 		scriptTab.add(txt_anObjectArray4788);
 		txt_anObjectArray4788.setColumns(10);
 
-		txtAnobjectarray_6 = new JTextField();
+        JTextField txtAnobjectarray_6 = new JTextField();
 		txtAnobjectarray_6.setBounds(0, 211, 131, 20);
 		scriptTab.add(txtAnobjectarray_6);
 		txtAnobjectarray_6.setText("anObjectArray4701");
@@ -829,11 +866,11 @@ public class InterfaceGui  extends JFrame {
 		scriptTab.add(txt_anObjectArray4701);
 		txt_anObjectArray4701.setColumns(10);
 
-		panel_10 = new JPanel();
+        JPanel panel_10 = new JPanel();
 		tabbedPane.addTab("Configs", null, panel_10, null);
 		panel_10.setLayout(null);
 
-		txtConfigs = new JTextField();
+        JTextField txtConfigs = new JTextField();
 		txtConfigs.setEditable(false);
 		txtConfigs.setText("Configs");
 		txtConfigs.setBounds(10, 33, 86, 20);
@@ -845,7 +882,7 @@ public class InterfaceGui  extends JFrame {
 		panel_10.add(txt_configs);
 		txt_configs.setColumns(10);
 
-		txtAnintarray = new JTextField();
+        JTextField txtAnintarray = new JTextField();
 		txtAnintarray.setText("anIntArray4833");
 		txtAnintarray.setEditable(false);
 		txtAnintarray.setColumns(10);
@@ -857,7 +894,7 @@ public class InterfaceGui  extends JFrame {
 		txt_anIntArray4833.setBounds(95, 58, 263, 20);
 		panel_10.add(txt_anIntArray4833);
 
-		txtAnintarray_1 = new JTextField();
+        JTextField txtAnintarray_1 = new JTextField();
 		txtAnintarray_1.setText("anIntArray4789");
 		txtAnintarray_1.setEditable(false);
 		txtAnintarray_1.setColumns(10);
@@ -869,7 +906,7 @@ public class InterfaceGui  extends JFrame {
 		txt_anIntArray4789.setBounds(95, 84, 263, 20);
 		panel_10.add(txt_anIntArray4789);
 
-		txtAnintarray_2 = new JTextField();
+        JTextField txtAnintarray_2 = new JTextField();
 		txtAnintarray_2.setText("anIntArray4829");
 		txtAnintarray_2.setEditable(false);
 		txtAnintarray_2.setColumns(10);
@@ -881,7 +918,7 @@ public class InterfaceGui  extends JFrame {
 		txt_anIntArray4829.setBounds(95, 110, 263, 20);
 		panel_10.add(txt_anIntArray4829);
 
-		txtAnintarray_3 = new JTextField();
+        JTextField txtAnintarray_3 = new JTextField();
 		txtAnintarray_3.setText("anIntArray4805");
 		txtAnintarray_3.setEditable(false);
 		txtAnintarray_3.setColumns(10);
@@ -897,7 +934,7 @@ public class InterfaceGui  extends JFrame {
 		tabbedPane.addTab("New tab", null, panel_8, null);
 		panel_8.setLayout(null);
 
-		txtAnobjectarray_8 = new JTextField();
+        JTextField txtAnobjectarray_8 = new JTextField();
 		txtAnobjectarray_8.setBounds(10, 5, 86, 20);
 		txtAnobjectarray_8.setText("anObjectArray4774");
 		txtAnobjectarray_8.setEditable(false);
@@ -909,7 +946,7 @@ public class InterfaceGui  extends JFrame {
 		txt_anObjectArray4774.setColumns(10);
 		panel_8.add(txt_anObjectArray4774);
 
-		txtAnobjectarray_9 = new JTextField();
+        JTextField txtAnobjectarray_9 = new JTextField();
 		txtAnobjectarray_9.setText("anObjectArray4803");
 		txtAnobjectarray_9.setEditable(false);
 		txtAnobjectarray_9.setColumns(10);
@@ -921,7 +958,7 @@ public class InterfaceGui  extends JFrame {
 		txt_anObjectArray4803.setBounds(106, 30, 372, 20);
 		panel_8.add(txt_anObjectArray4803);
 
-		txtAnobjectarray_10 = new JTextField();
+        JTextField txtAnobjectarray_10 = new JTextField();
 		txtAnobjectarray_10.setText("anObjectArray4680");
 		txtAnobjectarray_10.setEditable(false);
 		txtAnobjectarray_10.setColumns(10);
@@ -933,7 +970,7 @@ public class InterfaceGui  extends JFrame {
 		txt_anObjectArray4680.setBounds(106, 55, 372, 20);
 		panel_8.add(txt_anObjectArray4680);
 
-		txtAnobjectarray_11 = new JTextField();
+        JTextField txtAnobjectarray_11 = new JTextField();
 		txtAnobjectarray_11.setText("anObjectArray4856");
 		txtAnobjectarray_11.setEditable(false);
 		txtAnobjectarray_11.setColumns(10);
@@ -945,7 +982,7 @@ public class InterfaceGui  extends JFrame {
 		txt_anObjectArray4856.setBounds(106, 82, 372, 20);
 		panel_8.add(txt_anObjectArray4856);
 
-		txtAnobjectarray_12 = new JTextField();
+        JTextField txtAnobjectarray_12 = new JTextField();
 		txtAnobjectarray_12.setText("anObjectArray4852");
 		txtAnobjectarray_12.setEditable(false);
 		txtAnobjectarray_12.setColumns(10);
@@ -957,7 +994,7 @@ public class InterfaceGui  extends JFrame {
 		txt_anObjectArray4852.setBounds(106, 107, 372, 20);
 		panel_8.add(txt_anObjectArray4852);
 
-		txtAnobjectarray_13 = new JTextField();
+        JTextField txtAnobjectarray_13 = new JTextField();
 		txtAnobjectarray_13.setText("anObjectArray4711");
 		txtAnobjectarray_13.setEditable(false);
 		txtAnobjectarray_13.setColumns(10);
@@ -969,7 +1006,7 @@ public class InterfaceGui  extends JFrame {
 		txt_anObjectArray4711.setBounds(106, 133, 372, 20);
 		panel_8.add(txt_anObjectArray4711);
 
-		txtAnobjectarray_14 = new JTextField();
+        JTextField txtAnobjectarray_14 = new JTextField();
 		txtAnobjectarray_14.setText("anObjectArray4753");
 		txtAnobjectarray_14.setEditable(false);
 		txtAnobjectarray_14.setColumns(10);
@@ -986,7 +1023,7 @@ public class InterfaceGui  extends JFrame {
 		txt_anObjectArray4688.setBounds(106, 184, 372, 20);
 		panel_8.add(txt_anObjectArray4688);
 
-		anObjectArray4775 = new JTextField();
+        JTextField anObjectArray4775 = new JTextField();
 		anObjectArray4775.setText("anObjectArray4775");
 		anObjectArray4775.setEditable(false);
 		anObjectArray4775.setColumns(10);
@@ -998,7 +1035,7 @@ public class InterfaceGui  extends JFrame {
 		txt_anObjectArray4775.setBounds(106, 215, 372, 20);
 		panel_8.add(txt_anObjectArray4775);
 
-		txtAnobjectarray_15 = new JTextField();
+        JTextField txtAnobjectarray_15 = new JTextField();
 		txtAnobjectarray_15.setText("anObjectArray4688");
 		txtAnobjectarray_15.setEditable(false);
 		txtAnobjectarray_15.setColumns(10);
@@ -1102,7 +1139,7 @@ public class InterfaceGui  extends JFrame {
 		});
 		getContentPane().add(btnAddRectangle);
 
-		panel_6 = new JPanel();
+        JPanel panel_6 = new JPanel();
 		panel_6.setBorder(new TitledBorder(null, "Premade components", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_6.setBounds(10, 465, 205, 112);
 		getContentPane().add(panel_6);
@@ -1158,7 +1195,7 @@ public class InterfaceGui  extends JFrame {
 		btnTest.setBounds(10, 387, 193, 32);
 		getContentPane().add(btnTest);
 
-		btnDeleteSelectedInterface = new JButton("Cleans the current interface");
+        JButton btnDeleteSelectedInterface = new JButton("Cleans the current interface");
 		btnDeleteSelectedInterface.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int option = JOptionPane.showConfirmDialog( componentTree,
@@ -1186,7 +1223,7 @@ public class InterfaceGui  extends JFrame {
 		btnDeleteSelectedInterface.setBounds(10, 419, 193, 32);
 		getContentPane().add(btnDeleteSelectedInterface);
 
-		panel_5 = new JPanel();
+        JPanel panel_5 = new JPanel();
 		panel_5.setBorder(new TitledBorder(null, "Settings", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_5.setBounds(728, 473, 277, 184);
 		getContentPane().add(panel_5);
@@ -1270,7 +1307,7 @@ public class InterfaceGui  extends JFrame {
 		chckbxRealFonttesting.setBounds(6, 107, 193, 25);
 		panel_settings.add(chckbxRealFonttesting);
 
-		btnNewButton_1 = new JButton("Save");
+        JButton btnNewButton_1 = new JButton("Save");
 
 		btnNewButton_1.setBounds(10, 604, 182, 43);
 		getContentPane().add(btnNewButton_1);
@@ -1301,7 +1338,7 @@ public class InterfaceGui  extends JFrame {
 		getContentPane().add(btnQcopy);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(currentInterface != -1 && selectedComp != -1){
+				if(currentInterface != -1 && selectedComp != -1) {
 					saveInterface(currentInterface,selectedComp);
 					drawTree(currentInterface);
 					setValues(currentInterface,selectedComp);
@@ -1871,8 +1908,11 @@ public class InterfaceGui  extends JFrame {
 		//new stuff
 		for(int i = 0; i < ComponentDefinition.getInterfaceDefinitionsComponentsSize(interfaceId); i ++){
 			ComponentDefinition c = ComponentDefinition.getInterfaceComponent(interfaceId, i);
-			if(c == null)
+			if(c == null) {
+				System.out.println("is null" +i);
 				continue;
+			}
+			System.out.println("here");
 			//check for the base containers
 			if(c.parentId == -1 && ComponentDefinition.hasChilds(interfaceId, c.ihash)){
 				DefaultMutableTreeNode  child = new DefaultMutableTreeNode("Component "+ c.componentId);
@@ -2077,143 +2117,6 @@ public class InterfaceGui  extends JFrame {
 			e.printStackTrace();
 		}
 	}
-
-
-	private int[] backgrouds = {
-			297
-	};
-
-	private int[] specialSprites = {
-			829,830
-	};
-	private JButton btnCopy;
-	private JButton btnDelete;
-	private JButton btnNewButton;
-	private JTextField txt_type;
-	private JTextField txtType;
-	private JTextField txtHash;
-	private JTextField txt_hash;
-	private JTabbedPane tabbedPane;
-	private JPanel generalTab;
-	private JPanel textTab;
-	private JPanel spriteTab;
-	private JTextField txt_x;
-	private JTextField txtXPosition;
-	private JTextField txt_y;
-	private JTextField txtYPosition;
-	private JTextField txt_height;
-	private JTextField txtHeight;
-	private JTextField txtWidht;
-	private JTextField txt_widht;
-	private JTextField txtText;
-	private JTextField txt_text;
-	private JTextField txtLeftClick;
-	private JTextField txt_leftclick;
-	private JButton btnNewButton_1;
-	private JTextField txtParent;
-	private JTextField txt_parent;
-	private JTextField txtRightclick;
-	private JTextField txt_option1;
-	private JTextField txt_option2;
-	private JTextField txtRightclick_1;
-	private JTextField txtRightclick_2;
-	private JTextField txt_option3;
-	private JTextField txtRightclick_3;
-	private JTextField txt_option4;
-	private JTextField txt_option5;
-	private JTextField txtRightclick_4;
-	private JButton btnDeleteSelectedInterface;
-	private JTextField text_positionmodeX;
-	private JTextField txt_modex;
-	private JTextField text_modeY;
-	private JTextField txt_positionmodeY;
-	private JPanel panel_5;
-	private JCheckBox chckbxShowHiddenComps;
-	private JCheckBox chckbxShowRectangles;
-	private JPanel panel_6;
-	private JTextField txtTest;
-	private JTextField txt_border;
-	private JMenuItem mntmPackSprite;
-	private JTextField textField;
-	private JTextField txt_sprite;
-	private JTextField txtHeightMode;
-	private JTextField txtWidhtMode;
-	private JTextField txt_modeHeight;
-	private JTextField txt_widthMode;
-	private JTextField textField_4;
-	private JTextField txt_model;
-	private JCheckBox chckbxHidden;
-	private JTextField txtPopup;
-	private JTextField txt_popup;
-	private JTextField txtOnhover;
-	private JTextField txt_fullonhover;
-	private JTextField txtMouseLeave;
-	private JTextField txt_mouseLeave;
-	private JTextField txtAnobjectarray;
-	private JTextField txt_onload;
-	private JTextField txtAnobjectarray_1;
-	private JTextField txt_anObjectArray4771;
-	private JTextField txtAnobjectarray_2;
-	private JTextField txt_anObjectArray4768;
-	private JTextField txtAnobjectarray_3;
-	private JTextField txt_anObjectArray4807;
-	private JTextField txtAnobjectarray_4;
-	private JTextField txt_anObjectArray4742;
-	private JTextField txtAnobjectarray_5;
-	private JTextField txt_anObjectArray4788;
-	private JTextField txtAnobjectarray_6;
-	private JTextField txt_anObjectArray4701;
-	private JPanel panel_10;
-	private JTextField txtConfigs;
-	private JTextField txt_configs;
-	private JTextField txtAnobjectarray_7;
-	private JTextField txt_anObjectArray4770;
-	private JTextField txtfond;
-	private JTextField txt_font;
-	private JTextField txtAnimationId;
-	private JTextField txt_animationId;
-	private JTextField txtColor;
-	private JTextField txt_color;
-	private JTextField txtTransparency;
-	private JTextField txt_trans;
-	private JTextField txtMulti;
-	private JTextField txt_multi;
-	private JTextField txt_qcopy_inter;
-	private JTextField txt_qcopy_comp;
-	private JTextField txt_scrollX;
-	private JTextField txt_scrollY;
-	private JTextField txtAnintarray;
-	private JTextField txt_anIntArray4833;
-	private JTextField txtAnintarray_1;
-	private JTextField txt_anIntArray4789;
-	private JTextField txtAnintarray_2;
-	private JTextField txt_anIntArray4829;
-	private JTextField txtAnintarray_3;
-	private JTextField txt_anIntArray4805;
-	private JTextField txtAnobjectarray_8;
-	private JTextField txt_anObjectArray4774;
-	private JTextField txtAnobjectarray_9;
-	private JTextField txt_anObjectArray4803;
-	private JTextField txtAnobjectarray_10;
-	private JTextField txt_anObjectArray4680;
-	private JTextField txtAnobjectarray_11;
-	private JTextField txt_anObjectArray4856;
-	private JTextField txtAnobjectarray_12;
-	private JTextField txt_anObjectArray4852;
-	private JTextField txtAnobjectarray_13;
-	private JTextField txt_anObjectArray4711;
-	private JTextField txtAnobjectarray_14;
-	private JTextField txt_anObjectArray4753;
-	private JTextField txt_anObjectArray4688;
-	private JTextField anObjectArray4775;
-	private JTextField txt_anObjectArray4775;
-	private JTextField txtAnobjectarray_15;
-	private JTextField txt_xali;
-	private JTextField txt_yali;
-	private JLabel lblContainerScrollX;
-	private JLabel lblContainerScrollY;
-
-
 	/**
 	 * returns them in the right order
 	 * @param interfaceId
@@ -2228,6 +2131,8 @@ public class InterfaceGui  extends JFrame {
 		if(allComps == null)
 			return null;
 		for(ComponentDefinition c : allComps){
+			if(c == null)
+				continue;
 			if(c.parentId == -1)
 				comps.add(c);
 		}
@@ -2262,26 +2167,23 @@ public class InterfaceGui  extends JFrame {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+
 		}
 		if(chckbxRefreshTreeOn.isSelected()){
 			JTree tree = new JTree(createInterfaceTree(id));
-			tree.addTreeSelectionListener(new TreeSelectionListener() {
-
-				@Override
-				public void valueChanged(TreeSelectionEvent e) {
-					DefaultMutableTreeNode selectedNode =  (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
-					try {
-						if(selectedNode.getUserObject() != null){
-							int id = Integer.parseInt(selectedNode.getUserObject().toString().replaceAll("Component ", ""));
-							selectedComp = id;
-							setValues(currentInterface,id);
-						}
-					} catch(Exception ex) {
-						/* some roots aren't a root , better catch them instead of spamming console*/
-
+			tree.addTreeSelectionListener(e -> {
+				DefaultMutableTreeNode selectedNode =  (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
+				try {
+					if(selectedNode.getUserObject() != null){
+						int id1 = Integer.parseInt(selectedNode.getUserObject().toString().replaceAll("Component ", ""));
+						selectedComp = id1;
+						setValues(currentInterface, id1);
 					}
+				} catch(Exception ex) {
+					/* some roots aren't a root , better catch them instead of spamming console*/
 
 				}
+
 			});
 			scrollPane_1.setViewportView(tree);
 		}
@@ -2365,13 +2267,18 @@ public class InterfaceGui  extends JFrame {
 	public void makeInterface(int interfaceId, boolean showContainers, boolean showHidden, boolean showModels) throws IOException{
 		/* graphic part*/
 		result = new BufferedImage(panel.getWidth(), panel.getHeight(),   BufferedImage.TYPE_INT_RGB);
-		g = result.getGraphics();
+        /**
+         * drawing
+         **/
+        Graphics g = result.getGraphics();
 		/**
 		 * make sure you get them in the right order (containers)
 		 */
 		List<ComponentDefinition> test = this.getOrderedComps(interfaceId);
-		if(test == null)
+		if(test == null) {
+			System.out.println("is null");
 			return;
+		}
 		for(ComponentDefinition component : test){
 			ComponentPosition.setValues(component);
 			/**
@@ -2392,8 +2299,8 @@ public class InterfaceGui  extends JFrame {
 			 */
 
 			ComponentDefinition parent = InterfaceUtils.getParent(component.parentId);//ComponentDefinition.getParent(component, interfaceId);
-			/*if(parent == null)
-				continue;*/
+			if(parent == null)
+				continue;
 			/* setting correct values of the parent ofcourse*/
 			if(parent != null) {
 				ComponentPosition.setValues(parent);

@@ -6,7 +6,7 @@ package com.interfaces;
  * #Shnek6969
  */
 public class ComponentConstants {
-    
+
     public static final int MODEL = 6;
     public static final int FIGURE = 3;
     public static final int TEXT = 4;
