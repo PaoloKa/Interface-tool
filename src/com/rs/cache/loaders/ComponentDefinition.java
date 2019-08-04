@@ -30,165 +30,96 @@ public class ComponentDefinition {
 	public int positionY;
 	public int width;
 	public int height;
-	/**
-	 * other
-	 */
-	public int realX;
 	public Object[] anObjectArray4680;
-	public int anInt4681;
 	public int anInt4682;
-	public int anInt4683;
 	public String[] rightclickOptions;
-	public int anInt4687;
 	public Object[] anObjectArray4688;
 	public boolean hidden;
-	private short[] aShortArray4690;
 	public int layerHeight;
 	public int parentId;
 	public int baseWidth;
-	public int anInt4694 = -1;
-	public int height2;
 	public int anInt4697;
 	public int targetOverCursor;
-	public int anInt4700;
 	public Object[] anObjectArray4701;
-	public int anInt4703;
 	public int[] anIntArray4705;
 	public Object[] onMouseHoverScript;
-	public boolean aBoolean4707;
 	public int anInt4708;
 	public int anInt4709 = 0;
 	public boolean shadow;
 	public Object[] 	anObjectArray4711;
-	public Object[] anObjectArray4712;
-	public int anInt4714;
-	private short[] aShortArray4717;
-	public int anInt4718;
-	public int anInt4719;
 	public byte aspectXType;
 	public boolean aBoolean4721;
 	public int baseHeight;
-	public boolean aBoolean4723;
-	public int anInt4724;
-	// public EntityNode_Sub4 anEntityNode_Sub4_4726;
-	public boolean aBoolean4727;
 	public int anInt4728;
-	public boolean aBoolean4730;
+	public Hashtable aHashTable4823;
+	public IComponentSettings activeProperties;
 	public boolean vFlip;
 	public byte[] aByteArray4733;
-	public int anInt4734;
 	public int layerWidth;
-	public boolean alpha;
-	public Object[] anObjectArray4740;
 	public byte aspectHeightType;
 	public Object[] anObjectArray4742;
 	public boolean hFlip;
 	public int borderThickness;
-	public Object[] anObjectArray4745;
-	public int anInt4746;
-	public int anInt4747;
-	public int anInt4748;
 	public byte aspectWidthType;
 	public Object[] anObjectArray4751;
 	public int anInt4752;
 	public Object[] anObjectArray4753;
 	public int color;
-	// public Animator anAnimator4755;
-	public Object[] anObjectArray4756;
 	public int transparency;
 	public Object[] onLoadScript;
 	public int fontId;
-	public int anInt4760;
 	public int mouseOverCursor;
-	public int realY;
-	public int anInt4764;
 	public String name;
 	public int multiline;
 	public Object[] anObjectArray4768;
 	public boolean filled;
 	public Object[] anObjectArray4770;
 	public Object[] anObjectArray4771;
-	public int[] anIntArray4772;
 	public int animationId;
 	public Object[] anObjectArray4774;
 	public Object[] anObjectArray4775;
-	public Object[] anObjectArray4777;
-	public Object[] anObjectArray4778;
 	public String Name;
-	public int anInt4780;
 	public boolean clickMask;
-	public int anInt4783;
 	public String aString4784;
-	private short[] aShortArray4785;
 	public String aString4786;
 	public int zoom;
 	public Object[] anObjectArray4788;
 	public int[] anIntArray4789;
 	public String text;
-	public int anInt4792;
-	public ComponentDefinition[] aWidgetArray4793;
-	public int anInt4794;
 	public int anInt4795;
 	public int anInt4796;
 	public int anInt4797;
-	public Object[] anObjectArray4798;
-	public Object[] anObjectArray4799;
 	public int anInt4800;
-	public int anInt4801;
-	public boolean aBoolean4802;
 	public Object[] anObjectArray4803;
-	public ComponentDefinition[] aWidgetArray4804;
 	public int[] anIntArray4805;
 	public byte[] aByteArray4806;
 	public Object[] anObjectArray4807;
-	public boolean hasScripts;
 	public int width2;
-	public int anInt4810;
-	public int anInt4811;
-	public int[] anIntArray4812;
-	public int anInt4813;
 	public int contentType;
 	public int anInt4815;
 	public int basePositionY;
-	public int anInt4817;
 	public Object[] onMouseLeaveScript;
-	public boolean aBoolean4819;
 	public int spriteId;
 	public int anInt4821;
 	public int ihash;
-	@SuppressWarnings("rawtypes")
-	public Hashtable aHashTable4823;
-	public int anInt4824;
 	public int textVerticalAli;
-	public int anInt4826;
-	public Object[] anObjectArray4828;
 	public int[] anIntArray4829;
-	public int anInt4831;
 	public boolean aBoolean4832;
 	public int[] anIntArray4833;
 	public Object[] popupScript;
 	public int textHorizontalAli;
-	public ComponentDefinition aWidget4836;
-	private short[] aShortArray4837;
 	public int[] configs;
 	public int targetLeaveCursor;
-	public IComponentSettings activeProperties;
 	public int type;
 	public int anInt4842;
-	public int modelType;
-	public Object[] anObjectArray4846;
-	public int anInt4848;
 	public int anInt4849;
 	public int basePositionX;
 	public byte aspectYType;
 	public Object[] anObjectArray4852;
-	public Object[] anObjectArray4854;
 	public Object[] anObjectArray4856;
-	public Object[] anObjectArray4857;
 	public boolean disableHover;
 	public int anInt4860;
 	public boolean repeat_;
-	public Object[] anObjectArray4862;
 	public int[] opCursors;
 	public int modelId;
 	public boolean aBoolean4865;
@@ -503,7 +434,7 @@ public class ComponentDefinition {
 		return data;
 
 	}
-	public int checkInt;
+
 	public int flag;
 	public byte newInt;
 	private int flag2;
@@ -579,7 +510,6 @@ public class ComponentDefinition {
 			anInt4728 = stream.readUnsignedShort();
 			flag2 = stream.readUnsignedByte();
 			repeat_ = (flag2 & 0x1 ^ 0xffffffff) != -1; // repeat ?
-			alpha = (flag2 & 0x2) != 0;
 			transparency = stream.readUnsignedByte();
 			borderThickness = stream.readUnsignedByte();
 			anInt4796 = stream.readInt(); //also shadow
@@ -591,7 +521,6 @@ public class ComponentDefinition {
 			}
 		}
 		if (type == 6) {
-			modelType = 1;
 			if ((ihash >> 16) > 1144)
 				modelId = stream.readBigSmart();
 			else {
@@ -601,10 +530,8 @@ public class ComponentDefinition {
 				}
 			}
 			i_19_ = stream.readUnsignedByte();
-			aBoolean4707 = (0x4 & i_19_) == 4;
 			boolean bool = (0x1 & i_19_) == 1;
 			aBoolean4865 = (i_19_ & 0x2 ^ 0xffffffff) == -3;
-			aBoolean4727 = (0x8 & i_19_ ^ 0xffffffff) == -9;
 			if (bool) {
 				anInt4709 = stream.readShort();
 				anInt4797 = stream.readShort();
@@ -694,7 +621,6 @@ public class ComponentDefinition {
 				}
 				b_23_ = (byte) stream.readByte();
 				if (b_23_ != 0) {
-					aBoolean4802 = true;
 				}
 				b_24_ = (byte) stream.readByte();
 				//system.out.println(" Index : "+i_22_);
@@ -826,8 +752,6 @@ public class ComponentDefinition {
 		anIntArray4805 = decodeScripts3(stream);
 	}
 
-	public Object[] arguments;
-
 	private final Object[] decodeScript(InputStream buffer) {
 
 		int length = buffer.readUnsignedByte();
@@ -844,7 +768,6 @@ public class ComponentDefinition {
 				objects[index] = buffer.readString();
 			}
 		}
-		hasScripts = true;
 		//System.out.println("End script");
 		return objects;
 	}
@@ -990,89 +913,53 @@ public class ComponentDefinition {
 	 */
 	public ComponentDefinition() {
 		targetOverCursor = -1;
-		aBoolean4730 = false;
-		anInt4747 = 0;
-		aBoolean4707 = false;
 		anInt4682 = 0;
 		anInt4752 = 1;
 		anInt4728 = 0;
 		fontId = -1;
-		aBoolean4727 = false;
 		filled = false;
 		baseWidth = 0;
 		multiline = 0;
 		aspectWidthType = (byte) 0;
-		realX = 0;
 		mouseOverCursor = -1;
 		Name = "";
 		aspectHeightType = (byte) 0;
-		anInt4780 = 0;
 		clickMask = true;
 		transparency = 0;
 		color = 0;
-		anInt4687 = -1;
-		anInt4783 = -1;
 		animationId = -1;
 		anInt4795 = 0;
 		anInt4796 = 0;
-		anInt4681 = 0;
-		anInt4714 = 2;
-		aBoolean4802 = false;
-		hasScripts = false;
 		borderThickness = 0;
 		aString4786 = "";
-		anInt4700 = 1;
 		anInt4697 = 0;
-		aBoolean4819 = false;
 		ihash = -1;
 		anInt4821 = 0;
 		anInt4815 = 0;
-		anInt4718 = -1;
 		spriteId = -1;
 		aBoolean4721 = false;
 		aspectXType = (byte) 0;
-		anInt4817 = 0;
 		anInt4708 = 0;
-		anInt4810 = 0;
 		zoom = 100;
-		alpha = false;
 		layerHeight = 0;
 		shadow = false;
 		textVerticalAli = 0;
-		anInt4719 = 0;
-		anInt4734 = 0;
 		text = "";
 		aBoolean4832 = true;
-		realY = 0;
-		anInt4792 = 1;
 		layerWidth = 0;
-		anInt4831 = 0;
 		anInt4800 = 0;
-		anInt4748 = -1;
 		width2 = 0;
 		textHorizontalAli = 0;
-		height2 = 0;
-		anInt4813 = 0;
-		modelType = 1;
-		activeProperties = GLOBAL_SETTINGS;
 		contentType = 0;
-		anInt4811 = 0;
 		baseHeight = 0;
 		anInt4849 = 0;
-		anInt4683 = -1;
 		parentId = -1;
-		anInt4801 = 0;
-		anInt4824 = -1;
-		aWidget4836 = null;
-		anInt4703 = -1;
 		disableHover = false;
 		hidden = false;
 		basePositionX = 0;
 		repeat_ = false;
-		anInt4848 = -1;
 		anInt4797 = 0;
 		anInt4860 = 0;// Class339_Sub4.anInt8679;
-		aBoolean4723 = false;
 		aspectYType = (byte) 0;
 		basePositionY = 0;
 		anInt4842 = 0;
