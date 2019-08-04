@@ -8,8 +8,8 @@ import com.alex.io.OutputStream;
 import com.interfaces.ComponentConstants;
 import com.rs.cache.Cache;
 
-import GUI.ComponentPosition;
-import GUI.InterfaceUtils;
+import com.interfaces.ComponentPosition;
+import com.interfaces.InterfaceUtils;
 /**
  * Interface tool
  * paolo 19/07/2019

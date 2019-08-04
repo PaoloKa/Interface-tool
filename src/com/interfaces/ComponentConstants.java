@@ -16,4 +16,6 @@ public class ComponentConstants {
 
     public static final int CLICK_MASK = 30;
 
+    public static final int SCROLL_BAR_SCRIPT = 30;
+
 }

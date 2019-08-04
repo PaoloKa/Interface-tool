@@ -1,7 +1,6 @@
 package GUI;
 
-import com.interfaces.ComponentConstants;
-import com.interfaces.FontDecoding;
+import com.interfaces.*;
 import com.rs.cache.Cache;
 import com.rs.cache.loaders.ComponentDefinition;
 import properties.PropertyValues;
@@ -2283,30 +2282,23 @@ public class InterfaceGui extends JFrame {
         /**
          * make sure you get them in the right order (containers)
          */
-        List<ComponentDefinition> test = this.getOrderedComps(interfaceId);
-        if (test == null) {
+        List<ComponentDefinition> orderedComponents = this.getOrderedComps(interfaceId);
+        if (orderedComponents == null) {
             System.out.println("is null");
             return;
         }
-        for (ComponentDefinition component : test) {
+        for(ComponentDefinition component : orderedComponents) {
             ComponentPosition.setValues(component);
             /**
              * if hidden or no null
              */
-            if (component == null)
-                continue;
-            if (InterfaceUtils.isHidden(component) && !showHidden)
+            if (component == null || (InterfaceUtils.isHidden(component) && !showHidden))
                 continue;
             /* vars */
             int width = component.width;
             int height = component.height;
             int x = ComponentDefinition.getX(component, interfaceId);
             int y = ComponentDefinition.getY(component, interfaceId);
-            /**
-             * if parent is hidden
-             * TODO parent of parent
-             */
-
             ComponentDefinition parent = InterfaceUtils.getParent(component.parentId);//ComponentDefinition.getParent(component, interfaceId);
             if (parent == null)
                 continue;
@@ -2377,14 +2369,19 @@ public class InterfaceGui extends JFrame {
              * Containers
              */
             if (component.type == ComponentConstants.CONTAINER && showContainers) {
-                g.setColor(Color.RED);
-                if (component.parentId > 0) {
-
-                    g.drawRect(ComponentDefinition.getX(component, interfaceId), ComponentDefinition.getY(component, interfaceId), component.width, component.height);
+                if(ContainerHelper.isScrollBar(component)){
+                    BufferedImage sprite = ImageUtils.resize(ImageIO.read(new File("data/scriptsprites/scrollbar.jpg")), width, height);
+                    g.drawImage(sprite, x, y, null);
                 } else {
-                    g.setColor(Color.green);
-                    g.drawRect(component.positionX, component.positionY, component.width, component.height);
+                    g.setColor(Color.RED);
+                    if (component.parentId > 0) {
 
+                        g.drawRect(ComponentDefinition.getX(component, interfaceId), ComponentDefinition.getY(component, interfaceId), component.width, component.height);
+                    } else {
+                        g.setColor(Color.green);
+                        g.drawRect(component.positionX, component.positionY, component.width, component.height);
+
+                    }
                 }
             }
             /**

@@ -1,4 +1,4 @@
-package GUI;
+package com.interfaces;
 
 import com.rs.cache.Cache;
 import com.rs.cache.loaders.ComponentDefinition;
