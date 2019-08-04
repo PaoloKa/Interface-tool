@@ -15,7 +15,7 @@ public class ComponentConstants {
     public static final int TEXT = 4;
     public static final int CONTAINER = 0;
     public static final int SPRITE = 5;
-    public static final int UNKNOWN = 9;
+    public static final int LINE = 9;
     /**
      * masks
      */

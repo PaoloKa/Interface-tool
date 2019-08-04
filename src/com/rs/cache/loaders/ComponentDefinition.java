@@ -48,7 +48,7 @@ public class ComponentDefinition {
 	public boolean shadow;
 	public Object[] 	anObjectArray4711;
 	public byte aspectXType;
-	public boolean aBoolean4721;
+	public boolean lineDirection;
 	public int baseHeight;
 	public int anInt4728;
 	public Hashtable aHashTable4823;
@@ -62,7 +62,7 @@ public class ComponentDefinition {
 	public int borderThickness;
 	public byte aspectWidthType;
 	public Object[] anObjectArray4751;
-	public int anInt4752;
+	public int lineWidth;
 	public Object[] anObjectArray4753;
 	public int color;
 	public int transparency;
@@ -321,10 +321,10 @@ public class ComponentDefinition {
 				out.writeByte(0);
 			out.writeByte(transparency);
 		}
-		if(type == ComponentConstants.UNKNOWN){
-			out.writeByte(anInt4752);
+		if(type == ComponentConstants.LINE){
+			out.writeByte(lineWidth);
 			out.writeInt(color);
-			if(aBoolean4721)
+			if(lineDirection)
 				out.writeByte(1);
 			else
 				out.writeByte(0);
@@ -597,11 +597,10 @@ public class ComponentDefinition {
 			filled = (stream.readUnsignedByte() ^ 0xffffffff) == -2; //filled ?
 			transparency = stream.readUnsignedByte();
 		}
-		if (type == ComponentConstants.UNKNOWN) {
-
-			anInt4752 = stream.readUnsignedByte();
+		if (type == ComponentConstants.LINE) {
+			lineWidth = stream.readUnsignedByte();
 			color = stream.readInt();
-			aBoolean4721 = stream.readUnsignedByte() == 1;
+			lineDirection = stream.readUnsignedByte() == 1;
 		}
 		optionMask = stream.read24BitInt();
 		i_21_ = stream.readUnsignedByte();
@@ -914,7 +913,7 @@ public class ComponentDefinition {
 	public ComponentDefinition() {
 		targetOverCursor = -1;
 		anInt4682 = 0;
-		anInt4752 = 1;
+		lineWidth = 1;
 		anInt4728 = 0;
 		fontId = -1;
 		filled = false;
@@ -937,7 +936,7 @@ public class ComponentDefinition {
 		anInt4821 = 0;
 		anInt4815 = 0;
 		spriteId = -1;
-		aBoolean4721 = false;
+		lineDirection = false;
 		aspectXType = (byte) 0;
 		anInt4708 = 0;
 		zoom = 100;
