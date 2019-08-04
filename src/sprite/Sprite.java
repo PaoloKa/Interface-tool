@@ -107,7 +107,7 @@ public final class Sprite {
 			/* grab some frequently used values */
 			int subWidth = subWidths[id], subHeight = subHeights[id];
 			int offsetX = offsetsX[id], offsetY = offsetsY[id];
-			if(subWidth > 10000 || subHeight > 10000) //since it give jpc errors
+			if(subWidth > 1000 || subHeight > 1000 || width > 1000 || height > 1000) //since it give jpc errors
 				continue;
 			/* create a BufferedImage to store the resulting image */
 			BufferedImage image = set.frames[id] = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);

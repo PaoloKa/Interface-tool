@@ -62,7 +62,7 @@ public class SpriteDumper {
 					BufferedImage image = sprite.getFrame(frame);
 					try {
 						ImageIO.write(image, "png", file);
-					} catch (IOException e) {
+					} catch (Exception e) {
 						logger.log(Level.SEVERE,"Could not dump sprite "+i+" error ->"+e.getMessage());
 						continue;
 					}

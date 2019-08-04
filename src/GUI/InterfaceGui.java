@@ -1421,10 +1421,10 @@ public class InterfaceGui extends JFrame {
                                 "Properties can not be found, make sure you've a config.properties file.");
                         logger.log(Level.SEVERE,"Properties can not be found, make sure you've a config.properties file.\"");
                     }
+                    logger.info("Application started...");
                     Cache.init();
                     InterfaceGui frame = new InterfaceGui();
                     frame.setVisible(true);
-                    logger.info("Application started...");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
