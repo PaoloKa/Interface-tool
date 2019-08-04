@@ -1198,19 +1198,9 @@ public class InterfaceGui extends JFrame {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    try {
                         makeInterface(currentInterface, true, chckbxShowHiddenComps.isSelected(), chckbxShowRectangles.isSelected());
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
                 } else {
-                    try {
                         makeInterface(currentInterface, false, chckbxShowHiddenComps.isSelected(), chckbxShowRectangles.isSelected());
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
                 }
             }
 
@@ -1225,19 +1215,9 @@ public class InterfaceGui extends JFrame {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    try {
-                        makeInterface(currentInterface, chckbxShowContainers.isSelected(), chckbxShowHiddenComps.isSelected(), true);
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
+                    makeInterface(currentInterface, chckbxShowContainers.isSelected(), chckbxShowHiddenComps.isSelected(), true);
                 } else {
-                    try {
-                        makeInterface(currentInterface, chckbxShowContainers.isSelected(), chckbxShowHiddenComps.isSelected(), false);
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
+                    makeInterface(currentInterface, chckbxShowContainers.isSelected(), chckbxShowHiddenComps.isSelected(), false);
                 }
             }
 
@@ -1309,19 +1289,10 @@ public class InterfaceGui extends JFrame {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    try {
                         makeInterface(currentInterface, chckbxShowContainers.isSelected(), true, chckbxShowRectangles.isSelected());
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
                 } else {
-                    try {
                         makeInterface(currentInterface, chckbxShowContainers.isSelected(), false, chckbxShowRectangles.isSelected());
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
+
                 }
             }
 
@@ -2167,13 +2138,7 @@ public class InterfaceGui extends JFrame {
     }
 
     public void drawTree(int id) {
-        try {
-            this.makeInterface(id, chckbxShowContainers.isSelected(), this.chckbxShowHiddenComps.isSelected(), chckbxShowRectangles.isSelected());
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-
-        }
+        this.makeInterface(id, chckbxShowContainers.isSelected(), this.chckbxShowHiddenComps.isSelected(), chckbxShowRectangles.isSelected());
         if (chckbxRefreshTreeOn.isSelected()) {
             JTree tree = new JTree(createInterfaceTree(id));
             tree.addTreeSelectionListener(e -> {
@@ -2270,7 +2235,7 @@ public class InterfaceGui extends JFrame {
      * @param interfaceId
      * @throws IOException TODO remove all the booleans, shitcode lol
      */
-    public void makeInterface(int interfaceId, boolean showContainers, boolean showHidden, boolean showModels) throws IOException {
+    public void makeInterface(int interfaceId, boolean showContainers, boolean showHidden, boolean showModels)  {
         /* graphic part*/
         result = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_RGB);
         /**
@@ -2322,8 +2287,12 @@ public class InterfaceGui extends JFrame {
              * checks if it's a sprite
              */
             if (component.type == ComponentConstants.SPRITE && component.spriteId > -1) {
-                BufferedImage sprite = ImageUtils.resize(ImageIO.read(new File(PropertyValues.sprite_path + component.spriteId + "_0.png")), width, height);
-
+                BufferedImage sprite = null;
+                try {
+                    sprite = ImageUtils.resize(ImageIO.read(new File(PropertyValues.sprite_path + component.spriteId + "_0.png")), width, height);
+                } catch (IOException e) {
+                    System.out.println("[Error] sprite "+component.spriteId+" not found.");
+                }
                 /* horizontal flip*/
                 if (component.hFlip)
                     sprite = ImageUtils.horizontalFlip(sprite);
@@ -2367,14 +2336,21 @@ public class InterfaceGui extends JFrame {
              * ComponentDefinition.getX(comp, interafece)
              */
             if (component.type == ComponentConstants.CONTAINER) {
+                BufferedImage sprite = null;
                 if(ContainerHelper.isScrollBar(component)){
-                    BufferedImage sprite = ImageUtils.resize(ImageIO.read(new File("data/scriptsprites/scrollbar.jpg")), width, height);
+                    try {
+                        sprite = ImageUtils.resize(ImageIO.read(new File("data/scriptsprites/scrollbar.jpg")), width, height);
+                    } catch (IOException e) {
+                        System.out.println("scrollbar.jpg not found");
+                    }
                     g.drawImage(sprite, ComponentDefinition.getX(component, interfaceId), ComponentDefinition.getY(component, interfaceId), null);
                 }else if(ContainerHelper.isButton(component)){
-                        System.out.println("been here");
-                        BufferedImage sprite = ImageUtils.resize(ImageIO.read(new File("data/scriptsprites/button.png")), width, height);
-                        System.out.println(ComponentDefinition.getX(component, interfaceId) +" "+ComponentDefinition.getY(component, interfaceId));
-                        g.drawImage(sprite, ComponentDefinition.getX(component, interfaceId), ComponentDefinition.getY(component, interfaceId), null);
+                    try {
+                        sprite = ImageUtils.resize(ImageIO.read(new File("data/scriptsprites/button.png")), width, height);
+                    } catch (IOException e) {
+                        System.out.println("button.png not found");
+                    }
+                    g.drawImage(sprite, ComponentDefinition.getX(component, interfaceId), ComponentDefinition.getY(component, interfaceId), null);
                 } else if(showContainers){
                     g.setColor(Color.RED);
                     if (component.parentId > 0) {
@@ -2451,15 +2427,11 @@ public class InterfaceGui extends JFrame {
                     }
                 }
             }
-
-
         }
         JLabel jLabel = new JLabel(new ImageIcon(result));
         JPanel jPanel = new JPanel();
         jPanel.add(jLabel);
-        //close session
-        //  g.dispose();
-
+        g.dispose();
         scrollPane_2.setViewportView(jLabel);
         this.getContentPane().add(jPanel);
     }
