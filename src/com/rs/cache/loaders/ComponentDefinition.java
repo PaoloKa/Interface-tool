@@ -343,7 +343,6 @@ public class ComponentDefinition {
 				out.writeShort(anInt4682);
 				out.writeShort(zoom);
 			}
-			System.out.println(zoom +" "+anInt4682+" "+anInt4821);
 			if ((ihash >> 16) > 1144)
 				out.writeBigSmart(animationId);
 			else {
@@ -623,8 +622,8 @@ public class ComponentDefinition {
 				anInt4682 = stream.readUnsignedShort();
 				zoom = stream.readShort();
 			}
-			zoom = 850;
-			System.out.println(interfaceId+" "+componentId+" values:" + zoom +" "+anInt4682+" "+anInt4821);
+			//zoom = 850;
+			//System.out.println(interfaceId+" "+componentId+" values:" + zoom +" "+anInt4682+" "+anInt4821);
 
 			if ((ihash >> 16) > 1144)
 				animationId = stream.readBigSmart();

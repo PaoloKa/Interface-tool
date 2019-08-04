@@ -2,6 +2,7 @@ package com.interfaces;
 
 import com.rs.cache.loaders.ComponentDefinition;
 
+import static com.interfaces.ComponentConstants.BUTTON_SCRIPT;
 import static com.interfaces.ComponentConstants.SCROLL_BAR_SCRIPT;
 
 /**
@@ -18,6 +19,17 @@ public class ContainerHelper {
      */
     public static boolean isScrollBar(ComponentDefinition component){
         if(component.onLoadScript!= null && Integer.parseInt(component.onLoadScript[0].toString()) == SCROLL_BAR_SCRIPT)
+            return true;
+        return false;
+    }
+
+    /**
+     * checks if the component is a button
+     * @param component
+     * @return
+     */
+    public static boolean isButton(ComponentDefinition component){
+        if(component.onLoadScript!= null && Integer.parseInt(component.onLoadScript[0].toString()) == BUTTON_SCRIPT)
             return true;
         return false;
     }

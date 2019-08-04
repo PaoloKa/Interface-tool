@@ -1,12 +1,6 @@
 <component name="libraryTable">
   <library name="bin">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/bin/syntheticaBlackEye.jar!/" />
-      <root url="jar://$PROJECT_DIR$/bin/jgoodies-forms-1.8.0-sources.jar!/" />
-      <root url="jar://$PROJECT_DIR$/bin/substance.jar!/" />
-      <root url="jar://$PROJECT_DIR$/bin/jgoodies-forms-1.8.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/bin/synthetica.jar!/" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC />
     <SOURCES />
   </library>

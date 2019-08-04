@@ -1,6 +1,7 @@
 package GUI;
 
 import com.interfaces.*;
+import com.interfaces.text.FontDecoding;
 import com.rs.cache.Cache;
 import com.rs.cache.loaders.ComponentDefinition;
 import properties.PropertyValues;
@@ -2130,24 +2131,21 @@ public class InterfaceGui extends JFrame {
      */
     public ArrayList<ComponentDefinition> getOrderedComps(int interfaceId) {
         ArrayList<ComponentDefinition> comps = new ArrayList();
-        ArrayList<ComponentDefinition> comps2 = new ArrayList();
         ArrayList<ComponentDefinition> containers = ComponentDefinition.getInterfaceContainers(interfaceId); //gets all the containers of an interface
         ComponentDefinition[] allComps = ComponentDefinition.getInterface(interfaceId);
-
         if (allComps == null)
             return null;
-        for (ComponentDefinition c : allComps) {
+       /* for (ComponentDefinition c : allComps) {
             if (c == null)
                 continue;
             if (c.parentId == -1)
                 comps.add(c);
-        }
+        }*/
         for (ComponentDefinition comp : containers) {
             if (!comps.contains(comp))
                 comps.add(comp); //add container itself
             for (ComponentDefinition child : ComponentDefinition.getChildsByParent(interfaceId, comp.ihash))
                 comps.add(child); //Add childs
-
         }
         /**
          * adding all the comps who don't have a parent
@@ -2292,16 +2290,17 @@ public class InterfaceGui extends JFrame {
             /**
              * if hidden or no null
              */
-            if (component == null || (InterfaceUtils.isHidden(component) && !showHidden))
+            if (component == null || (InterfaceUtils.isHidden(component) && !showHidden)) {
                 continue;
+            }
             /* vars */
             int width = component.width;
             int height = component.height;
             int x = ComponentDefinition.getX(component, interfaceId);
             int y = ComponentDefinition.getY(component, interfaceId);
             ComponentDefinition parent = InterfaceUtils.getParent(component.parentId);//ComponentDefinition.getParent(component, interfaceId);
-            if (parent == null)
-                continue;
+            /*if (parent == null)
+                continue;*/
             /* setting correct values of the parent ofcourse*/
             if (parent != null) {
                 ComponentPosition.setValues(parent);
@@ -2339,10 +2338,8 @@ public class InterfaceGui extends JFrame {
              * Rectangles
              */
             if (component.type == ComponentConstants.FIGURE) {
-                //don't draw them
                 if (component.color == 0) {
                     g.setColor(Color.black);
-                    //continue;
                 } else {
                     /** Setting the color **/
                     Color color = new Color(component.color);
@@ -2354,8 +2351,6 @@ public class InterfaceGui extends JFrame {
                 g.drawRect(ComponentDefinition.getX(component, currentInterface), ComponentDefinition.getY(component, currentInterface), component.width, component.height);
                 if (component.filled)
                     g.fillRect(ComponentDefinition.getX(component, currentInterface), ComponentDefinition.getY(component, currentInterface), component.width, component.height);
-                //g.setColor(Color.green);
-                //g.drawRect(component.positionX, component.positionY, component.width, component.height);
             }
             /**
              * models
@@ -2367,15 +2362,22 @@ public class InterfaceGui extends JFrame {
             }
             /**
              * Containers
+             *
+             *
+             * ComponentDefinition.getX(comp, interafece)
              */
-            if (component.type == ComponentConstants.CONTAINER && showContainers) {
+            if (component.type == ComponentConstants.CONTAINER) {
                 if(ContainerHelper.isScrollBar(component)){
                     BufferedImage sprite = ImageUtils.resize(ImageIO.read(new File("data/scriptsprites/scrollbar.jpg")), width, height);
-                    g.drawImage(sprite, x, y, null);
-                } else {
+                    g.drawImage(sprite, ComponentDefinition.getX(component, interfaceId), ComponentDefinition.getY(component, interfaceId), null);
+                }else if(ContainerHelper.isButton(component)){
+                        System.out.println("been here");
+                        BufferedImage sprite = ImageUtils.resize(ImageIO.read(new File("data/scriptsprites/button.png")), width, height);
+                        System.out.println(ComponentDefinition.getX(component, interfaceId) +" "+ComponentDefinition.getY(component, interfaceId));
+                        g.drawImage(sprite, ComponentDefinition.getX(component, interfaceId), ComponentDefinition.getY(component, interfaceId), null);
+                } else if(showContainers){
                     g.setColor(Color.RED);
                     if (component.parentId > 0) {
-
                         g.drawRect(ComponentDefinition.getX(component, interfaceId), ComponentDefinition.getY(component, interfaceId), component.width, component.height);
                     } else {
                         g.setColor(Color.green);

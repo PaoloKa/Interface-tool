@@ -1,4 +1,4 @@
-package com.interfaces;
+package com.interfaces.text;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
