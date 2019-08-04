@@ -117,7 +117,7 @@ public class ComponentDefinition {
 	public String aString4784;
 	private short[] aShortArray4785;
 	public String aString4786;
-	public int anInt4787;
+	public int zoom;
 	public Object[] anObjectArray4788;
 	public int[] anIntArray4789;
 	public String text;
@@ -216,7 +216,6 @@ public class ComponentDefinition {
 	 * @param id
 	 * @return
 	 */
-
 	public static ComponentDefinition[] getInterface(int id, boolean reload) {
 		if (id >= icomponentsdefs.length)
 			return null;
@@ -255,7 +254,6 @@ public class ComponentDefinition {
 	 * @return  encoded byte array
 	 */
 	public byte[] encode(){
-		/*outputstream*/
 		OutputStream out = new OutputStream();
 		out.writeByte(newInt);
 		out.writeByte(this.type);
@@ -335,7 +333,7 @@ public class ComponentDefinition {
 				out.writeShort(anInt4815);
 				out.writeShort(anInt4821);
 				out.writeShort(anInt4682);
-				out.writeShort(anInt4787);
+				out.writeShort(zoom);
 			} else if(aBoolean4865){
 				out.writeShort(anInt4709);
 				out.writeShort(anInt4797);
@@ -343,8 +341,9 @@ public class ComponentDefinition {
 				out.writeShort(anInt4815);
 				out.writeShort(anInt4821);
 				out.writeShort(anInt4682);
-				out.writeShort(anInt4787);
+				out.writeShort(zoom);
 			}
+			System.out.println(zoom +" "+anInt4682+" "+anInt4821);
 			if ((ihash >> 16) > 1144)
 				out.writeBigSmart(animationId);
 			else {
@@ -614,7 +613,7 @@ public class ComponentDefinition {
 				anInt4815 = stream.readUnsignedShort();
 				anInt4821 = stream.readUnsignedShort();
 				anInt4682 = stream.readUnsignedShort();
-				anInt4787 = stream.readUnsignedShort();
+				zoom = stream.readUnsignedShort();
 			} else if (aBoolean4865) {
 				anInt4709 = stream.readShort();
 				anInt4797 = stream.readShort();
@@ -622,8 +621,10 @@ public class ComponentDefinition {
 				anInt4815 = stream.readUnsignedShort();
 				anInt4821 = stream.readUnsignedShort();
 				anInt4682 = stream.readUnsignedShort();
-				anInt4787 = stream.readShort();
+				zoom = stream.readShort();
 			}
+			zoom = 850;
+			System.out.println(interfaceId+" "+componentId+" values:" + zoom +" "+anInt4682+" "+anInt4821);
 
 			if ((ihash >> 16) > 1144)
 				animationId = stream.readBigSmart();
@@ -923,7 +924,7 @@ public class ComponentDefinition {
 		}
 		return foundChilderen;
 	}
-	
+
 	public static boolean hasChilds(int interfaceId, int parentHash){
 		ComponentDefinition[] list = ComponentDefinition.getInterface(interfaceId);
 		for(ComponentDefinition c : list){
@@ -1035,7 +1036,7 @@ public class ComponentDefinition {
 		anInt4817 = 0;
 		anInt4708 = 0;
 		anInt4810 = 0;
-		anInt4787 = 100;
+		zoom = 100;
 		alpha = false;
 		layerHeight = 0;
 		shadow = false;
