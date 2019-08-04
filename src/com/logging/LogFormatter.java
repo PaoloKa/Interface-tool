@@ -42,7 +42,9 @@ public class LogFormatter extends Formatter
         builder.append("]");
 
         builder.append(" [");
+        builder.append(getTypeColor(record.getLevel().getName()));
         builder.append(record.getLevel().getName());
+        builder.append(ANSI_YELLOW);
         builder.append("]");
 
         builder.append(ANSI_WHITE);
@@ -65,6 +67,18 @@ public class LogFormatter extends Formatter
         builder.append(ANSI_RESET);
         builder.append("\n");
         return builder.toString();
+    }
+
+    private String getTypeColor(String name){
+        switch (name){
+            case "SEVERE":
+                return ANSI_RED;
+            case "INFO":
+                return ANSI_GREEN;
+            case "WARNING":
+                return ANSI_YELLOW;
+        }
+        return ANSI_WHITE;
     }
 
     private String calcDate(long millisecs) {

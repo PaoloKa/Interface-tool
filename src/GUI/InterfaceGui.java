@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Formatter;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -1440,13 +1441,14 @@ public class InterfaceGui extends JFrame {
      * set the values to the text inputs
      *
      * @param inter
-     * @param id
+     * @param componentId
      */
-    public void setValues(int inter, int id) {
+    public void setValues(int inter, int componentId) {
         /* cleaning previous values*/
+        logger.info("Setting values for component: "+componentId+" from interface "+inter);
         cleanValues();
         /*  selected component*/
-        final ComponentDefinition comp = ComponentDefinition.getInterfaceComponent(inter, id);
+        final ComponentDefinition comp = ComponentDefinition.getInterfaceComponent(inter, componentId);
         /* setting all the values*/
         this.txt_hash.setText(comp.ihash + "");
         this.txt_height.setText(comp.baseHeight + "");
@@ -1727,6 +1729,7 @@ public class InterfaceGui extends JFrame {
     }
 
     private void drawSelected(ComponentDefinition comp, int interafece) {
+        logger.info("Drawing selected component "+comp.componentId);
         this.panel = new JPanel() {
             @Override
             public void paintComponent(Graphics g) {
@@ -1832,6 +1835,7 @@ public class InterfaceGui extends JFrame {
         //message
         //JOptionPane.showMessageDialog(scrollPane_2, "Component has been succesfully saved.");
         //saves it
+        logger.info("Saving component "+comp+" from interface interface "+inter);
         Cache.STORE.getIndexes()[3].putFile(inter, comp, changedComponent.encode());
     }
 
@@ -1841,6 +1845,7 @@ public class InterfaceGui extends JFrame {
      * @return
      */
     public DefaultListModel populateList() {
+        logger.info("Populating interface list");
         DefaultListModel listModel = new DefaultListModel();
         for (int i = 0; i < ComponentDefinition.getInterfaceDefinitionsSize(); i++) {
             try {
@@ -1851,6 +1856,7 @@ public class InterfaceGui extends JFrame {
 
             }
         }
+        logger.info("Done Populating list");
         return listModel;
 
     }
@@ -2147,6 +2153,7 @@ public class InterfaceGui extends JFrame {
     }
 
     public void drawTree(int id) {
+        logger.info("Drawing components for interface "+id);
         this.makeInterface(id, chckbxShowContainers.isSelected(), this.chckbxShowHiddenComps.isSelected(), chckbxShowRectangles.isSelected());
         if (chckbxRefreshTreeOn.isSelected()) {
             JTree tree = new JTree(createInterfaceTree(id));
@@ -2159,6 +2166,7 @@ public class InterfaceGui extends JFrame {
                         setValues(currentInterface, id1);
                     }
                 } catch (Exception ex) {
+                    logger.log(Level.SEVERE,"Error selecting component, error->"+ex);
                     /* some roots aren't a root , better catch them instead of spamming console*/
 
                 }
@@ -2246,6 +2254,7 @@ public class InterfaceGui extends JFrame {
      */
     public void makeInterface(int interfaceId, boolean showContainers, boolean showHidden, boolean showModels)  {
         /* graphic part*/
+        logger.info("Drawing preview interface");
         result = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_RGB);
         /**
          * drawing
