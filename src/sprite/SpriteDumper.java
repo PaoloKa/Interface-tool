@@ -21,34 +21,31 @@
  */
 package sprite;
 
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
+import com.logging.LogFactory;
 import com.rs.cache.Cache;
 
 import GUI.InterfaceGui;
 import properties.PropertyValues;
 
-/**
- * @author Kyle Friz
- * @since Dec 30, 2015
- */
+
 public class SpriteDumper {
-	
-	public static void main(String[] args) throws IOException {
-		File directory = new File(PropertyValues.dump_path);			
-		
+
+	private static final Logger logger = LogFactory.createLogger(SpriteDumper.class.getName());
+
+	public static void dump() {
+		File directory = new File(PropertyValues.dump_path);
 		if (!directory.exists()) {
 			directory.mkdirs();
 		}
-		com.rs.cache.Cache.init();
 		int size = Cache.STORE.getIndexes()[8].getLastArchiveId();
 			for (int i = 0; i < Cache.STORE.getIndexes()[8].getLastArchiveId(); i++) {
 				if (Cache.STORE.getIndexes()[8].getFile(i) == null)
@@ -58,20 +55,23 @@ public class SpriteDumper {
 					continue;
 				ByteBuffer buf = ByteBuffer.wrap(data);
 				Sprite sprite = Sprite.decode(buf);
-				
+				if(sprite == null || sprite.size() == 0)
+					continue;
 				for (int frame = 0; frame < sprite.size(); frame++) {
 					File file = new File(PropertyValues.dump_path, i + "_" + frame + ".png");
-					
-				//	BufferedImage image = ImageUtils.createColoredBackground(ImageUtils.makeColorTransparent(sprite.getFrame(frame), Color.WHITE), (Color.WHITE));
-
 					BufferedImage image = sprite.getFrame(frame);
-					
-					ImageIO.write(image, "png", file);
+					try {
+						ImageIO.write(image, "png", file);
+					} catch (IOException e) {
+						logger.log(Level.SEVERE,"Could not dump sprite "+i+" error ->"+e.getMessage());
+						continue;
+					}
 				}
 				
 				double progress = (double) (i + 1) / size * 100;
 				
-				System.out.printf("%d out of %d %.2f%s\n", (i + 1),size, progress, "%");	
+				//System.out.printf("%d out of %d %.2f%s\n", (i + 1),size, progress, "%");
+				logger.info((i + 1)+" out of "+size+" "+Math.round(progress)+"%");
 				
 			}
 

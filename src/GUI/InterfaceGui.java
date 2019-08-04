@@ -9,6 +9,7 @@ import com.rs.cache.loaders.ComponentDefinition;
 import properties.PropertyValues;
 import sprite.ImageUtils;
 import sprite.Sprite;
+import sprite.SpriteDumper;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -149,10 +150,10 @@ public class InterfaceGui extends JFrame {
             if (evt.getValueIsAdjusting())
                 return;
             int id = Integer.parseInt(interface_list.getSelectedValue().toString().replaceAll("Interface: ", ""));
+            logger.info("Interface "+id+" is selected.");
             currentInterface = id;
             drawTree(id);
             cleanValues();
-            logger.info("Interface "+id+" is selected.");
 
         });
 
@@ -241,7 +242,7 @@ public class InterfaceGui extends JFrame {
         btnCopy.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 copiedComp = ComponentDefinition.getInterfaceComponent(currentInterface, selectedComp);
-                System.out.println("Component "+copiedComp.componentId+" copied from interface "+copiedComp.interfaceId);
+                logger.info("Component "+copiedComp.componentId+" copied from interface "+copiedComp.interfaceId);
             }
         });
         btnCopy.setBounds(904, 404, 78, 32);
@@ -1335,8 +1336,7 @@ public class InterfaceGui extends JFrame {
                         "Dumping sprites",
                         "", 0, Cache.STORE.getIndexes()[8].getLastArchiveId());
                 progressMonitor.setProgress(1);
-
-                dumpSprites();
+                SpriteDumper.dump();
             }
         });
         mnAbout.add(mntmDumpSprites);
@@ -1412,17 +1412,19 @@ public class InterfaceGui extends JFrame {
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null,
                                 "" + e);
-                        System.out.println(e);
+                        logger.log(Level.SEVERE,e.getMessage());
                     }
                     try {
                         PropertyValues.loadValues();
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null,
                                 "Properties can not be found, make sure you've a config.properties file.");
+                        logger.log(Level.SEVERE,"Properties can not be found, make sure you've a config.properties file.\"");
                     }
                     Cache.init();
                     InterfaceGui frame = new InterfaceGui();
                     frame.setVisible(true);
+                    logger.info("Application started...");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -1954,51 +1956,6 @@ public class InterfaceGui extends JFrame {
 
     }
 
-    public void dumpSprites() {
-        File directory = new File(PropertyValues.dump_path);
-
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-        try {
-            com.rs.cache.Cache.init();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        int size = Cache.STORE.getIndexes()[8].getLastArchiveId();
-        for (int i = 0; i < Cache.STORE.getIndexes()[8].getLastArchiveId(); i++) {
-            progressMonitor.setProgress(i + 1);
-            if (Cache.STORE.getIndexes()[8].getFile(i) == null)
-                continue;
-            byte[] data = Cache.STORE.getIndexes()[8].getFile(i);
-            if (data == null)
-                continue;
-            ByteBuffer buf = ByteBuffer.wrap(data);
-            Sprite sprite = Sprite.decode(buf);
-            if (sprite == null)
-                continue;
-            for (int frame = 0; frame < sprite.size(); frame++) {
-                File file = new File(PropertyValues.dump_path, i + "_" + frame + ".png");
-                BufferedImage image = sprite.getFrame(frame);
-
-                try {
-                    ImageIO.write(image, "png", file);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-
-            double progress = (double) (i + 1) / size * 100;
-
-            System.out.printf("%d out of %d %.2f%s\n", (i + 1), size, progress, "%");
-
-        }
-
-
-    }
-
     public void addIndex0text(int interfaceId) {
         ComponentDefinition defaultButton = ComponentDefinition.getInterfaceComponent(6, 19);
         defaultButton.parentId = -1;
@@ -2153,7 +2110,7 @@ public class InterfaceGui extends JFrame {
     }
 
     public void drawTree(int id) {
-        logger.info("Drawing components for interface "+id);
+        logger.info("Drawing componenttree ");
         this.makeInterface(id, chckbxShowContainers.isSelected(), this.chckbxShowHiddenComps.isSelected(), chckbxShowRectangles.isSelected());
         if (chckbxRefreshTreeOn.isSelected()) {
             JTree tree = new JTree(createInterfaceTree(id));
