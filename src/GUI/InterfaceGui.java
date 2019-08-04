@@ -2,6 +2,8 @@ package GUI;
 
 import com.interfaces.*;
 import com.interfaces.text.FontDecoding;
+import com.logging.LogFactory;
+import com.logging.LogFormatter;
 import com.rs.cache.Cache;
 import com.rs.cache.loaders.ComponentDefinition;
 import properties.PropertyValues;
@@ -26,11 +28,15 @@ import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Logger;
 
 
 public class InterfaceGui extends JFrame {
 
     private static final long serialVersionUID = 1L;
+    private static final Logger logger = LogFactory.createLogger(InterfaceGui.class.getName());
     public static JProgressBar progressBar;
     public ProgressMonitor progressMonitor;
     protected JList interface_list;
@@ -145,6 +151,8 @@ public class InterfaceGui extends JFrame {
             currentInterface = id;
             drawTree(id);
             cleanValues();
+            logger.info("Interface "+id+" is selected.");
+
         });
 
         final JPopupMenu popupMenu = new JPopupMenu();
@@ -232,6 +240,7 @@ public class InterfaceGui extends JFrame {
         btnCopy.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 copiedComp = ComponentDefinition.getInterfaceComponent(currentInterface, selectedComp);
+                System.out.println("Component "+copiedComp.componentId+" copied from interface "+copiedComp.interfaceId);
             }
         });
         btnCopy.setBounds(904, 404, 78, 32);

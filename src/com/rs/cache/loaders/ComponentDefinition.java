@@ -2,10 +2,13 @@ package com.rs.cache.loaders;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.alex.io.InputStream;
 import com.alex.io.OutputStream;
 import com.interfaces.ComponentConstants;
+import com.logging.LogFactory;
 import com.rs.cache.Cache;
 
 import com.interfaces.ComponentPosition;
@@ -19,6 +22,7 @@ public class ComponentDefinition {
 
 	public static ComponentDefinition[][] icomponentsdefs = new ComponentDefinition[getInterfaceDefinitionsSize()][];
 	private static IComponentSettings GLOBAL_SETTINGS = new IComponentSettings(0, -1);
+    private static final Logger logger = LogFactory.createLogger(ComponentDefinition.class.getName());
 	/**
 	 * positions
 	 */
@@ -202,7 +206,7 @@ public class ComponentDefinition {
 															int component) {
 		ComponentDefinition[] inter = getInterface(interfaceId);
 		if (inter == null || component >= inter.length){
-			System.out.println("Component is null");
+			logger.log(Level.SEVERE, "Component "+component+ " from "+interfaceId+" is null.");
 			return null;
 		}
 		return inter[component];
@@ -223,20 +227,15 @@ public class ComponentDefinition {
 			icomponentsdefs[id] = new ComponentDefinition[getInterfaceDefinitionsComponentsSize(id)];
 			for (int i = 0; i < icomponentsdefs[id].length; i++) {
 				byte[] data = Cache.STORE.getIndexes()[3].getFile(id, i);
-				if (data != null) {
+				if (data == null) {
+                    logger.log(Level.SEVERE, "Component "+i+ " from interface "+id+" is null, on initial load.");
+				} else {
 					ComponentDefinition defs = icomponentsdefs[id][i] = new ComponentDefinition();
 					defs.ihash = i + (id << 16);
-					/*if (data[0] != -1) {
-						if(id == 746)
-							System.out.println("Interafec= "+id+" Component"+i+" is null.");
-						continue;
-					}*/
 					defs.decode(new InputStream(data), i, id);
 
-				} else {
-					System.out.println("data is null file id :"+i);
 				}
-			}
+            }
 		}
 		return icomponentsdefs[id];
 	}
