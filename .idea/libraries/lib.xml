@@ -6,6 +6,7 @@
       <root url="jar://$PROJECT_DIR$/lib/jgoodies-forms-1.8.0-sources.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/synthetica.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/syntheticaBlackEye.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/FileStore.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

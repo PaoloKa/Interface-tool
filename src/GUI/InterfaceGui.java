@@ -3,12 +3,10 @@ package GUI;
 import com.interfaces.*;
 import com.interfaces.text.FontDecoding;
 import com.logging.LogFactory;
-import com.logging.LogFormatter;
 import com.rs.cache.Cache;
 import com.rs.cache.loaders.ComponentDefinition;
 import properties.PropertyValues;
 import sprite.ImageUtils;
-import sprite.Sprite;
 import sprite.SpriteDumper;
 
 import javax.imageio.ImageIO;
@@ -25,12 +23,9 @@ import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -2058,7 +2053,7 @@ public class InterfaceGui extends JFrame {
             defaultButton.parentId = -1;
             defaultButton.text = "I'm cleaned :)";
             Cache.STORE.getIndexes()[3].putFile(archiveId, 0, defaultButton.encode());
-            Cache.getStore().getIndexes()[3].getArchive(archiveId).setData(data);
+            //Cache.getStore().getIndexes()[3].getArchive(archiveId)..setData(data);
             this.drawTree(archiveId);
         } catch (IOException e) {
             // TODO Auto-generated catch block

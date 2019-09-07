@@ -23,7 +23,6 @@ package sprite;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,9 +30,8 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 import com.logging.LogFactory;
-import com.rs.cache.Cache;
 
-import GUI.InterfaceGui;
+import com.rs.cache.Cache;
 import properties.PropertyValues;
 
 

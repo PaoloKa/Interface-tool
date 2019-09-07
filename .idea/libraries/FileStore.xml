@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="editor1">
+  <library name="FileStore">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/editor.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/FileStore.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
