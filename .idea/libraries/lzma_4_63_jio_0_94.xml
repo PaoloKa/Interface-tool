@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="FileStore">
+  <library name="lzma-4.63-jio-0.94">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/FileStore.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/lzma-4.63-jio-0.94.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

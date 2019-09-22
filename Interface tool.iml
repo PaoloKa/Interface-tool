@@ -8,6 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="substance" level="project" />
-    <orderEntry type="library" name="FileStore" level="project" />
+    <orderEntry type="library" name="google-guava" level="project" />
+    <orderEntry type="library" name="lzma-4.63-jio-0.94" level="project" />
   </component>
 </module>

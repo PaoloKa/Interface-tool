@@ -165,7 +165,6 @@ public class ComponentDefinition {
 					ComponentDefinition defs = icomponentsdefs[id][i] = new ComponentDefinition();
 					defs.ihash = i + (id << 16);
 					defs.decode(new InputStream(data), i, id);
-
 				}
             }
 		}
