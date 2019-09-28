@@ -2,8 +2,8 @@ package com.interfaces;
 
 import com.rs.cache.loaders.ComponentDefinition;
 
-import static com.interfaces.ComponentConstants.BUTTON_SCRIPT;
-import static com.interfaces.ComponentConstants.SCROLL_BAR_SCRIPT;
+import static com.interfaces.components.ComponentConstants.BUTTON_SCRIPT;
+import static com.interfaces.components.ComponentConstants.SCROLL_BAR_SCRIPT;
 
 /**
  * Interface tool

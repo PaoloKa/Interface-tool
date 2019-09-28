@@ -1,5 +1,6 @@
-package com.interfaces;
+package com.interfaces.components;
 
+import com.interfaces.InterfaceUtils;
 import com.rs.cache.loaders.ComponentDefinition;
 
 public class ComponentPosition {

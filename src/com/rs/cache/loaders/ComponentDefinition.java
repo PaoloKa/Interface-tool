@@ -7,10 +7,10 @@ import java.util.logging.Logger;
 
 import com.alex.io.InputStream;
 import com.alex.io.OutputStream;
-import com.interfaces.ComponentConstants;
+import com.interfaces.components.ComponentConstants;
 import com.logging.LogFactory;
 
-import com.interfaces.ComponentPosition;
+import com.interfaces.components.ComponentPosition;
 import com.interfaces.InterfaceUtils;
 import com.rs.cache.Cache;
 
@@ -144,31 +144,31 @@ public class ComponentDefinition {
 		return inter[component];
 	}
 
-	public static ComponentDefinition[] getInterface(int id) {
-		return getInterface(id, false);
+	public static ComponentDefinition[] getInterface(int interfaceId) {
+		return getInterface(interfaceId, false);
 	}
 	/**
 	 * returns an array of components aka the interface
-	 * @param id
+	 * @param interfaceId
 	 * @return
 	 */
-	public static ComponentDefinition[] getInterface(int id, boolean reload) {
-		if (id >= icomponentsdefs.length)
+	public static ComponentDefinition[] getInterface(int interfaceId, boolean reload) {
+		if (interfaceId >= icomponentsdefs.length)
 			return null;
-		if (icomponentsdefs[id] == null || reload) {
-			icomponentsdefs[id] = new ComponentDefinition[getInterfaceDefinitionsComponentsSize(id)];
-			for (int i = 0; i < icomponentsdefs[id].length; i++) {
-				byte[] data = Cache.STORE.getIndexes()[3].getFile(id, i);
+		if (icomponentsdefs[interfaceId] == null || reload) {
+			icomponentsdefs[interfaceId] = new ComponentDefinition[getInterfaceDefinitionsComponentsSize(interfaceId)];
+			for (int i = 0; i < icomponentsdefs[interfaceId].length; i++) {
+				byte[] data = Cache.STORE.getIndexes()[3].getFile(interfaceId, i);
 				if (data == null) {
-                    logger.log(Level.SEVERE, "Component "+i+ " from interface "+id+" is null, on initial load.");
+                    logger.log(Level.SEVERE, "Component "+i+ " from interface "+interfaceId+" is null, on initial load.");
 				} else {
-					ComponentDefinition defs = icomponentsdefs[id][i] = new ComponentDefinition();
-					defs.ihash = i + (id << 16);
-					defs.decode(new InputStream(data), i, id);
+					ComponentDefinition defs = icomponentsdefs[interfaceId][i] = new ComponentDefinition();
+					defs.ihash = i + (interfaceId << 16);
+					defs.decode(new InputStream(data), i, interfaceId);
 				}
             }
 		}
-		return icomponentsdefs[id];
+		return icomponentsdefs[interfaceId];
 	}
 
 	public static int getInterfaceDefinitionsSize() {

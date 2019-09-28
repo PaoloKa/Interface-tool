@@ -1,6 +1,8 @@
 package GUI;
 
 import com.interfaces.*;
+import com.interfaces.components.ComponentConstants;
+import com.interfaces.components.ComponentPosition;
 import com.interfaces.text.FontDecoding;
 import com.logging.LogFactory;
 import com.rs.cache.Cache;
