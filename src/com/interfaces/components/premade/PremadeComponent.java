@@ -10,16 +10,13 @@ import com.rs.cache.loaders.ComponentDefinition;
 public abstract class PremadeComponent {
 
     /**
-     *
-     * @param interfaceId the id of the interface to pack to
-     * @param interfaceSize the current length of the components of that specific interface
      * @return
      */
-    public abstract ComponentDefinition[] createComponents(int interfaceId, int interfaceSize);
+    public abstract ComponentDefinition[] createAndGetComponents(int interfaceId, int componentPosition);
 
 
-    protected int createHashForComponet(int interfaceId, int componentPosition){
+
+    private int createHash(int componentPosition, int interfaceId){
         return componentPosition +(interfaceId << 16);
-
     }
 }

@@ -13,19 +13,19 @@ import com.rs.cache.loaders.ComponentDefinition;
 public class ButtonComponent extends PremadeComponent {
 
 
-    public ComponentDefinition[] createComponents(int interfaceId, int interfaceSize){
+    public ComponentDefinition[] createAndGetComponents(int interfaceId, int componentPosition){
         ComponentDefinition[] components = new ComponentDefinition[2];
-        components[0] = createContainer(interfaceId,interfaceSize);
-
+        components[0] = createContainer(interfaceId,componentPosition);
+        components[1] = ComponentFactory.createCustomComponent(ComponentFactory.CUSTOM_COMPONENT_TYPES.CLICKABLE_TEXT, interfaceId,componentPosition);
         return components;
     }
 
-    private ComponentDefinition createContainer(int interfaceId,int interfaceSize){
-        ComponentDefinition component = ComponentFactory.createBaseComponent(ComponentConstants.CONTAINER);
+
+    private ComponentDefinition createContainer(int interfaceId, int componentPosition){
+        ComponentDefinition component = ComponentFactory.createBaseTypeComponent(ComponentConstants.CONTAINER,interfaceId,componentPosition);
         component.onLoadScript = new Object[]  {92,-2147483645};
         component.onMouseLeaveScript = new Object[]  {92,-2147483645};
         component.onMouseHoverScript = new Object[]  {94,-2147483645};
-        component.ihash = createHashForComponet(interfaceId,interfaceSize + 0)
         return component;
     }
 

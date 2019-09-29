@@ -7,6 +7,9 @@ import com.interfaces.text.FontDecoding;
 import com.logging.LogFactory;
 import com.rs.cache.Cache;
 import com.rs.cache.loaders.ComponentDefinition;
+import javafx.scene.control.Dialog;
+import javafx.util.Pair;
+import javafx.scene.control.*;
 import properties.PropertyValues;
 import sprite.ImageUtils;
 import sprite.SpriteDumper;
@@ -128,16 +131,9 @@ public class InterfaceGui extends JFrame {
      */
     public InterfaceGui() {
         setTitle("Interface editor");
-        TextAreaOutputStream taOutputStream = new TextAreaOutputStream(textArea, "Console");
-        //System.setOut(new PrintStream(taOutputStream));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1035, 743);
         getContentPane().setLayout(null);
-
-        JLabel lblQuickCopy = new JLabel("Quick copy");
-        lblQuickCopy.setBounds(749, 449, 86, 16);
-        getContentPane().add(lblQuickCopy);
-
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setBounds(10, 54, 193, 331);
         getContentPane().add(scrollPane);
@@ -280,9 +276,31 @@ public class InterfaceGui extends JFrame {
         });
         getContentPane().add(btnDelete);
 
-        JButton btnNewButton = new JButton("paste");
-        btnNewButton.setToolTipText("Past your copied component into the selected interface");
-        btnNewButton.addActionListener(new ActionListener() {
+        JButton pastButton = new JButton("paste");
+        final JPopupMenu pasteButttonPopup = new JPopupMenu();
+        JMenuItem pasteWithAction = new JMenuItem("Past with action");
+        pasteButttonPopup.add(pasteWithAction);
+        pasteWithAction.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (currentInterface == -1) {
+                    return;
+                }
+                int copyTime = Integer.parseInt(JOptionPane.showInputDialog("How many times would you like to copy?",1));
+                if(copyTime > 0){
+                    int parentHash = Integer.parseInt(JOptionPane.showInputDialog("parentHash of the new components?", -1));
+                    int increaseX = Integer.parseInt(JOptionPane.showInputDialog("X position you want to add with every new component",0));
+                    int increaseY = Integer.parseInt(JOptionPane.showInputDialog("Y position you want to add with every new component",0));
+                    int dialogResult = JOptionPane.showConfirmDialog (null, "Are you sure you want to add those components?","Warning",1);
+                    if(dialogResult == JOptionPane.YES_OPTION){
+                        pasteComponentWithAction(increaseX,increaseY,parentHash,copyTime);
+                    }
+                }
+
+            }
+        });
+        pastButton.setComponentPopupMenu(pasteButttonPopup);
+        pastButton.setToolTipText("Past your copied component into the selected interface");
+        pastButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (currentInterface == -1) {
                     return;
@@ -290,8 +308,8 @@ public class InterfaceGui extends JFrame {
                 pasteComponent();
             }
         });
-        btnNewButton.setBounds(816, 404, 78, 32);
-        getContentPane().add(btnNewButton);
+        pastButton.setBounds(816, 404, 78, 32);
+        getContentPane().add(pastButton);
         /**
          * tabbed pane
          */
@@ -1256,29 +1274,23 @@ public class InterfaceGui extends JFrame {
         btnNewButton_1.setBounds(10, 604, 182, 43);
         getContentPane().add(btnNewButton_1);
 
-        txt_qcopy_inter = new JTextField();
-        txt_qcopy_inter.setToolTipText("interface id you want to copy from");
-        txt_qcopy_inter.setBounds(826, 449, 78, 22);
-        getContentPane().add(txt_qcopy_inter);
-        txt_qcopy_inter.setColumns(10);
 
-        txt_qcopy_comp = new JTextField();
-        txt_qcopy_comp.setBounds(904, 449, 74, 22);
-        getContentPane().add(txt_qcopy_comp);
-        txt_qcopy_comp.setColumns(10);
-
-        JButton btnQcopy = new JButton("");
+        JButton btnQcopy = new JButton("Edit multiple components");
         btnQcopy.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                try {
-                    copiedComp = ComponentDefinition.getInterfaceComponent(Integer.parseInt(txt_qcopy_inter.getText()), Integer.parseInt(txt_qcopy_comp.getText()));
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(scrollPane_2,
-                            "Component can not be found.");
+                String[] componentIds = JOptionPane.showInputDialog("ComponentsIds, split by using ;",1).split(";");
+                if(componentIds.length> 0){
+                    String leftclick =  (JOptionPane.showInputDialog("leftclick option", ""));
+                    String text = (JOptionPane.showInputDialog("text value", ""));
+                    String hidden = (JOptionPane.showInputDialog("Hidden? (true/false)", ""));
+                    int dialogResult = JOptionPane.showConfirmDialog (null, "Are you sure you want to edit those components?","Warning",1);
+                    if(dialogResult == JOptionPane.YES_OPTION){
+                        editMultipleComponents(componentIds,leftclick,text,hidden);
+                    }
                 }
             }
         });
-        btnQcopy.setBounds(990, 445, 27, 25);
+        btnQcopy.setBounds(800, 445, 150, 25);
         getContentPane().add(btnQcopy);
         btnNewButton_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -1389,6 +1401,30 @@ public class InterfaceGui extends JFrame {
          *
          */
 
+    }
+
+    private void editMultipleComponents(String[] componentIds, String leftclick, String text, String hidden) {
+        for(String component : componentIds){
+            int id = Integer.parseInt(component);
+            ComponentDefinition editcomp = ComponentDefinition.getInterfaceComponent(currentInterface, id);
+            if(!text.isEmpty())
+                editcomp.text = text;
+            if(!hidden.isEmpty())
+            editcomp.hidden = Boolean.parseBoolean(hidden);
+            if(!leftclick.isEmpty()) {
+                if (editcomp.rightclickOptions != null) {
+                    editcomp.rightclickOptions[0] = leftclick;
+                } else {
+                    editcomp.rightclickOptions = new String[5];
+                    editcomp.optionMask = ComponentConstants.CLICK_MASK;
+                    editcomp.rightclickOptions[0] = leftclick;
+                }
+            }
+            Cache.STORE.getIndexes()[3].putFile(currentInterface, id, editcomp.encode());
+        }
+        ComponentDefinition.getInterface(currentInterface, true);
+        drawTree(currentInterface);
+        logger.info("Succesful edited all the components.");
     }
 
     /**
@@ -1898,7 +1934,6 @@ public class InterfaceGui extends JFrame {
                 System.out.println("is null" + i);
                 continue;
             }
-            //System.out.println("here");
             //check for the base containers
             if (c.parentId == -1 && ComponentDefinition.hasChilds(interfaceId, c.ihash)) {
                 DefaultMutableTreeNode child = new DefaultMutableTreeNode("Component " + c.componentId);
@@ -1983,44 +2018,49 @@ public class InterfaceGui extends JFrame {
 
     }
 
-    /**
-     * handles the component pasting
-     */
-    public void pasteComponent() {
+
+    public void pasteComponentWithAction(int xIncrease, int yIncrease, int parentHash, int times) {
         if (copiedComp == null) {
             JOptionPane.showMessageDialog(scrollPane_2, "No component was selected to paste.");
             return;
         }
-        if (copiedComp.type == ComponentConstants.CONTAINER) {
-            int containerPlace = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface);
-            copiedComp.parentId = -1;
-            Cache.STORE.getIndexes()[3].putFile(currentInterface, containerPlace, copiedComp.encode());
-            ArrayList<ComponentDefinition> childs = ComponentDefinition.getChildsByParent(copiedComp.interfaceId, copiedComp.ihash);
-            for (ComponentDefinition c : childs) {
-                if (c.type == ComponentConstants.CONTAINER) { //TODO packing containers in containers
+        final int baseX = copiedComp.basePositionX;
+        final int baseY = copiedComp.basePositionY;
+        for(int time = 1; time <= times; time++) {
+            if (copiedComp.type == ComponentConstants.CONTAINER) {
+                int containerPlace = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface);
+                copiedComp.parentId = -1;
+                Cache.STORE.getIndexes()[3].putFile(currentInterface, containerPlace, copiedComp.encode());
+                ArrayList<ComponentDefinition> childs = ComponentDefinition.getChildsByParent(copiedComp.interfaceId, copiedComp.ihash);
+                for (ComponentDefinition c : childs) {
+                    if (c.type == ComponentConstants.CONTAINER) { //TODO packing containers in containers
 
-                } else
-                    Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), c.encode());
-            }
-            ComponentDefinition.getInterface(currentInterface, true);
-            int size = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface);
-            ComponentDefinition parent = ComponentDefinition.getInterfaceComponent(currentInterface, containerPlace);
-            for (int i = size - childs.size() - 1; i < size; i++) {
-                ComponentDefinition component = ComponentDefinition.getInterfaceComponent(currentInterface, i);
-                if (component.type != 0) {
-                    component.parentId = parent.ihash;
-                    Cache.STORE.getIndexes()[3].putFile(currentInterface, i, component.encode());
-
+                    } else
+                        Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), c.encode());
                 }
+                ComponentDefinition.getInterface(currentInterface, true);
+                int size = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface);
+                ComponentDefinition parent = ComponentDefinition.getInterfaceComponent(currentInterface, containerPlace);
+                for (int i = size - childs.size() - 1; i < size; i++) {
+                    ComponentDefinition component = ComponentDefinition.getInterfaceComponent(currentInterface, i);
+                    if (component.type != 0) {
+                        component.parentId = parent.ihash;
+                        Cache.STORE.getIndexes()[3].putFile(currentInterface, i, component.encode());
+
+                    }
+                }
+                ComponentDefinition.getInterface(currentInterface, true);
+                drawTree(currentInterface);
+            } else {
+                copiedComp.parentId = parentHash;
+                copiedComp.basePositionX= baseX+ xIncrease * time;
+                copiedComp.basePositionY= baseY+ yIncrease * time;
+                logger.info(xIncrease * time+" "+yIncrease * time);
+                Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), copiedComp.encode());
             }
-            ComponentDefinition.getInterface(currentInterface, true);
-            drawTree(currentInterface);
-        } else {
-            copiedComp.parentId = -1;
-            Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), copiedComp.encode());
-            ComponentDefinition.getInterface(currentInterface, true);
-            drawTree(currentInterface);
         }
+        ComponentDefinition.getInterface(currentInterface, true);
+        drawTree(currentInterface);
     }
 
     /**
@@ -2041,70 +2081,6 @@ public class InterfaceGui extends JFrame {
         }
     }
 
-    /**
-     * todo
-     *
-     * @param path
-     */
-    public void packInterface(String path) {
-        byte[] data;
-        try {
-            data = Files.readAllBytes(new File(path).toPath());
-            int archiveId = ComponentDefinition.getInterfaceDefinitionsSize();
-            ComponentDefinition defaultButton = ComponentDefinition.getInterfaceComponent(6, 19);
-            defaultButton.parentId = -1;
-            defaultButton.text = "I'm cleaned :)";
-            Cache.STORE.getIndexes()[3].putFile(archiveId, 0, defaultButton.encode());
-            //Cache.getStore().getIndexes()[3].getArchive(archiveId)..setData(data);
-            this.drawTree(archiveId);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * returns them in the right order
-     *
-     * @param interfaceId
-     * @return sorted comp list
-     */
-    public ArrayList<ComponentDefinition> getOrderedComps(int interfaceId) {
-        ArrayList<ComponentDefinition> comps = new ArrayList();
-        ArrayList<ComponentDefinition> containers = ComponentDefinition.getInterfaceContainers(interfaceId); //gets all the containers of an interface
-        ComponentDefinition[] allComps = ComponentDefinition.getInterface(interfaceId);
-        if (allComps == null)
-            return null;
-       /* for (ComponentDefinition c : allComps) {
-            if (c == null)
-                continue;
-            if (c.parentId == -1)
-                comps.add(c);
-        }*/
-        for (ComponentDefinition comp : containers) {
-            if (!comps.contains(comp))
-                comps.add(comp); //add container itself
-            for (ComponentDefinition child : ComponentDefinition.getChildsByParent(interfaceId, comp.ihash))
-                comps.add(child); //Add childs
-        }
-        /**
-         * adding all the comps who don't have a parent
-         */
-        for (int i = 0; i < allComps.length; i++) {
-            if (allComps[i] == null)
-                continue;
-            ComponentPosition.setValues(allComps[i]);
-            boolean found = false;
-            for (ComponentDefinition c : comps) {
-                if (c.componentId == allComps[i].componentId)
-                    found = true;
-            }
-            if (!found)
-                comps.add(allComps[i]);
-        }
-        return comps;
-
-    }
 
     public void drawTree(int id) {
         logger.info("Drawing componenttree ");
@@ -2217,7 +2193,7 @@ public class InterfaceGui extends JFrame {
         /**
          * make sure you get them in the right order (containers)
          */
-        List<ComponentDefinition> orderedComponents = this.getOrderedComps(interfaceId);
+        List<ComponentDefinition> orderedComponents = InterfaceUtils.getOrderedComps(interfaceId);
         if (orderedComponents == null) {
             System.out.println("is null");
             return;
