@@ -39,6 +39,7 @@ public class InterfaceGui extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private static final Logger logger = LogFactory.createLogger(InterfaceGui.class.getName());
+    public static  enum EDIT_OPTIONS  {BASE, SCRIPTS};
     public static JProgressBar progressBar;
     public ProgressMonitor progressMonitor;
     protected JList interface_list;
@@ -305,7 +306,8 @@ public class InterfaceGui extends JFrame {
                 if (currentInterface == -1) {
                     return;
                 }
-                pasteComponent();
+                pasteComponentWithAction(0,0,-1,1);
+                //pasteComponent();
             }
         });
         pastButton.setBounds(816, 404, 78, 32);
@@ -1278,15 +1280,41 @@ public class InterfaceGui extends JFrame {
         JButton btnQcopy = new JButton("Edit multiple components");
         btnQcopy.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
+
+                EDIT_OPTIONS edit_option = (EDIT_OPTIONS) JOptionPane.showInputDialog(btnCopy,
+                        "What is your favorite pizza?",
+                        "Favorite Pizza",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        EDIT_OPTIONS.values(),
+                        EDIT_OPTIONS.values()[0]);
+
                 String[] componentIds = JOptionPane.showInputDialog("ComponentsIds, split by using ;",1).split(";");
                 if(componentIds.length> 0){
-                    String leftclick =  (JOptionPane.showInputDialog("leftclick option", ""));
-                    String text = (JOptionPane.showInputDialog("text value", ""));
-                    String hidden = (JOptionPane.showInputDialog("Hidden? (true/false)", ""));
+                    String onMouseHover ="";
+                    String onMouseLeave ="";
+                    String onLoad ="";
+                    String leftclick ="";
+                    String text ="";
+                    String hidden ="";
+                    switch (edit_option){
+                        case BASE:
+                             leftclick =  (JOptionPane.showInputDialog("leftclick option", ""));
+                             text = (JOptionPane.showInputDialog("text value", ""));
+                             hidden = (JOptionPane.showInputDialog("Hidden? (true/false)", ""));
+
+                            break;
+                        case SCRIPTS:
+                             onMouseHover = JOptionPane.showInputDialog("onMouseHover script","");
+                             onMouseLeave = JOptionPane.showInputDialog("onMouseLeave script","");
+                             onLoad = JOptionPane.showInputDialog("onLoad script",1);
+                            break;
+                    }
                     int dialogResult = JOptionPane.showConfirmDialog (null, "Are you sure you want to edit those components?","Warning",1);
                     if(dialogResult == JOptionPane.YES_OPTION){
-                        editMultipleComponents(componentIds,leftclick,text,hidden);
+                        editMultipleComponents(componentIds,leftclick,text,hidden,onMouseLeave,onMouseHover,onLoad);
                     }
+
                 }
             }
         });
@@ -1386,8 +1414,7 @@ public class InterfaceGui extends JFrame {
                 chooser.setAcceptAllFileFilterUsed(false);
 
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                    packInterface(chooser.getSelectedFile().getPath());
-                    // System.out.println("getSelectedFile() : " + chooser.getSelectedFile());
+
                 } else {
                     System.out.println("No Selection ");
                 }
@@ -1403,7 +1430,7 @@ public class InterfaceGui extends JFrame {
 
     }
 
-    private void editMultipleComponents(String[] componentIds, String leftclick, String text, String hidden) {
+    private void editMultipleComponents(String[] componentIds, String leftclick, String text, String hidden, String onMouseLeave, String onMouseHover, String onLoad) {
         for(String component : componentIds){
             int id = Integer.parseInt(component);
             ComponentDefinition editcomp = ComponentDefinition.getInterfaceComponent(currentInterface, id);
@@ -1420,6 +1447,12 @@ public class InterfaceGui extends JFrame {
                     editcomp.rightclickOptions[0] = leftclick;
                 }
             }
+            if(!onMouseLeave.isEmpty())
+                editcomp.onMouseLeaveScript =  InterfaceUtils.getScriptArray(onMouseLeave);
+            if(!onMouseLeave.isEmpty())
+                editcomp.onMouseHoverScript =  InterfaceUtils.getScriptArray(onMouseHover);
+            if(!onMouseLeave.isEmpty())
+                editcomp.onLoadScript =  InterfaceUtils.getScriptArray(onLoad);
             Cache.STORE.getIndexes()[3].putFile(currentInterface, id, editcomp.encode());
         }
         ComponentDefinition.getInterface(currentInterface, true);
@@ -1896,27 +1929,6 @@ public class InterfaceGui extends JFrame {
 
     }
 
-    public DefaultTreeModel populateTree(int interfaceId) {
-        DefaultMutableTreeNode head = new DefaultMutableTreeNode("Interface " + interfaceId + "");
-        for (ComponentDefinition component : ComponentDefinition.getInterface(interfaceId)) {
-            if (component.parentId == -1) {
-                head.add(new DefaultMutableTreeNode("Component: " + component.componentId));
-                continue;
-            }
-            DefaultMutableTreeNode child = new DefaultMutableTreeNode("Component " + component.componentId);
-            ArrayList<ComponentDefinition> childs = ComponentDefinition.getChildsByParent(interfaceId, component.ihash);
-            while (childs != null) {
-                for (ComponentDefinition childeren : childs) {
-                    child.add(new DefaultMutableTreeNode("Component:" + component.componentId));
-
-                }
-                head.add(child);
-
-
-            }
-        }
-        return new DefaultTreeModel(head);
-    }
 
     /**
      * TODO rewrite this
@@ -2027,20 +2039,31 @@ public class InterfaceGui extends JFrame {
         final int baseX = copiedComp.basePositionX;
         final int baseY = copiedComp.basePositionY;
         for(int time = 1; time <= times; time++) {
+
             if (copiedComp.type == ComponentConstants.CONTAINER) {
                 int containerPlace = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface);
-                copiedComp.parentId = -1;
+                copiedComp.parentId = parentHash;
+                copiedComp.basePositionX= baseX+ xIncrease * time;
+                copiedComp.basePositionY= baseY+ yIncrease * time;
                 Cache.STORE.getIndexes()[3].putFile(currentInterface, containerPlace, copiedComp.encode());
                 ArrayList<ComponentDefinition> childs = ComponentDefinition.getChildsByParent(copiedComp.interfaceId, copiedComp.ihash);
-                for (ComponentDefinition c : childs) {
-                    if (c.type == ComponentConstants.CONTAINER) { //TODO packing containers in containers
-
-                    } else
-                        Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), c.encode());
+                for (ComponentDefinition component : childs) {
+                    int currentComponentPlace = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface);
+                    if (component.type == ComponentConstants.CONTAINER) { //TODO packing containers in containers
+                        ArrayList<ComponentDefinition> childs2 = ComponentDefinition.getChildsByParent(copiedComp.interfaceId, component.ihash);
+                        component.parentId = containerPlace +(currentInterface << 16);
+                        Cache.STORE.getIndexes()[3].putFile(currentInterface,ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), component.encode());
+                        for (ComponentDefinition c2 : childs2) {
+                            c2.parentId = currentComponentPlace +(currentInterface << 16);
+                            Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), c2.encode());
+                        }
+                    } else {
+                        component.parentId = containerPlace +(currentInterface << 16);
+                        Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), component.encode());
+                    }
                 }
-                ComponentDefinition.getInterface(currentInterface, true);
-                int size = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface);
-                ComponentDefinition parent = ComponentDefinition.getInterfaceComponent(currentInterface, containerPlace);
+               //ComponentDefinition.getInterface(currentInterface, true);
+                /*ComponentDefinition parent = ComponentDefinition.getInterfaceComponent(currentInterface, containerPlace);
                 for (int i = size - childs.size() - 1; i < size; i++) {
                     ComponentDefinition component = ComponentDefinition.getInterfaceComponent(currentInterface, i);
                     if (component.type != 0) {
@@ -2048,9 +2071,7 @@ public class InterfaceGui extends JFrame {
                         Cache.STORE.getIndexes()[3].putFile(currentInterface, i, component.encode());
 
                     }
-                }
-                ComponentDefinition.getInterface(currentInterface, true);
-                drawTree(currentInterface);
+                }*/
             } else {
                 copiedComp.parentId = parentHash;
                 copiedComp.basePositionX= baseX+ xIncrease * time;
@@ -2082,11 +2103,11 @@ public class InterfaceGui extends JFrame {
     }
 
 
-    public void drawTree(int id) {
+    public void drawTree(int interfaceId) {
         logger.info("Drawing componenttree ");
-        this.makeInterface(id, chckbxShowContainers.isSelected(), this.chckbxShowHiddenComps.isSelected(), chckbxShowRectangles.isSelected());
+        this.makeInterface(interfaceId, chckbxShowContainers.isSelected(), this.chckbxShowHiddenComps.isSelected(), chckbxShowRectangles.isSelected());
         if (chckbxRefreshTreeOn.isSelected()) {
-            JTree tree = new JTree(createInterfaceTree(id));
+            JTree tree = new JTree(createInterfaceTree(interfaceId));
             tree.addTreeSelectionListener(e -> {
                 DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
                 try {
@@ -2098,7 +2119,6 @@ public class InterfaceGui extends JFrame {
                 } catch (Exception ex) {
                     logger.log(Level.SEVERE,"Error selecting component, error->"+ex);
                     /* some roots aren't a root , better catch them instead of spamming console*/
-
                 }
 
             });
