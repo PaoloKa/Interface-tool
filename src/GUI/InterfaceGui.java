@@ -1282,8 +1282,8 @@ public class InterfaceGui extends JFrame {
             public void actionPerformed(ActionEvent arg0) {
 
                 EDIT_OPTIONS edit_option = (EDIT_OPTIONS) JOptionPane.showInputDialog(btnCopy,
-                        "What is your favorite pizza?",
-                        "Favorite Pizza",
+                        "Select an edit type",
+                        "Edit options",
                         JOptionPane.QUESTION_MESSAGE,
                         null,
                         EDIT_OPTIONS.values(),
