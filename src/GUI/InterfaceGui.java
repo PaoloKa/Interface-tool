@@ -2038,40 +2038,33 @@ public class InterfaceGui extends JFrame {
         }
         final int baseX = copiedComp.basePositionX;
         final int baseY = copiedComp.basePositionY;
+        ArrayList<ComponentDefinition> childs = ComponentDefinition.getChildsByParent(copiedComp.interfaceId, copiedComp.ihash);
         for(int time = 1; time <= times; time++) {
 
             if (copiedComp.type == ComponentConstants.CONTAINER) {
-                int containerPlace = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface);
+                final int containerPlace = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface);
                 copiedComp.parentId = parentHash;
                 copiedComp.basePositionX= baseX+ xIncrease * time;
                 copiedComp.basePositionY= baseY+ yIncrease * time;
                 Cache.STORE.getIndexes()[3].putFile(currentInterface, containerPlace, copiedComp.encode());
-                ArrayList<ComponentDefinition> childs = ComponentDefinition.getChildsByParent(copiedComp.interfaceId, copiedComp.ihash);
+                logger.info( "in here :)"+childs.size()+" "+copiedComp.ihash+" "+copiedComp.interfaceId);
                 for (ComponentDefinition component : childs) {
                     int currentComponentPlace = ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface);
                     if (component.type == ComponentConstants.CONTAINER) { //TODO packing containers in containers
                         ArrayList<ComponentDefinition> childs2 = ComponentDefinition.getChildsByParent(copiedComp.interfaceId, component.ihash);
                         component.parentId = containerPlace +(currentInterface << 16);
+                        logger.info("here :(");
                         Cache.STORE.getIndexes()[3].putFile(currentInterface,ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), component.encode());
                         for (ComponentDefinition c2 : childs2) {
                             c2.parentId = currentComponentPlace +(currentInterface << 16);
                             Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), c2.encode());
                         }
                     } else {
-                        component.parentId = containerPlace +(currentInterface << 16);
+                        logger.info("here :)");
+                        component.parentId =  containerPlace +(currentInterface << 16);
                         Cache.STORE.getIndexes()[3].putFile(currentInterface, ComponentDefinition.getInterfaceDefinitionsComponentsSize(currentInterface), component.encode());
                     }
                 }
-               //ComponentDefinition.getInterface(currentInterface, true);
-                /*ComponentDefinition parent = ComponentDefinition.getInterfaceComponent(currentInterface, containerPlace);
-                for (int i = size - childs.size() - 1; i < size; i++) {
-                    ComponentDefinition component = ComponentDefinition.getInterfaceComponent(currentInterface, i);
-                    if (component.type != 0) {
-                        component.parentId = parent.ihash;
-                        Cache.STORE.getIndexes()[3].putFile(currentInterface, i, component.encode());
-
-                    }
-                }*/
             } else {
                 copiedComp.parentId = parentHash;
                 copiedComp.basePositionX= baseX+ xIncrease * time;
