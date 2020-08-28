@@ -1414,7 +1414,7 @@ public class InterfaceGui extends JFrame {
                 chooser.setAcceptAllFileFilterUsed(false);
 
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-
+                	ComponentDefinition.packInterface(chooser.getSelectedFile());
                 } else {
                     System.out.println("No Selection ");
                 }
@@ -1489,7 +1489,7 @@ public class InterfaceGui extends JFrame {
                     }
                     logger.info("Application started...");
                     Cache.init();
-                    InterfaceGui frame = new InterfaceGui();
+                    frame = new InterfaceGui();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -2395,6 +2395,35 @@ public class InterfaceGui extends JFrame {
         g.dispose();
         scrollPane_2.setViewportView(jLabel);
         this.getContentPane().add(jPanel);
+    }
+	
+	/**
+     * export to interface to a basic file
+     *
+     * @param interfaceId
+     * @throws IOException
+     * @throws FileNotFoundException
+     */
+    public void exportInterface(int interfaceId) throws FileNotFoundException, IOException {
+        File file = new File("data/export/" + interfaceId + "/");
+        file.mkdir();
+        int components = Cache.STORE.getIndexes()[3].getValidFilesCount(interfaceId);
+        for(int i = 0; i < components; i++) {
+        	byte[] data2 = Cache.STORE.getIndexes()[3].getFile(interfaceId, i);
+        	if (data2 == null) {
+        		continue;
+        	}
+        	FileOutputStream fos = new FileOutputStream(new File("data/export/" + interfaceId + "/"+i+".dat"));
+        	fos.write(data2);
+            fos.close();
+        }
+        JOptionPane.showMessageDialog(scrollPane_2, interfaceId + " dumped to data/export/" + interfaceId + "/");
+    }
+	
+	public static InterfaceGui frame;
+    
+    public static InterfaceGui getFrame() {
+    	return frame;
     }
 }
 
