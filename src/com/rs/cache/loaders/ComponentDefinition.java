@@ -170,6 +170,46 @@ public class ComponentDefinition {
 		}
 		return icomponentsdefs[interfaceId];
 	}
+	
+	public static ComponentDefinition[] packInterface(File file) {
+		int interfaceId = Integer.parseInt(file.getName());
+		if (interfaceId >= icomponentsdefs.length)
+			return null;
+		System.out.println("Components: "+new File("data/export/" + interfaceId + "/").list().length);
+		int components = new File("data/export/" + interfaceId + "/").list().length;
+		icomponentsdefs[interfaceId] = new ComponentDefinition[components];
+		for (int i = 0; i < icomponentsdefs[interfaceId].length; i++) {
+			byte[] data = getFile(interfaceId, i);
+			if (data == null) {
+                logger.log(Level.SEVERE, "Component "+i+ " from interface "+interfaceId+" is null, on initial load.");
+			} else {
+				ComponentDefinition defs = icomponentsdefs[interfaceId][i] = new ComponentDefinition();
+				defs.ihash = i + (interfaceId << 16);
+				defs.decode(new InputStream(data), i, interfaceId);
+				Cache.STORE.getIndexes()[3].putFile(interfaceId, i, defs.encode());
+				InterfaceGui.getFrame().drawTree(interfaceId);
+			}
+        }
+		JOptionPane.showMessageDialog(null, interfaceId + " has been packed");
+		return icomponentsdefs[interfaceId];
+	}
+	
+    public static byte[] getFile(int interfaceId, int i) {
+    	File file = new File("data/export/" + interfaceId + "/"+i+".dat");
+    	if (!file.exists()) {
+    		return null;
+    	}
+    	byte[] bytesArray = new byte[(int) file.length()];
+    	FileInputStream fis;
+		try {
+			fis = new FileInputStream(file);
+	    	fis.read(bytesArray);
+	    	fis.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	return bytesArray;
+    }
 
 	public static int getInterfaceDefinitionsSize() {
 		return Cache.STORE.getIndexes()[3].getLastArchiveId() +1;
