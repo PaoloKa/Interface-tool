@@ -245,6 +245,9 @@ public class InterfaceGui extends JFrame {
         JButton btnDelete = new JButton("delete");
         btnDelete.setToolTipText("Deletes the selected component");
         btnDelete.setBounds(728, 404, 78, 32);
+        JButton btnDelete = new JButton("delete");
+        btnDelete.setToolTipText("Deletes the selected component");
+        btnDelete.setBounds(728, 404, 78, 32);
         btnDelete.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -258,17 +261,29 @@ public class InterfaceGui extends JFrame {
                             "Inane warning",
                             JOptionPane.YES_NO_OPTION);
                     if (option == 0) {
-                        try {
+                    	try {
+	                    	if (c.type == ComponentConstants.CONTAINER) {
+	                    		for(int compId : ComponentDefinition.getChildren(currentInterface, selectedComp)) {
+	                    			for(int compId2 : ComponentDefinition.getChildren(currentInterface, compId)) {
+	                    				for(int compId3 : ComponentDefinition.getChildren(currentInterface, compId2)) {
+	                    					Cache.STORE.getIndexes()[3].removeFile(currentInterface, compId3);
+		                    			}
+	                    				Cache.STORE.getIndexes()[3].removeFile(currentInterface, compId2);
+	                    			}
+	                    			Cache.STORE.getIndexes()[3].removeFile(currentInterface, compId);
+	                    		}
+	                    	}
                             Cache.STORE.getIndexes()[3].removeFile(currentInterface, selectedComp);
                             Cache.STORE.getIndexes()[3].resetCachedFiles();
                             Cache.STORE.getIndexes()[3].rewriteTable();
                             try {
                                 Cache.init(); // otherwise it doesn't work xd
                             } catch (IOException e1) {
-                                // TODO Auto-generated catch block
                                 e1.printStackTrace();
                             }
                         } finally {
+                        	// new
+                        	ComponentDefinition.getInterface(currentInterface, true);
                             drawTree(currentInterface);
                         }
                     }
