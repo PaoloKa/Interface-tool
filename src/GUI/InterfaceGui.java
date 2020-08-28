@@ -2085,16 +2085,20 @@ public class InterfaceGui extends JFrame {
      * @throws FileNotFoundException
      */
     public void exportInterface(int interfaceId) throws FileNotFoundException, IOException {
-        File file = new File("data/export/" + interfaceId + ".dat");
-        byte[] data = Cache.STORE.getIndexes()[3].getArchive(interfaceId).getData();
-        try (FileOutputStream fos = new FileOutputStream(file)) {
-            fos.write(data);
+        File file = new File("data/export/" + interfaceId + "/");
+        file.mkdir();
+        int components = Cache.STORE.getIndexes()[3].getValidFilesCount(interfaceId);
+        for(int i = 0; i < components; i++) {
+        	byte[] data2 = Cache.STORE.getIndexes()[3].getFile(interfaceId, i);
+        	if (data2 == null) {
+        		continue;
+        	}
+        	FileOutputStream fos = new FileOutputStream(new File("data/export/" + interfaceId + "/"+i+".dat"));
+        	fos.write(data2);
             fos.close();
-            //message
-            JOptionPane.showMessageDialog(scrollPane_2, interfaceId + " dumped to data/export/" + interfaceId + ".dat");
         }
+        JOptionPane.showMessageDialog(scrollPane_2, interfaceId + " dumped to data/export/" + interfaceId + "/");
     }
-
 
     public void drawTree(int interfaceId) {
         logger.info("Drawing componenttree ");
@@ -2395,29 +2399,6 @@ public class InterfaceGui extends JFrame {
         g.dispose();
         scrollPane_2.setViewportView(jLabel);
         this.getContentPane().add(jPanel);
-    }
-	
-	/**
-     * export to interface to a basic file
-     *
-     * @param interfaceId
-     * @throws IOException
-     * @throws FileNotFoundException
-     */
-    public void exportInterface(int interfaceId) throws FileNotFoundException, IOException {
-        File file = new File("data/export/" + interfaceId + "/");
-        file.mkdir();
-        int components = Cache.STORE.getIndexes()[3].getValidFilesCount(interfaceId);
-        for(int i = 0; i < components; i++) {
-        	byte[] data2 = Cache.STORE.getIndexes()[3].getFile(interfaceId, i);
-        	if (data2 == null) {
-        		continue;
-        	}
-        	FileOutputStream fos = new FileOutputStream(new File("data/export/" + interfaceId + "/"+i+".dat"));
-        	fos.write(data2);
-            fos.close();
-        }
-        JOptionPane.showMessageDialog(scrollPane_2, interfaceId + " dumped to data/export/" + interfaceId + "/");
     }
 	
 	public static InterfaceGui frame;
